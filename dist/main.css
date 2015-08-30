@@ -1,0 +1,97 @@
+/*!
+ * =====================================================
+ * sjz v1.0.0 ()
+ * Copyright 2015 sjz
+ *
+ * v1.0.0 designed by @sjz.
+ * =====================================================
+ */
+
+/*!
+ * =====================================================
+ * sjz v1.0.0 ()
+ * Copyright 2015 sjz
+ *
+ * v1.0.0 designed by @sjz.
+ * =====================================================
+ */
+
+body {
+  background: #3f3b3a;
+  font-family: microsoft yahei, simsun;
+  -webkit-user-select: none;
+}
+
+input {
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.page {
+  min-width: 320px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.page .logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 10%;
+  background: #1fac4c;
+  margin: 40px auto;
+  text-align: center;
+  line-height: 140px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+.page .form-section {
+  width: 65%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.page .form-section .bk-input {
+  margin: 0;
+  border: 3px solid #1fac4c;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: #fff;
+}
+.page .form-section .bk-input input {
+  display: block;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  height: 20px;
+  line-height: 20px;
+  background-color: transparent;
+}
+.page .btn-comm {
+  padding: 8px 0;
+  border-radius: 8px;
+  display: block;
+  width: 65%;
+  color: #fff;
+  font-size: 1.2em;
+  margin: 5px auto;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.page .btn-green {
+  background: #1fac4c;
+  margin-bottom: 25px;
+}
+.page .btn-grey {
+  background: #956134;
+}
+.page .btn-grey span {
+  display: block;
+  line-height: 30px;
+}
+.page .btn-grey span.row-1 {
+  font-size: 1rem;
+}
+
+/*# sourceMappingURL=main.css.map */

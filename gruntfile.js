@@ -21,7 +21,9 @@ module.exports = function (grunt) {
       sassPath: 'entry/sass/',
       jsPath: 'entry/js',
       distPath: 'dist/',
-      entry: 'entry/'
+      entry: 'entry/',
+      entryImg: 'entry/img/',
+      distImg: 'dist/img/'
     },
 
     banner: '/*!\n' +
@@ -75,6 +77,16 @@ module.exports = function (grunt) {
         ],
         // tasks: ['sass:sjz', 'sass:hotelForSearch', 'requirejs:hotelFromOrder', 'requirejs:hotelBeforeOrder', 'requirejs:hotelForSearch', 'cssmin:hotel', 'cssmin:hotelForSearch'],
         tasks: ['sass:sjz','cssmin:sjz']
+      }
+    },
+
+    copy: {
+      sjz: {
+        files: [
+          {expand: true, cwd: '<%= meta.entryImg %>', src: "**", dest: "<%= meta.distImg %>"}
+        ]
+        // src: '<%= meta.entryImg %>*',
+        // dest: '<%= meta.distImg %>'
       }
     },
 
@@ -137,6 +149,6 @@ module.exports = function (grunt) {
 
   // server
   grunt.registerTask('server', 'Run server', ['connect', 'open',  'watch']);
-  grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'watch']);
+  grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'copy']);
   // grunt.registerTask('hotel', ['sass:hotel', 'sass:hotelForSearch', 'requirejs:hotelFromOrder', 'requirejs:hotelBeforeOrder', 'requirejs:hotelForSearch', 'cssmin:hotel', 'cssmin:hotelForSearch']);
 };

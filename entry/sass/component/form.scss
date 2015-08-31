@@ -1,0 +1,23 @@
+$colorMain: #1fac4c;
+
+.form-set {
+	width: 65%;
+	margin: 0 auto;
+	& p {
+		margin: 0;
+		padding: 5px 15px;
+		background: #fff;
+		border-bottom: 2px solid $colorMain;
+		border-left: 2px solid $colorMain;
+		border-right: 2px solid $colorMain;
+	}
+	& p:first-of-type {
+		border: 2px solid $colorMain;
+		border-radius: 8px 8px 0 0;
+	}
+	& p:last-of-type {
+		border-bottom: 2px solid $colorMain;
+		border-top: 0;
+		border-radius: 0 0 8px 8px;
+	}
+}

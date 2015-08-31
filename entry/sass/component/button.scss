@@ -1,0 +1,15 @@
+$colorMain: #1fac4c;
+
+.button-comm {
+	display: block;
+	width: 65%;
+	height: 44px;
+	line-height: 44px;
+	font-size: 18px;
+	letter-spacing: 2px;
+	color: #fff;
+	background: $colorMain;
+	margin: 0 auto;
+	border-radius: 8px;
+	text-align: center;
+}

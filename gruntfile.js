@@ -124,23 +124,23 @@ module.exports = function (grunt) {
         }
     },
 
-    // requirejs: {
-    //   hotelForSearch: {
-    //     options: {
-    //           baseUrl: "./",
-    //           // baseUrl: 'entry/huoche/',
-    //           name : 'lib/almond',
-    //           // mainConfigFile: "entry/huoche/config.js",
-    //           include : [
-    //             'entry/hotel/mainForSearch'
-    //           ],
-    //           out: '<%= meta.hotelDist %>mainForSearch.js',
-    //           optimize : 'uglify2',
-    //           //optimize : 'none',
-    //           wrap : true,
-    //     }
-    //   }
-    // }
+    requirejs: {
+      sjz: {
+        options: {
+          baseUrl: "./",
+          // baseUrl: 'entry/huoche/',
+          name : '<%= meta.entry %>js/lib/almond',
+          // mainConfigFile: "entry/huoche/config.js",
+          include : [
+            '<%= meta.entry %>js/main'
+          ],
+          out: '<%= meta.distPath %>main.js',
+          // optimize : 'uglify2',
+          optimize : 'none',
+          wrap : true
+        }
+      }
+    }
   });
 
   // Load the plugins
@@ -149,6 +149,6 @@ module.exports = function (grunt) {
 
   // server
   grunt.registerTask('server', 'Run server', ['connect', 'open',  'watch']);
-  grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'copy']);
+  grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'copy', 'requirejs']);
   // grunt.registerTask('hotel', ['sass:hotel', 'sass:hotelForSearch', 'requirejs:hotelFromOrder', 'requirejs:hotelBeforeOrder', 'requirejs:hotelForSearch', 'cssmin:hotel', 'cssmin:hotelForSearch']);
 };

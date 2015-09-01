@@ -1,6 +1,25 @@
+$fontFace: microsoft yahei, simsun;
+
+html, body {
+	height: 100%;
+}
+.page {
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+body {
+	margin: 0;
+	padding: 0;
+	font-family: $fontFace;
+	-webkit-user-select: none;
+}
 input {
 	outline:none;
 	-webkit-appearance: none;
 	border-radius: 0;
 	border: none; 
+}
+.block15 {
+	height: 15px;
 }

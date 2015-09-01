@@ -1,23 +1,74 @@
-$colorMain: #1fac4c;
+$mainColor: #1fac4c;
 
 .form-set {
 	width: 65%;
 	margin: 0 auto;
+	position: relative;
 	& p {
 		margin: 0;
 		padding: 5px 15px;
 		background: #fff;
-		border-bottom: 2px solid $colorMain;
-		border-left: 2px solid $colorMain;
-		border-right: 2px solid $colorMain;
+		border-bottom: 2px solid $mainColor;
+		border-left: 2px solid $mainColor;
+		border-right: 2px solid $mainColor;
 	}
-	& p:first-of-type {
-		border: 2px solid $colorMain;
-		border-radius: 8px 8px 0 0;
+	& p.item:first-of-type, & p.item-sub:first-of-type {
+		border: 2px solid $mainColor;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
 	}
-	& p:last-of-type {
-		border-bottom: 2px solid $colorMain;
+	& p.item:last-of-type, & p.item-sub:last-of-type {
+		border-bottom: 2px solid $mainColor;
 		border-top: 0;
-		border-radius: 0 0 8px 8px;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+	& p.item.droplist {
+		border: 2px solid $mainColor;
+		position: relative;
+		span {
+			display: block;
+			position: absolute;
+			height: 100%;
+			width: 15%;
+			background: $mainColor;
+			border-radius: 0 8px 8px 0;
+			top: -2px;
+			right: -2px;
+			border: 2px solid $mainColor;
+
+			i {
+				display: block;
+				position: absolute;
+				color: #fff;
+				text-align: center;
+				font-style: normal;
+				width: 20px;
+				height: 20px;
+				text-align: center;
+				line-height: 20px;
+				top: 50%; 
+				margin-top: -10px;
+				left: 50%;
+				margin-left: -10px;
+				-webkit-transform: rotateX(180deg)
+			}
+		}
+	}
+
+	.form-set-sub {
+		width: 100%;
+		position: absolute;
+		z-index: 100;
+		margin-top: -2px;
+		left: 0;
+
+		.item-sub:active {
+			background: #e7f7ec;
+		}
+
+		/*.item-sub, .item-sub {
+			background: #e7f7ec;
+		}*/
 	}
 }

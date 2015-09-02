@@ -62,6 +62,7 @@ $mainColor: #1fac4c;
 		z-index: 100;
 		margin-top: -2px;
 		left: 0;
+		display: none;
 
 		.item-sub:active {
 			background: #e7f7ec;
@@ -70,5 +71,8 @@ $mainColor: #1fac4c;
 		/*.item-sub, .item-sub {
 			background: #e7f7ec;
 		}*/
+	}
+	.form-set-sub.on {
+		display: block;
 	}
 }

@@ -69,12 +69,16 @@
   z-index: 100;
   margin-top: -2px;
   left: 0;
+  display: none;
   /*.item-sub, .item-sub {
   	background: #e7f7ec;
   }*/
 }
 .form-set .form-set-sub .item-sub:active {
   background: #e7f7ec;
+}
+.form-set .form-set-sub.on {
+  display: block;
 }
 
 .button-comm {
@@ -100,11 +104,6 @@ body.user-yuyue {
   -webkit-user-select: none;
 }
 
-.page {
-  min-width: 320px;
-  max-width: 320px;
-  margin: 0 auto;
-}
 .page .logo {
   width: 105px;
   height: 125px;
@@ -185,7 +184,11 @@ html, body {
 }
 
 .page {
+  min-width: 320px;
+  max-width: 640px;
+  margin: 0 auto;
   height: 100%;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }

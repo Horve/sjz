@@ -16,6 +16,7 @@
 .form-set p {
   margin: 0;
   padding: 5px 15px;
+  height: 24px;
   background: #fff;
   border-bottom: 2px solid #1fac4c;
   border-left: 2px solid #1fac4c;
@@ -35,6 +36,14 @@
 .form-set p.item.droplist {
   border: 2px solid #1fac4c;
   position: relative;
+}
+.form-set p.item.droplist em {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
 }
 .form-set p.item.droplist span {
   display: block;
@@ -70,12 +79,13 @@
   margin-top: -2px;
   left: 0;
   display: none;
-  /*.item-sub, .item-sub {
-  	background: #e7f7ec;
-  }*/
-}
-.form-set .form-set-sub .item-sub:active {
-  background: #e7f7ec;
+  		/*.item-sub:active {
+  			background: #e7f7ec;
+  		}
+  
+  		.item-sub, .item-sub {
+  			background: #e7f7ec;
+  		}*/
 }
 .form-set .form-set-sub.on {
   display: block;

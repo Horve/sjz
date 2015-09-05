@@ -129,12 +129,13 @@ module.exports = function (grunt) {
         options: {
           baseUrl: "./",
           // baseUrl: 'entry/huoche/',
-          name : '<%= meta.entry %>js/lib/almond',
+          // name : '<%= meta.entry %>js/lib/almond',
+          name : '<%= meta.entry %>js/lib/require',
           // mainConfigFile: "entry/huoche/config.js",
           include : [
             '<%= meta.entry %>js/main'
           ],
-          out: '<%= meta.distPath %>main.js',
+          out: '<%= meta.distPath %>build.js',
           // optimize : 'uglify2',
           optimize : 'none',
           wrap : true

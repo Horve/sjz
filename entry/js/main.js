@@ -1,8 +1,4 @@
-requirejs.config({
-	baseUrl: './',
-	waitSeconds: 10
-});
-
-require(['./src/workerapply'], function() {
-
+// main.js
+require(['entry/js/src/workerapply'], function() {
+	
 });

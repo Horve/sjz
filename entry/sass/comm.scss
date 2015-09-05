@@ -4,7 +4,11 @@ html, body {
 	height: 100%;
 }
 .page {
+	min-width: 320px;
+	max-width: 640px;
+	margin: 0 auto;
 	height: 100%;
+	width: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
 }

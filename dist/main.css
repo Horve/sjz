@@ -454,12 +454,11 @@ input {
   width: 100%;
 }
 .quote .item-row .content .item-content .form-set.square-nosub {
-  width: 40%;
+  width: 45%;
   margin: 0;
 }
 .quote .item-row .content .item-content .form-set.square-nosub input {
   width: 100%;
-  text-align: center;
 }
 .quote .item-row .content:last-of-type {
   margin-bottom: 0;

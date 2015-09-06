@@ -3779,7 +3779,10 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 					});
 				}
 				$(this).addClass("on").siblings().removeClass("on");
-				_this.hide(el);
+				setTimeout(function() {
+					_this.hide(el);
+				}, 300);
+				
 			});
 			
 		}

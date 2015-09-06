@@ -81,8 +81,10 @@ $contentWidth: 80%;
 				height: 40px;
 				color: $mainColor;
 				position: absolute;
-				display: -webkit-flex;
-				align-items: center;
+				/*display: -webkit-flex;
+				align-items: center;*/
+				display: -webkit-box;
+				-webkit-box-align: center;
 
 				span {
 					display: block;
@@ -91,15 +93,24 @@ $contentWidth: 80%;
 			.item-content {
 				height: 100%;
 				line-height: 100%;
-				display: -webkit-flex;
-				align-content: center;
+				/*display: -webkit-flex;
+				align-content: center;*/
+				display: -webkit-box;
+				-webkit-box-align: center;
 				margin-left: 50px;
 				.form-set {
 					width: 100%;
 				}
 
+				& span.item-txt {
+					display: inline-block;
+					line-height: 40px;
+					color: $mainColor;
+					margin: 0 0 0 3px;
+				}
+
 				.form-set.square-nosub {
-					width: 45%;
+					width: 80px;
 					margin: 0;
 
 					input {

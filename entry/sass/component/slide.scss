@@ -51,9 +51,14 @@ $mainColor: #19ad5e;
 		     	display: none;
 		    	font-style: normal;
 		    	position: absolute;
-		    	right:30px;
+		    	right:20px;
 		    	font-weight: bold;
-		    	top: 0;
+		    	top: 10px;
+		    	width: 16px;
+		    	height: 8px;
+		    	border-left: 1px solid $mainColor;
+		    	border-bottom: 1px solid $mainColor;
+		    	-webkit-transform: rotate(-45deg);
 		    }
 		}
 		li.on {

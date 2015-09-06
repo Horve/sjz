@@ -3689,7 +3689,7 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 	
 	var isfirst = true;
 	var slideOption = {
-		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i>√</i></li></ul></div>',
+		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i></i></li></ul></div>',
 		// {
 		// 	title: "这是标题这是标题",
 		// 	data: ["选项一","选项二","选项三","选项四","选项五","选项六"],
@@ -3699,6 +3699,9 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 		// }
 		add: function(elem, options) {
 			var _this = this;
+			if (options.initOption && typeof options.initOption === 'function') {
+				options.initOption(elem, options.data);
+			}
 			$(elem).off("click").on("click", function() {
 				_this.beforeShow(elem, options);
 			});
@@ -3708,7 +3711,6 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 			var title = options.title;
 			var data = options.data;
 			var slide;
-			console.log($('.form-mask').length);
 			if (!$('.form-mask').length) {
 				slide = $(_this.TEMPLATE);
 				isfirst = true;
@@ -3719,7 +3721,7 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 			slide.find('.sli-title span').html(title);
 			var content = [];
 			[].forEach.call(data, function(item) {
-				content.push('<li data-id="' + item.id + '"><span>' + item.txt + '</span><i>√</i></li>');
+				content.push('<li data-id="' + item.id + '"><span>' + item.txt + '</span><i></i></li>');
 			});
 			slide.find('.slide-item-ul').html(content.join(""));
 			if (isfirst) {
@@ -3732,11 +3734,9 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 				$('.form-slide, .form-mask').show();
 				_this.show($('.form-slide'), _this, elem, options.callback);
 			}
-			
 		},
 
 		show: function(el, _this, pageElem, callback) {
-			console.log(el);
 			var elH = $(el).height();
 			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
 			_this.hideBind(el);
@@ -3757,7 +3757,7 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 		afterHide: function() {
 			setTimeout(function() {
 				$('.form-slide').hide();
-			}, 500);
+			}, 300);
 		},
 		itemEvent: function(el, pageElem, callback) {
 			var _this = this;
@@ -3784,7 +3784,6 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 				}, 300);
 				
 			});
-			
 		}
 		
 	};
@@ -3805,6 +3804,12 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 				txt: "品味装 399/㎡"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#quote-new-house input').val(data.txt);
 			$('#quote-new-house input').attr("data-id", data.id);
@@ -3824,6 +3829,12 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 				txt: "经济改造 99+399/㎡"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#quote-old-house input').val(data.txt);
 			$('#quote-old-house input').attr("data-id", data.id);
@@ -3846,6 +3857,12 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 				txt: "3"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-shi input').val(data.txt);
 			$('#h-shi input').attr("data-id", data.id);
@@ -3868,6 +3885,12 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 				txt: "2"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-ting input').val(data.txt);
 			$('#h-ting input').attr("data-id", data.id);
@@ -3886,6 +3909,12 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 				txt: "1"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-chu input').val(data.txt);
 			$('#h-chu input').attr("data-id", data.id);
@@ -3908,6 +3937,12 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 				txt: "2"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-wei input').val(data.txt);
 			$('#h-wei input').attr("data-id", data.id);

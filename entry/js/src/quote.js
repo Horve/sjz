@@ -12,6 +12,12 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "品味装 399/㎡"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#quote-new-house input').val(data.txt);
 			$('#quote-new-house input').attr("data-id", data.id);
@@ -31,6 +37,12 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "经济改造 99+399/㎡"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#quote-old-house input').val(data.txt);
 			$('#quote-old-house input').attr("data-id", data.id);
@@ -53,6 +65,12 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "3"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-shi input').val(data.txt);
 			$('#h-shi input').attr("data-id", data.id);
@@ -75,6 +93,12 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "2"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-ting input').val(data.txt);
 			$('#h-ting input').attr("data-id", data.id);
@@ -93,6 +117,12 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "1"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-chu input').val(data.txt);
 			$('#h-chu input').attr("data-id", data.id);
@@ -115,6 +145,12 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "2"
 			}
 		],
+		// 设置初始选项 不设置为null
+		initOption: function(el, datas) {
+			console.log(datas);
+			$(el).find('input').val(datas[0].txt);
+			$(el).find('input').attr("data-id", datas[0].id);
+		},
 		callback: function(data) {
 			$('#h-wei input').val(data.txt);
 			$('#h-wei input').attr("data-id", data.id);

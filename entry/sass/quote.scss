@@ -45,6 +45,26 @@ $contentWidth: 80%;
 				}
 			}
 		}
+
+		.title-locate {
+			display: block;
+			width: 80px;
+			height: 100px;
+			background: #fff;
+			position: absolute;
+			right: -20px;
+			top: -60px;
+			-webkit-transform: rotate(-60deg);
+
+			span {
+				display: block;
+				position: absolute;
+				-webkit-transform: rotate(60deg);
+			    top: 50px;
+    			left: 0px;
+    			color: $mainColor;
+			}
+		}
 	}
 
 	.item-row {
@@ -76,6 +96,16 @@ $contentWidth: 80%;
 				margin-left: 50px;
 				.form-set {
 					width: 100%;
+				}
+
+				.form-set.square-nosub {
+					width: 40%;
+					margin: 0;
+
+					input {
+						width: 100%;
+						text-align: center;
+					}
 				}
 			}
 		}

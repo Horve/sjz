@@ -3736,12 +3736,15 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 		},
 
 		show: function(el, _this, pageElem, callback) {
-			$(el).addClass("anim");
+			console.log(el);
+			var elH = $(el).height();
+			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
 			_this.hideBind(el);
 			_this.itemEvent(el, pageElem, callback);
 		},
 		hide: function(el) {
-			$(el).removeClass("anim");
+			// $(el).removeClass("anim");
+			$(el).attr("style", "-webkit-transform: translate3d(0,0,0);");
 			$('.form-mask').hide();
 			this.afterHide();
 		},
@@ -3752,9 +3755,9 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 			});
 		},
 		afterHide: function() {
-			// setTimeout(function() {
-			// 	// $('.form-slide').hide();
-			// }, 500);
+			setTimeout(function() {
+				$('.form-slide').hide();
+			}, 500);
 		},
 		itemEvent: function(el, pageElem, callback) {
 			var _this = this;

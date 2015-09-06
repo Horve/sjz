@@ -10,22 +10,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 			{
 				id: 2,
 				txt: "品味装 399/㎡"
-			},
-			{
-				id: 3,
-				txt: "经济装 299/㎡"
-			},
-			{
-				id: 4,
-				txt: "品味装 399/㎡"
-			},
-			{
-				id: 5,
-				txt: "经济装 299/㎡"
-			},
-			{
-				id: 6,
-				txt: "品味装 399/㎡"
 			}
 		],
 		callback: function(data) {
@@ -41,6 +25,10 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 			{
 				id: 1,
 				txt: "经济改造 99+299/㎡"
+			},
+			{
+				id: 2,
+				txt: "经济改造 99+399/㎡"
 			}
 		],
 		callback: function(data) {

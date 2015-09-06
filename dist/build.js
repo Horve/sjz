@@ -3682,8 +3682,246 @@ define('entry/js/src/workerapply',['../lib/zepto'], function(zepto) {
 	};
 	workerApply.init();
 });
+define('entry/js/core/core',['../lib/zepto'], function(zepto) {
+	return $;	
+});
+define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
+	
+	var isfirst = true;
+	var slideOption = {
+		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i>√</i></li></ul></div>',
+		// {
+		// 	title: "这是标题这是标题",
+		// 	data: ["选项一","选项二","选项三","选项四","选项五","选项六"],
+		// 	callback: function() {
+
+		// 	}
+		// }
+		add: function(elem, options) {
+			var _this = this;
+			$(elem).off("click").on("click", function() {
+				_this.beforeShow(elem, options);
+			});
+		},
+		beforeShow: function(elem, options, callback) {
+			var _this = this;
+			var title = options.title;
+			var data = options.data;
+			var slide;
+			console.log($('.form-mask').length);
+			if (!$('.form-mask').length) {
+				slide = $(_this.TEMPLATE);
+				isfirst = true;
+			} else {
+				slide = $('.form-mask, .form-slide');
+				isfirst = false;
+			}
+			slide.find('.sli-title span').html(title);
+			var content = [];
+			[].forEach.call(data, function(item) {
+				content.push('<li data-id="' + item.id + '"><span>' + item.txt + '</span><i>√</i></li>');
+			});
+			slide.find('.slide-item-ul').html(content.join(""));
+			if (isfirst) {
+				$('.page').append(slide);
+				setTimeout(function() {
+					_this.show($('.form-slide'), _this, elem, options.callback);
+				}, 100);
+			} else {
+				// _this.show($('.form-slide'), _this, elem, options.callback);
+				$('.form-slide, .form-mask').show();
+				_this.show($('.form-slide'), _this, elem, options.callback);
+			}
+			
+		},
+
+		show: function(el, _this, pageElem, callback) {
+			$(el).addClass("anim");
+			_this.hideBind(el);
+			_this.itemEvent(el, pageElem, callback);
+		},
+		hide: function(el) {
+			$(el).removeClass("anim");
+			$('.form-mask').hide();
+			this.afterHide();
+		},
+		hideBind: function(el) {
+			var _this = this;
+			$('.form-mask').off('click').on('click', function() {
+				_this.hide(el);
+			});
+		},
+		afterHide: function() {
+			// setTimeout(function() {
+			// 	// $('.form-slide').hide();
+			// }, 500);
+		},
+		itemEvent: function(el, pageElem, callback) {
+			var _this = this;
+			var lis = $('.form-slide li');
+			var input = $(pageElem).find('input');
+			if($(input).attr('data-id')){
+				[].forEach.call(lis, function(li) {
+					if ($(li).attr("data-id") === $(input).attr('data-id')) {
+						$(li).addClass("on");
+					}	
+				});
+			}
+
+			$('.form-slide li').off('click').on('click', function() {
+				if(callback && typeof callback === "function") {
+					callback({
+						id: $(this).attr("data-id"),
+						txt: $(this).find('span').html()
+					});
+				}
+				$(this).addClass("on").siblings().removeClass("on");
+				_this.hide(el);
+			});
+			
+		}
+		
+	};
+
+	return slideOption;
+});
+define('entry/js/src/quote',['../core/core', './component/slideOptions'], function(zepto, slideOption) {
+	console.log($('#quote-new-house'));
+	slideOption.add($('#quote-new-house'), {
+		title: "选择新房装修类型",
+		data: [
+			{
+				id: 1,
+				txt: "经济装 299/㎡"
+			},
+			{
+				id: 2,
+				txt: "品味装 399/㎡"
+			},
+			{
+				id: 3,
+				txt: "经济装 299/㎡"
+			},
+			{
+				id: 4,
+				txt: "品味装 399/㎡"
+			},
+			{
+				id: 5,
+				txt: "经济装 299/㎡"
+			},
+			{
+				id: 6,
+				txt: "品味装 399/㎡"
+			}
+		],
+		callback: function(data) {
+			$('#quote-new-house input').val(data.txt);
+			$('#quote-new-house input').attr("data-id", data.id);
+		}
+	});
+
+	// 旧房装修
+	slideOption.add($('#quote-old-house'), {
+		title: "选择旧房装修类型",
+		data: [
+			{
+				id: 1,
+				txt: "经济改造 99+299/㎡"
+			}
+		],
+		callback: function(data) {
+			$('#quote-old-house input').val(data.txt);
+			$('#quote-old-house input').attr("data-id", data.id);
+		}
+	});
+
+	slideOption.add($('#h-shi'), {
+		title: "房型-室",
+		data: [
+			{
+				id: 1,
+				txt: "1"
+			},
+			{
+				id: 2,
+				txt: "2"
+			},
+			{
+				id: 3,
+				txt: "3"
+			}
+		],
+		callback: function(data) {
+			$('#h-shi input').val(data.txt);
+			$('#h-shi input').attr("data-id", data.id);
+		}
+	});
+
+	slideOption.add($('#h-ting'), {
+		title: "房型-厅",
+		data: [
+			{
+				id: 1,
+				txt: "0"
+			},
+			{
+				id: 2,
+				txt: "1"
+			},
+			{
+				id: 3,
+				txt: "2"
+			}
+		],
+		callback: function(data) {
+			$('#h-ting input').val(data.txt);
+			$('#h-ting input').attr("data-id", data.id);
+		}
+	});
+
+	slideOption.add($('#h-chu'), {
+		title: "房型-厨",
+		data: [
+			{
+				id: 1,
+				txt: "0"
+			},
+			{
+				id: 2,
+				txt: "1"
+			}
+		],
+		callback: function(data) {
+			$('#h-chu input').val(data.txt);
+			$('#h-chu input').attr("data-id", data.id);
+		}
+	});
+
+	slideOption.add($('#h-wei'), {
+		title: "房型-卫",
+		data: [
+			{
+				id: 1,
+				txt: "0"
+			},
+			{
+				id: 2,
+				txt: "1"
+			},
+			{
+				id: 3,
+				txt: "2"
+			}
+		],
+		callback: function(data) {
+			$('#h-wei input').val(data.txt);
+			$('#h-wei input').attr("data-id", data.id);
+		}
+	});
+});
 // main.js
-require(['entry/js/src/workerapply'], function() {
+require(['entry/js/src/workerapply','entry/js/src/quote'], function() {
 	
 });
 define("entry/js/main", function(){});

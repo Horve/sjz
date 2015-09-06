@@ -1,4 +1,5 @@
-$colorMain: #1fac4c;
+$colorMain: #19ad5e;
+$colorActive: #6ac881;
 
 .button-comm {
 	display: block;
@@ -12,4 +13,7 @@ $colorMain: #1fac4c;
 	margin: 0 auto;
 	border-radius: 8px;
 	text-align: center;
+}
+.button-comm:active {
+	background: $colorActive;
 }

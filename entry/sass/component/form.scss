@@ -1,4 +1,4 @@
-$mainColor: #1fac4c;
+$mainColor: #19ad5e;
 
 .form-set {
 	width: 65%;
@@ -24,6 +24,9 @@ $mainColor: #1fac4c;
 		border-bottom-left-radius: 8px;
 		border-bottom-right-radius: 8px;
 	}
+	& p.item:nth-of-type(1) {
+		border-top: 2px solid $mainColor;
+	}
 	& p.item.droplist {
 		border: 2px solid $mainColor;
 		position: relative;
@@ -39,8 +42,8 @@ $mainColor: #1fac4c;
 			display: block;
 			position: absolute;
 			height: 100%;
-			width: 15%;
-			background: $mainColor;
+			width: 18%;
+			background: #fff;
 			border-radius: 0 8px 8px 0;
 			top: -2px;
 			right: -2px;
@@ -49,7 +52,7 @@ $mainColor: #1fac4c;
 			i {
 				display: block;
 				position: absolute;
-				color: #fff;
+				color: $mainColor;
 				text-align: center;
 				font-style: normal;
 				width: 20px;

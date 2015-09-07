@@ -1,5 +1,4 @@
 define(['../core/core', './component/slideOptions'], function(zepto, slideOption) {
-	console.log($('#quote-new-house'));
 	slideOption.add($('#quote-new-house'), {
 		title: "选择新房装修类型",
 		data: [
@@ -14,7 +13,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -39,7 +37,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -67,7 +64,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -95,7 +91,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -119,7 +114,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -147,7 +141,6 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},

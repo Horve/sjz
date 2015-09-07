@@ -1,4 +1,4 @@
 // main.js
-require(['entry/js/src/workerapply','entry/js/src/quote'], function() {
+require(['entry/js/src/workerapply','entry/js/src/quote', 'entry/js/src/quoteres'], function() {
 	
 });

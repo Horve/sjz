@@ -1,4 +1,4 @@
-define(['../../core/core'], function($) {
+define(['../../core/core'], function(core) {
 	
 	var isfirst = true;
 	var slideOption = {

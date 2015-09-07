@@ -3682,10 +3682,28 @@ define('entry/js/src/workerapply',['../lib/zepto'], function(zepto) {
 	};
 	workerApply.init();
 });
-define('entry/js/core/core',['../lib/zepto'], function(zepto) {
-	return $;	
+define('entry/js/core/tools',[],function() {
+	var Tools = {
+		getCurrentStyle: function(elem, style) {
+			var style;
+			if (window.getComputedStyle) {
+				var obj = window.getComputedStyle(elem, null);
+				style = obj.getPropertyValue(style);
+			} else {
+				style = elem.currentStyle;
+			}
+			return style;
+		}
+	};
+	return Tools;
 });
-define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
+define('entry/js/core/core',['../lib/zepto', './tools'], function(zepto, tools) {
+	// return $;
+	var core = {};
+	core.Tools = tools;
+	return core;
+});
+define('entry/js/src/component/slideOptions',['../../core/core'], function(core) {
 	
 	var isfirst = true;
 	var slideOption = {
@@ -3791,7 +3809,6 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function($) {
 	return slideOption;
 });
 define('entry/js/src/quote',['../core/core', './component/slideOptions'], function(zepto, slideOption) {
-	console.log($('#quote-new-house'));
 	slideOption.add($('#quote-new-house'), {
 		title: "选择新房装修类型",
 		data: [
@@ -3806,7 +3823,6 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -3831,7 +3847,6 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -3859,7 +3874,6 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -3887,7 +3901,6 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -3911,7 +3924,6 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -3939,7 +3951,6 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		],
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
-			console.log(datas);
 			$(el).find('input').val(datas[0].txt);
 			$(el).find('input').attr("data-id", datas[0].id);
 		},
@@ -3949,8 +3960,35 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 		}
 	});
 });
+define('entry/js/src/quoteres',['../core/core'], function(core) {
+	var Tools = core.Tools;
+
+	var quoteres = {
+		DOM_item_block: $('.block-item'),
+		DOM_item_block_item: $('.block-item .block'),
+		DOM_button: $('.quoteres .button-comm'),
+
+		init: function() {
+			var _this = this;
+			var width_block = Tools.getCurrentStyle(this.DOM_item_block[0], "width");
+			var width_item = Tools.getCurrentStyle(this.DOM_item_block_item[0], "width");
+			this.DOM_item_block.css("height", width_block);
+			this.DOM_item_block_item.css("height", width_item);
+			setTimeout(function() {
+				[].forEach.call(_this.DOM_item_block_item, function(item, index) {
+					$(item).addClass("animation" + (index + 1));
+				});
+				// _this.DOM_button.css("opacity", 1);
+				_this.DOM_button.addClass("animation5");
+				
+			}, 0);
+		}
+	};
+
+	quoteres.init();
+});
 // main.js
-require(['entry/js/src/workerapply','entry/js/src/quote'], function() {
+require(['entry/js/src/workerapply','entry/js/src/quote', 'entry/js/src/quoteres'], function() {
 	
 });
 define("entry/js/main", function(){});

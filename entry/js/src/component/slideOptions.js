@@ -1,17 +1,19 @@
 define(['../../core/core'], function(core) {
 	
 	var isfirst = true;
+	var isChoose = false;
 	var slideOption = {
-		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i></i></li></ul></div>',
+		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span><em class="slide-cancel">取消</em></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i></i></li></ul></div>',
 		// {
 		// 	title: "这是标题这是标题",
 		// 	data: ["选项一","选项二","选项三","选项四","选项五","选项六"],
+		//  choose: false,
 		// 	callback: function() {
-
 		// 	}
 		// }
 		add: function(elem, options) {
 			var _this = this;
+			isChoose = options.choose || false;
 			if (options.initOption && typeof options.initOption === 'function') {
 				options.initOption(elem, options.data);
 			}
@@ -53,7 +55,9 @@ define(['../../core/core'], function(core) {
 			var elH = $(el).height();
 			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
 			_this.hideBind(el);
-			_this.itemEvent(el, pageElem, callback);
+			if (isChoose) {
+				_this.itemEvent(el, pageElem, callback);
+			}
 		},
 		hide: function(el) {
 			// $(el).removeClass("anim");
@@ -63,7 +67,7 @@ define(['../../core/core'], function(core) {
 		},
 		hideBind: function(el) {
 			var _this = this;
-			$('.form-mask').off('click').on('click', function() {
+			$('.form-mask, .slide-cancel').off('click').on('click', function() {
 				_this.hide(el);
 			});
 		},

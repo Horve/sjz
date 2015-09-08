@@ -31,14 +31,24 @@ $mainColor: #19ad5e;
 		top: 0;
 		left: 0;
 		z-index: 10020;
+
+		em.slide-cancel {
+			font-style: normal;
+			font-size: 14px;
+			position: absolute;
+			line-height: 40px;
+			right: 20px;
+			color: $mainColor;
+		}
 	}
 	.slide-item-ul {
 		margin: 0;
 		padding: 41px 20px 10px 20px;
 		overflow: auto!important;
 		list-style: none;
-		max-height: 165px;
+		max-height: 250px;
     	min-height: 80px;
+    	-webkit-overflow-scrolling: touch;
 		li {
 			height: 40px;
 		    line-height: 40px;

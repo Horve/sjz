@@ -11,6 +11,7 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "品味装 399/㎡"
 			}
 		],
+		choose: true, // 是否是选项列表
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
 			$(el).find('input').val(datas[0].txt);
@@ -35,6 +36,7 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "经济改造 99+399/㎡"
 			}
 		],
+		choose: true, // 是否是选项列表
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
 			$(el).find('input').val(datas[0].txt);
@@ -62,6 +64,7 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "3"
 			}
 		],
+		choose: true, // 是否是选项列表
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
 			$(el).find('input').val(datas[0].txt);
@@ -89,6 +92,7 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "2"
 			}
 		],
+		choose: true, // 是否是选项列表
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
 			$(el).find('input').val(datas[0].txt);
@@ -112,6 +116,7 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "1"
 			}
 		],
+		choose: true, // 是否是选项列表
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
 			$(el).find('input').val(datas[0].txt);
@@ -139,6 +144,7 @@ define(['../core/core', './component/slideOptions'], function(zepto, slideOption
 				txt: "2"
 			}
 		],
+		choose: true, // 是否是选项列表
 		// 设置初始选项 不设置为null
 		initOption: function(el, datas) {
 			$(el).find('input').val(datas[0].txt);

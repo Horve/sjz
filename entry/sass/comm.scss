@@ -1,7 +1,16 @@
 $fontFace: "Helvetica Neue",Helvetica,"Microsoft YaHei",STHeiTi,sans-serif;
-
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
 html, body {
 	height: 100%;
+}
+i, em {
+	font-style: normal;
 }
 .page {
 	min-width: 320px;

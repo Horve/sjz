@@ -3860,11 +3860,11 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 			data: [
 				{
 					id: 1,
-					txt: "经济装 299/㎡"
+					txt: "经济装 199/㎡"
 				},
 				{
 					id: 2,
-					txt: "品味装 399/㎡"
+					txt: "品味装 299/㎡"
 				}
 			],
 			choose: true, // 是否是选项列表
@@ -3885,11 +3885,11 @@ define('entry/js/src/quote',['../core/core', './component/slideOptions'], functi
 			data: [
 				{
 					id: 1,
-					txt: "经济改造 99+299/㎡"
+					txt: "经济改造 99+199/㎡"
 				},
 				{
 					id: 2,
-					txt: "经济改造 99+399/㎡"
+					txt: "经济改造 99+299/㎡"
 				}
 			],
 			choose: true, // 是否是选项列表

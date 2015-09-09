@@ -13,6 +13,7 @@ define(function() {
 		scrollNum: function(elem) {
 			var initi = 1;
 			var num = $(elem).html();
+			if (!!!num) return;
 			num = num.replace(/[^\d]/g, "") + "";
 			var len = num.length;
 			var content = ""; 
@@ -31,7 +32,7 @@ define(function() {
 				var st = setInterval(function() {
 					$(elem).find('i').eq(len - initi).html(parseInt(Math.random() * 10));
 					tims += 1;
-					if (tims >= 15) {
+					if (tims >= 10) {
 						clearInterval(st);
 						$(elem).find('i').eq(len - initi).html(show);
 						initi += 1;
@@ -42,5 +43,6 @@ define(function() {
 
 		}
 	};
+	var Tools = Tools;
 	return Tools;
 });

@@ -3659,29 +3659,6 @@ window.$ === undefined && (window.$ = Zepto)
 ;
 define("entry/js/lib/zepto", function(){});
 
-// workerapply.js
-define('entry/js/src/workerapply',['../lib/zepto'], function(zepto) {
-	var workerApply = {
-		DOM_DROP: $('#wk-apply-type'),
-		DOM_DROPLIST: $('#wk-apply-formset .form-set-sub'),
-		DOM_DROPITEM: $('#wk-apply-formset .form-set-sub .item-sub'),
-
-		init: function() {
-			var THIS = this;
-			THIS.DOM_DROP.off("click").on("click", function() {
-				THIS.DOM_DROPLIST.toggleClass("on");
-			});
-			THIS.DOM_DROPITEM.off("click").on("click", function() {
-				var index = $(this).index();
-				var txt = $(this).text();
-				console.log(txt);
-				THIS.DOM_DROP.find('input').val(txt);
-				THIS.DOM_DROPLIST.removeClass("on");
-			});
-		}
-	};
-	workerApply.init();
-});
 define('entry/js/core/tools',[],function() {
 	var Tools = {
 		getCurrentStyle: function(elem, style) {
@@ -3697,6 +3674,7 @@ define('entry/js/core/tools',[],function() {
 		scrollNum: function(elem) {
 			var initi = 1;
 			var num = $(elem).html();
+			if (!!!num) return;
 			num = num.replace(/[^\d]/g, "") + "";
 			var len = num.length;
 			var content = ""; 
@@ -3715,7 +3693,7 @@ define('entry/js/core/tools',[],function() {
 				var st = setInterval(function() {
 					$(elem).find('i').eq(len - initi).html(parseInt(Math.random() * 10));
 					tims += 1;
-					if (tims >= 15) {
+					if (tims >= 10) {
 						clearInterval(st);
 						$(elem).find('i').eq(len - initi).html(show);
 						initi += 1;
@@ -3726,13 +3704,45 @@ define('entry/js/core/tools',[],function() {
 
 		}
 	};
+	var Tools = Tools;
 	return Tools;
 });
 define('entry/js/core/core',['../lib/zepto', './tools'], function(zepto, tools) {
 	// return $;
 	var core = {};
 	core.Tools = tools;
+	core.onrender = function(id, callback) {
+		var dom = $('.page');
+		if(dom.attr("data-render-id") === id) {
+			callback(dom);
+		}
+	}
 	return core;
+});
+// workerapply.js
+define('entry/js/src/workerapply',['../core/core'], function(core) {
+	core.onrender("workerapply", function(dom) {
+		var workerApply = {
+			DOM_DROP: $('#wk-apply-type'),
+			DOM_DROPLIST: $('#wk-apply-formset .form-set-sub'),
+			DOM_DROPITEM: $('#wk-apply-formset .form-set-sub .item-sub'),
+
+			init: function() {
+				var THIS = this;
+				THIS.DOM_DROP.off("click").on("click", function() {
+					THIS.DOM_DROPLIST.toggleClass("on");
+				});
+				THIS.DOM_DROPITEM.off("click").on("click", function() {
+					var index = $(this).index();
+					var txt = $(this).text();
+					console.log(txt);
+					THIS.DOM_DROP.find('input').val(txt);
+					THIS.DOM_DROPLIST.removeClass("on");
+				});
+			}
+		};
+		workerApply.init();
+	});
 });
 define('entry/js/src/component/slideOptions',['../../core/core'], function(core) {
 	
@@ -3843,356 +3853,359 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function(core)
 
 	return slideOption;
 });
-define('entry/js/src/quote',['../core/core', './component/slideOptions'], function(zepto, slideOption) {
-	slideOption.add($('#quote-new-house'), {
-		title: "选择新房装修类型",
-		data: [
-			{
-				id: 1,
-				txt: "经济装 299/㎡"
+define('entry/js/src/quote',['../core/core', './component/slideOptions'], function(core, slideOption) {
+	core.onrender("quote", function(dom) {
+		slideOption.add($('#quote-new-house'), {
+			title: "选择新房装修类型",
+			data: [
+				{
+					id: 1,
+					txt: "经济装 299/㎡"
+				},
+				{
+					id: 2,
+					txt: "品味装 399/㎡"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "品味装 399/㎡"
+			callback: function(data) {
+				$('#quote-new-house input').val(data.txt);
+				$('#quote-new-house input').attr("data-id", data.id);
 			}
-		],
-		choose: true, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#quote-new-house input').val(data.txt);
-			$('#quote-new-house input').attr("data-id", data.id);
-		}
-	});
+		});
 
-	// 旧房装修
-	slideOption.add($('#quote-old-house'), {
-		title: "选择旧房装修类型",
-		data: [
-			{
-				id: 1,
-				txt: "经济改造 99+299/㎡"
+		// 旧房装修
+		slideOption.add($('#quote-old-house'), {
+			title: "选择旧房装修类型",
+			data: [
+				{
+					id: 1,
+					txt: "经济改造 99+299/㎡"
+				},
+				{
+					id: 2,
+					txt: "经济改造 99+399/㎡"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "经济改造 99+399/㎡"
+			callback: function(data) {
+				$('#quote-old-house input').val(data.txt);
+				$('#quote-old-house input').attr("data-id", data.id);
 			}
-		],
-		choose: true, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#quote-old-house input').val(data.txt);
-			$('#quote-old-house input').attr("data-id", data.id);
-		}
-	});
+		});
 
-	slideOption.add($('#h-shi'), {
-		title: "房型-室",
-		data: [
-			{
-				id: 1,
-				txt: "1"
+		slideOption.add($('#h-shi'), {
+			title: "房型-室",
+			data: [
+				{
+					id: 1,
+					txt: "1"
+				},
+				{
+					id: 2,
+					txt: "2"
+				},
+				{
+					id: 3,
+					txt: "3"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "2"
-			},
-			{
-				id: 3,
-				txt: "3"
+			callback: function(data) {
+				$('#h-shi input').val(data.txt);
+				$('#h-shi input').attr("data-id", data.id);
 			}
-		],
-		choose: true, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#h-shi input').val(data.txt);
-			$('#h-shi input').attr("data-id", data.id);
-		}
-	});
+		});
 
-	slideOption.add($('#h-ting'), {
-		title: "房型-厅",
-		data: [
-			{
-				id: 1,
-				txt: "0"
+		slideOption.add($('#h-ting'), {
+			title: "房型-厅",
+			data: [
+				{
+					id: 1,
+					txt: "0"
+				},
+				{
+					id: 2,
+					txt: "1"
+				},
+				{
+					id: 3,
+					txt: "2"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "1"
-			},
-			{
-				id: 3,
-				txt: "2"
+			callback: function(data) {
+				$('#h-ting input').val(data.txt);
+				$('#h-ting input').attr("data-id", data.id);
 			}
-		],
-		choose: true, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#h-ting input').val(data.txt);
-			$('#h-ting input').attr("data-id", data.id);
-		}
-	});
+		});
 
-	slideOption.add($('#h-chu'), {
-		title: "房型-厨",
-		data: [
-			{
-				id: 1,
-				txt: "0"
+		slideOption.add($('#h-chu'), {
+			title: "房型-厨",
+			data: [
+				{
+					id: 1,
+					txt: "0"
+				},
+				{
+					id: 2,
+					txt: "1"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "1"
+			callback: function(data) {
+				$('#h-chu input').val(data.txt);
+				$('#h-chu input').attr("data-id", data.id);
 			}
-		],
-		choose: true, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#h-chu input').val(data.txt);
-			$('#h-chu input').attr("data-id", data.id);
-		}
-	});
+		});
 
-	slideOption.add($('#h-wei'), {
-		title: "房型-卫",
-		data: [
-			{
-				id: 1,
-				txt: "0"
+		slideOption.add($('#h-wei'), {
+			title: "房型-卫",
+			data: [
+				{
+					id: 1,
+					txt: "0"
+				},
+				{
+					id: 2,
+					txt: "1"
+				},
+				{
+					id: 3,
+					txt: "2"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "1"
-			},
-			{
-				id: 3,
-				txt: "2"
+			callback: function(data) {
+				$('#h-wei input').val(data.txt);
+				$('#h-wei input').attr("data-id", data.id);
 			}
-		],
-		choose: true, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#h-wei input').val(data.txt);
-			$('#h-wei input').attr("data-id", data.id);
-		}
+		});
 	});
+	
 });
 define('entry/js/src/quoteres',['../core/core', './component/slideOptions'], function(core, slideOption) {
-	var Tools = core.Tools;
+	core.onrender("quoteres", function(dom) {
+		var Tools = core.Tools;
 
-	slideOption.add($('.block.shuidian'), {
-		title: "水电综合项目",
-		data: [
-			{
-				id: 1,
-				txt: "石膏板平顶"
+		slideOption.add($('.block.shuidian'), {
+			title: "水电综合项目",
+			data: [
+				{
+					id: 1,
+					txt: "石膏板平顶"
+				},
+				{
+					id: 2,
+					txt: "防水处理"
+				},
+				{
+					id: 3,
+					txt: "吊顶"
+				},
+				{
+					id: 4,
+					txt: "PPR水管明装"
+				},
+				{
+					id: 1,
+					txt: "PPR水管暗装"
+				},
+				{
+					id: 5,
+					txt: "PVC管敷设暗线"
+				},
+				{
+					id: 6,
+					txt: "安装PVC分线盒"
+				},
+				{
+					id: 2,
+					txt: "安装PVC暗盒"
+				},
+				{
+					id: 7,
+					txt: "开补槽"
+				},
+				{
+					id: 8,
+					txt: "插座/开关安装"
+				},
+				{
+					id: 9,
+					txt: "配电线安装等"
+				}
+			],
+			choose: false, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "防水处理"
-			},
-			{
-				id: 3,
-				txt: "吊顶"
-			},
-			{
-				id: 4,
-				txt: "PPR水管明装"
-			},
-			{
-				id: 1,
-				txt: "PPR水管暗装"
-			},
-			{
-				id: 5,
-				txt: "PVC管敷设暗线"
-			},
-			{
-				id: 6,
-				txt: "安装PVC分线盒"
-			},
-			{
-				id: 2,
-				txt: "安装PVC暗盒"
-			},
-			{
-				id: 7,
-				txt: "开补槽"
-			},
-			{
-				id: 8,
-				txt: "插座/开关安装"
-			},
-			{
-				id: 9,
-				txt: "配电线安装等"
+			callback: function(data) {
+				$('#quote-new-house input').val(data.txt);
+				$('#quote-new-house input').attr("data-id", data.id);
 			}
-		],
-		choose: false, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#quote-new-house input').val(data.txt);
-			$('#quote-new-house input').attr("data-id", data.id);
-		}
-	});
-	slideOption.add($('.block.wagong'), {
-		title: "瓦工项目",
-		data: [
-			{
-				id: 1,
-				txt: "地面水泥找平"
+		});
+		slideOption.add($('.block.wagong'), {
+			title: "瓦工项目",
+			data: [
+				{
+					id: 1,
+					txt: "地面水泥找平"
+				},
+				{
+					id: 2,
+					txt: "墙地面基层处理抹灰找平拉毛"
+				},
+				{
+					id: 3,
+					txt: "包立管"
+				},
+				{
+					id: 4,
+					txt: "贴地砖"
+				},
+				{
+					id: 5,
+					txt: "踢脚线"
+				},
+				{
+					id: 6,
+					txt: "贴墙砖"
+				},
+				{
+					id: 7,
+					txt: "墙地面勾缝"
+				}
+			],
+			choose: false, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "墙地面基层处理抹灰找平拉毛"
-			},
-			{
-				id: 3,
-				txt: "包立管"
-			},
-			{
-				id: 4,
-				txt: "贴地砖"
-			},
-			{
-				id: 5,
-				txt: "踢脚线"
-			},
-			{
-				id: 6,
-				txt: "贴墙砖"
-			},
-			{
-				id: 7,
-				txt: "墙地面勾缝"
+			callback: function(data) {
+				$('#quote-new-house input').val(data.txt);
+				$('#quote-new-house input').attr("data-id", data.id);
 			}
-		],
-		choose: false, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#quote-new-house input').val(data.txt);
-			$('#quote-new-house input').attr("data-id", data.id);
-		}
-	});
-	slideOption.add($('.block.yougong'), {
-		title: "油工项目",
-		data: [
-			{
-				id: 1,
-				txt: "墙顶面铲墙皮"
+		});
+		slideOption.add($('.block.yougong'), {
+			title: "油工项目",
+			data: [
+				{
+					id: 1,
+					txt: "墙顶面铲墙皮"
+				},
+				{
+					id: 2,
+					txt: "墙顶面批刮腻子打磨"
+				},
+				{
+					id: 3,
+					txt: "墙顶面石膏找平"
+				},
+				{
+					id: 4,
+					txt: "刷漆人工费"
+				},
+				{
+					id: 5,
+					txt: "墙顶面基层处理封墙锢"
+				}
+			],
+			choose: false, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "墙顶面批刮腻子打磨"
-			},
-			{
-				id: 3,
-				txt: "墙顶面石膏找平"
-			},
-			{
-				id: 4,
-				txt: "刷漆人工费"
-			},
-			{
-				id: 5,
-				txt: "墙顶面基层处理封墙锢"
+			callback: function(data) {
+				$('#quote-new-house input').val(data.txt);
+				$('#quote-new-house input').attr("data-id", data.id);
 			}
-		],
-		choose: false, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#quote-new-house input').val(data.txt);
-			$('#quote-new-house input').attr("data-id", data.id);
-		}
-	});
-	slideOption.add($('.block.other'), {
-		title: "其他项目",
-		data: [
-			{
-				id: 1,
-				txt: "垃圾清运费"
+		});
+		slideOption.add($('.block.other'), {
+			title: "其他项目",
+			data: [
+				{
+					id: 1,
+					txt: "垃圾清运费"
+				},
+				{
+					id: 2,
+					txt: "材料搬运费"
+				},
+				{
+					id: 3,
+					txt: "小五金安装"
+				}
+			],
+			choose: false, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
 			},
-			{
-				id: 2,
-				txt: "材料搬运费"
-			},
-			{
-				id: 3,
-				txt: "小五金安装"
+			callback: function(data) {
+				$('#quote-new-house input').val(data.txt);
+				$('#quote-new-house input').attr("data-id", data.id);
 			}
-		],
-		choose: false, // 是否是选项列表
-		// 设置初始选项 不设置为null
-		initOption: function(el, datas) {
-			$(el).find('input').val(datas[0].txt);
-			$(el).find('input').attr("data-id", datas[0].id);
-		},
-		callback: function(data) {
-			$('#quote-new-house input').val(data.txt);
-			$('#quote-new-house input').attr("data-id", data.id);
-		}
+		});
+
+		var quoteres = {
+			DOM_item_block: $('.block-item'),
+			DOM_item_block_item: $('.block-item .block'),
+			DOM_button: $('.quoteres .button-comm'),
+
+			init: function() {
+				var _this = this;
+				Tools.scrollNum($('.quote-price .number'));
+				var width_block = Tools.getCurrentStyle(this.DOM_item_block[0], "width");
+				var width_item = Tools.getCurrentStyle(this.DOM_item_block_item[0], "width");
+				this.DOM_item_block.css("height", width_block);
+				this.DOM_item_block_item.css("height", width_item);
+				setTimeout(function() {
+					[].forEach.call(_this.DOM_item_block_item, function(item, index) {
+						$(item).addClass("animation" + (index + 1));
+					});
+					_this.DOM_button.addClass("animation5");
+				}, 0);
+			}
+		};
+		quoteres.init();	
 	});
-
-	var quoteres = {
-		DOM_item_block: $('.block-item'),
-		DOM_item_block_item: $('.block-item .block'),
-		DOM_button: $('.quoteres .button-comm'),
-
-		init: function() {
-			var _this = this;
-			Tools.scrollNum($('.quote-price .number'));
-			var width_block = Tools.getCurrentStyle(this.DOM_item_block[0], "width");
-			var width_item = Tools.getCurrentStyle(this.DOM_item_block_item[0], "width");
-			this.DOM_item_block.css("height", width_block);
-			this.DOM_item_block_item.css("height", width_item);
-			setTimeout(function() {
-				[].forEach.call(_this.DOM_item_block_item, function(item, index) {
-					$(item).addClass("animation" + (index + 1));
-				});
-				_this.DOM_button.addClass("animation5");
-			}, 0);
-		}
-	};
-
-
-
-	quoteres.init();
+	
 });
 // main.js
 require(['entry/js/src/workerapply','entry/js/src/quote', 'entry/js/src/quoteres'], function() {

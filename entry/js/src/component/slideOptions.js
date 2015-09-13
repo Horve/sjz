@@ -1,5 +1,4 @@
 define(['../../core/core'], function(core) {
-	
 	var isfirst = true;
 	var isChoose = false;
 	var slideOption = {
@@ -12,12 +11,14 @@ define(['../../core/core'], function(core) {
 		// 	}
 		// }
 		add: function(elem, options) {
+			console.log("Enter slideOption Component!");
 			var _this = this;
 			isChoose = options.choose || false;
 			if (options.initOption && typeof options.initOption === 'function') {
 				options.initOption(elem, options.data);
 			}
 			$(elem).off("click").on("click", function() {
+				console.log(111);
 				_this.beforeShow(elem, options);
 			});
 		},

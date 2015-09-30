@@ -1,4 +1,6 @@
 $fontFace: "Helvetica Neue",Helvetica,"Microsoft YaHei",STHeiTi,sans-serif;
+$navColor: #424252;
+$mainColor: #3ad064;
 * {
     /*-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -20,7 +22,12 @@ i, em {
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
+	position: relative;
 	/*padding-bottom: 20px;*/
+	& .single-page {
+		min-height: 100%;
+		position: relative;
+	}
 }
 body {
 	margin: 0;
@@ -40,4 +47,36 @@ input {
 }
 .blank15, .block15 {
 	height: 15px;
+}
+
+.navbar {
+	height: 45px;
+	background: $navColor;
+	position: absolute;
+	width: 100%; 
+	bottom: 0;
+	z-index: 1000;
+	display: -webkit-box;
+	box-sizing: border-box;
+	-webkit-box-pack: justify;
+	.item {
+		border-right: 1px solid #23232c;
+		border-left: 1px solid #65656d;
+		height: 100%;
+		box-sizing: border-box;
+		font-size: 14px;
+		width: 25%;
+		color: $mainColor;
+		text-align: center;
+		line-height: 45px;
+		&.on {
+			color: #fff;
+		}
+	}
+	.item:last-of-type {
+		border-right: none;
+	}
+	.item:first-of-type {
+		border-left: none;
+	}
 }

@@ -3,7 +3,7 @@ define(['../core/core'], function(core) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var Tools = core.Tools;
 		console.log(Swiper);
-		var mySwiper = new Swiper('.swiper-container',{
+		var mySwiper1 = new Swiper('.swiper-container-h',{
 			// direction: 'vertical'
 			onInit: function(swiper){
 		    	console.log("init");
@@ -17,6 +17,9 @@ define(['../core/core'], function(core) {
 		    		$('.swiper-slide-two .pic').addClass("animate_2");
 				}
 			}
+		});
+		var mySwiper2 = new Swiper('.swiper-container-v',{
+			direction: 'vertical'
 		});
 	});
 });

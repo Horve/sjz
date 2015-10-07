@@ -4290,7 +4290,10 @@ define('entry/js/src/userindex.js',['../core/core'], function(core) {
 	core.onrender("userindex", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var Tools = core.Tools;
-		console.log(Swiper);
+		var topNav = $('.topnav', dom);
+		var topNavs = $('.topnav .nav-item', dom);
+		var sliders = $('.swiper-top', dom);
+		console.log(topNav);
 		var mySwiper1 = new Swiper('.swiper-container-h',{
 			// direction: 'vertical'
 			onInit: function(swiper){
@@ -4306,13 +4309,54 @@ define('entry/js/src/userindex.js',['../core/core'], function(core) {
 				}
 			}
 		});
-		var mySwiper2 = new Swiper('.swiper-container-v',{
+	});
+});
+define('entry/js/src/userproduct.js',['../core/core'], function(core) {
+	core.onrender("userproduct", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var Tools = core.Tools;
+		var topNav = $('.topnav', dom);
+		var topNavs = $('.topnav .nav-item', dom);
+		var sliders = $('.swiper-top', dom);
+		console.log(topNav);
+		var mySwiper1 = new Swiper('.swiper-container-h',{
+			// direction: 'vertical'
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				// topNav.addClass("show");
+				$(topNavs[index]).addClass("on").siblings().removeClass("on");
+
+				// 延迟加载
+				var imgs = $('img', $(sliders[index]));
+				[].forEach.call(imgs, function(img) {
+					var src = $(img).attr("data-src");
+					if (src) {
+						$(img).attr("src", src);
+						$(img).removeAttr("data-src");
+					}
+				});
+			}
+		});
+		var mySwiper2 = new Swiper('.swiper-container-v1',{
+			pagination: '.swiper-pagination-h1',
+			direction: 'vertical'
+		});
+		var mySwiper3 = new Swiper('.swiper-container-v2',{
+			pagination: '.swiper-pagination-h2',
+			direction: 'vertical'
+		});
+		var mySwiper4 = new Swiper('.swiper-container-v3',{
+			pagination: '.swiper-pagination-h3',
+			direction: 'vertical'
+		});
+		var mySwiper5 = new Swiper('.swiper-container-v4',{
+			pagination: '.swiper-pagination-h4',
 			direction: 'vertical'
 		});
 	});
 });
 // main.js
-require(['entry/js/src/workerapply','entry/js/src/quote', 'entry/js/src/quoteres', 'entry/js/src/detail199.js', 'entry/js/src/userindex.js'], function() {
+require(['entry/js/src/workerapply','entry/js/src/quote', 'entry/js/src/quoteres', 'entry/js/src/detail199.js', 'entry/js/src/userindex.js', 'entry/js/src/userproduct.js'], function() {
 });
 define("entry/js/main", function(){});
 

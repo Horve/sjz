@@ -117,6 +117,9 @@ $fontColor: #424252;
 			display: -webkit-box;
 			-webkit-box-flex: justify;
 			box-sizing: border-box;
+			-webkit-transition: all .3s ease-in-out;
+		    transform: translate3d(0,0,0);
+	        -webkit-transform: translate3d(0,0,0);
 			.nav-item {
 				width: 25%;
 				border-right: 1px solid #2fb755;
@@ -127,12 +130,32 @@ $fontColor: #424252;
 				font-size: 0.14rem;
 				font-weight: bold;
 				color: $fontColor;
+				position: relative;
 				&:last-of-type {
 					border-right: none;
 				}
 				&.on {
 					color: #fff;
 				}
+				&:after {
+					display: block;
+					content: "";
+					width: 0.12rem;
+					height: 0.12rem;
+					background: $mainColor;
+					position: absolute;
+					bottom: -0.06rem;
+					left: 50%;
+					margin-left: -0.06rem;
+					-webkit-transform: rotate(45deg);
+					display: none;
+				}
+				&.on:after {
+					display: block;
+				}
+			}
+			&.show {
+				-webkit-transform: translateY(50px);
 			}
 		}
 		.swiper-container {
@@ -399,7 +422,7 @@ $fontColor: #424252;
 	    					background-position: -1rem -1rem;
 	    				}
 	    				&.p5 {
-	    					width: 2rem;
+	    					width: 2.32rem;
 	    					background-image: url(img/user/uindex_spr2.jpg);
 	    					background-position: 0 0;
 	    					background-size: 100%;
@@ -525,11 +548,12 @@ $fontColor: #424252;
     				-webkit-box-align: center;
     				overflow: hidden;
     				img {
-    					width: 120%;
-    					height: 120%;
+    					-webkit-transition: all .2s ease-in-out;
+    					width: 100%;
+    					height: 100%;
     					position: absolute;
-    					top: -10%;
-    					left: -10%;
+    					/*top: -10%;
+    					left: -10%;*/
     				}
     				span.t {
     					position: absolute;

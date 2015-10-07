@@ -73,8 +73,17 @@ input {
 		color: $mainColor;
 		text-align: center;
 		line-height: 45px;
+		position: relative;
 		&.on {
 			color: #fff;
+		}
+		a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 	}
 	.item:last-of-type {

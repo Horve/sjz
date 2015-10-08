@@ -4311,6 +4311,121 @@ define('entry/js/src/userindex.js',['../core/core'], function(core) {
 		});
 	});
 });
+define('entry/js/src/usernewyingzhuang.js',['../core/core'], function(core) {
+	core.onrender("user-new-yingzhuang", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var sliders = $('.swiper-slide', dom);
+		var mySwiper2 = new Swiper('.swiper-container-v1',{
+			pagination: '.swiper-pagination-h1',
+			direction: 'vertical',
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				// 延迟加载
+				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+				[].forEach.call(imgs, function(img) {
+					var src = $(img).attr("data-src");
+					if (src) {
+						$(img).attr("src", src);
+						$(img).removeAttr("data-src");
+					}
+				});
+			}
+		});
+	});
+});
+define('entry/js/src/usernewruanzhuang.js',['../core/core'], function(core) {
+	core.onrender("user-new-ruanzhuang", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var lazyLoad = function(imgs) {
+			[].forEach.call(imgs, function(img) {
+				var src = $(img).attr("data-src");
+				if (src) {
+					$(img).attr("src", src);
+					$(img).removeAttr("data-src");
+				}
+			});
+		};
+		var sliders = $('.swiper-slide', dom);
+		var mySwiper2 = new Swiper('.swiper-container-v2',{
+			pagination: '.swiper-pagination-h2',
+			direction: 'vertical',
+			onInit: function(swiper){
+		    	var index = swiper.activeIndex;
+		    	var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+		    	lazyLoad(imgs);
+		    },
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				console.log(index);
+				// 延迟加载
+				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+				lazyLoad(imgs);
+			}
+		});
+	});
+});
+define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
+	core.onrender("user-new-jiaju", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var lazyLoad = function(imgs) {
+			[].forEach.call(imgs, function(img) {
+				var src = $(img).attr("data-src");
+				if (src) {
+					$(img).attr("src", src);
+					$(img).removeAttr("data-src");
+				}
+			});
+		};
+		var sliders = $('.swiper-slide', dom);
+		var mySwiper2 = new Swiper('.swiper-container-v3',{
+			pagination: '.swiper-pagination-h3',
+			direction: 'vertical',
+			onInit: function(swiper){
+		    	var index = swiper.activeIndex;
+		    	var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+		    	lazyLoad(imgs);
+		    },
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				console.log(index);
+				// 延迟加载
+				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+				lazyLoad(imgs);
+			}
+		});
+	});
+});
+define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
+	core.onrender("user-new-jiadian", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var lazyLoad = function(imgs) {
+			[].forEach.call(imgs, function(img) {
+				var src = $(img).attr("data-src");
+				if (src) {
+					$(img).attr("src", src);
+					$(img).removeAttr("data-src");
+				}
+			});
+		};
+		var sliders = $('.swiper-slide', dom);
+		var mySwiper2 = new Swiper('.swiper-container-v4',{
+			pagination: '.swiper-pagination-h4',
+			direction: 'vertical',
+			onInit: function(swiper){
+		    	var index = swiper.activeIndex;
+		    	var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+		    	lazyLoad(imgs);
+		    },
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				console.log(index);
+				// 延迟加载
+				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
+				lazyLoad(imgs);
+			}
+		});
+	});
+});
 define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 	core.onrender("userproduct", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
@@ -4356,7 +4471,17 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 	});
 });
 // main.js
-require(['entry/js/src/workerapply','entry/js/src/quote', 'entry/js/src/quoteres', 'entry/js/src/detail199.js', 'entry/js/src/userindex.js', 'entry/js/src/userproduct.js'], function() {
+require([
+	'entry/js/src/workerapply',
+	'entry/js/src/quote', 
+	'entry/js/src/quoteres', 
+	'entry/js/src/detail199.js', 
+	'entry/js/src/userindex.js', 
+	'entry/js/src/usernewyingzhuang.js', 
+	'entry/js/src/usernewruanzhuang.js', 
+	'entry/js/src/usernewjiaju.js', 
+	'entry/js/src/usernewjiadian.js', 
+	'entry/js/src/userproduct.js'], function() {
 });
 define("entry/js/main", function(){});
 

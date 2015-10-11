@@ -40,7 +40,34 @@ define(function() {
 					}
 				}, 50);
 			}
-
+		},
+		lazyLoad: function(imgs) {
+			function show(imgs, src) {
+				$(imgs).css("opacity", 0);
+				setTimeout(function() {
+					$(imgs).attr("src", src);
+					$(imgs).removeAttr("data-src");
+					setTimeout(function(){
+						$(imgs).css("opacity", 1);
+					}, 0);
+				},200);
+			}
+			if (typeof imgs === 'object' && Object.prototype.toString.call(imgs) === '[object Array]') {
+				[].forEach.call(imgs, function(img) {
+					(function() {
+						var src = $(img).attr("data-src");
+						if (src) {
+							show(img, src);
+						}
+					})(img);
+					
+				});
+			} else {
+				var src = $(imgs).attr("data-src");
+				if (src) {
+					show(imgs, src);
+				}
+			}
 		}
 	};
 	var Tools = Tools;

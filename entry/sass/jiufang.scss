@@ -1,0 +1,234 @@
+$mainColor: #3acd64;
+$fontColor: #424252;
+
+.user-jf-html {
+	
+	font-size: 100px;
+	.top-nav {
+		z-index:1000;
+		width: 100%;
+		height: 0.45rem;
+		font-size: 0.14rem;
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+		background: $mainColor;
+		position: absolute;
+		top: 0;
+		left: 0;
+		a {
+			color: $fontColor;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 0.16rem;
+			width: 50%;
+			display: block;
+			height: 100%;
+			text-align: center;
+			line-height: 0.45rem;
+		    border-right: 1px solid #2fb755;
+   			border-left: 1px solid #6bdc8b;
+   			letter-spacing: 1px;
+   			box-sizing: border-box;
+   			position: relative;
+   			&:last-of-type {
+   				border-right: none;
+   			}
+   			&:first-of-type {
+   				border-left: none;
+   			}
+   			&.on {
+   				color: #fff;
+   				&:after {
+   					display: block;
+   				}
+   			}
+   			&:after{
+   				width: 8px;
+   				height: 8px;
+   				display: block;
+   				content: "";
+   				background: $mainColor;
+   				-webkit-transform: rotate(45deg);
+   				position: absolute;
+   				left: 50%;
+   				margin-left: -4px;
+   				bottom: -4px;
+   				display: none;
+   			}
+		}
+	}
+	.swiper-container {
+		font-size: 0.1rem;
+		margin-top: 0.45rem;
+		width: 100%;
+		height: 2.38rem;
+		.swiper-slide img {
+			-webkit-transition: opacity 0.2s ease-in-out;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.price-detail {
+		width: 88%;
+		font-size: 0.14rem;
+		margin: 0.15rem auto 0.25rem;
+		.tle {
+			font-size: 0.12rem;
+			color: $fontColor;
+		}
+	}
+	.price-list {
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+		margin-top: 0.12rem;
+	}
+	.price-choose {
+		width: calc((100% - 40px) / 3);
+		padding: 0 10px;
+		border-right: 1px solid $mainColor;
+
+		&:first-of-type {
+			padding-left: 0;
+		}
+		&:last-of-type {
+			padding-right: 0;
+			border-right: 0;
+		}
+
+		.price-sec {
+			margin-bottom: 0.15rem;
+			&:last-of-type {
+				margin-bottom: 0;
+			}
+			.pr {
+				display: block;
+				text-align: center;
+				font-size: 0.12rem;
+				em {
+					font-size: 0.16rem;
+				}
+			}
+			.btn {
+				height: 0.27rem;
+				background: $mainColor;
+				margin-top: 0.06rem;
+				border-radius: 3px;
+				position: relative;
+				font-size: 0.12rem;
+				&:before {
+					display: block;
+					content: "";
+					position: absolute;
+					width: 0.12rem;
+					height: 0.06rem;
+					border-left: 1px solid #fff;
+					border-bottom: 1px solid #fff;
+					-webkit-transform: rotate(-45deg);
+					top: 0.08rem;
+					left: 0.08rem;
+					display: none;
+				}
+				&.on {
+					span {
+						background: $mainColor;
+					}
+					&:before {
+						display: block;
+					}
+				}
+				span {
+					display: block;
+					width: 65%;
+					height: 0.23rem;
+					background: #fff;
+					position: absolute;
+					top: 0.02rem;
+					right: 0.02rem;
+					line-height: 0.23rem;
+					text-align: center;
+				}
+			}
+		}
+	}
+	.pay-order {
+		width: 75%;
+		margin: 0 auto;
+		padding-bottom: 0.6rem;
+	}
+}
+.user-jf-all {
+	font-size: 100px;
+	.top-nav {
+		z-index:1000;
+		width: 100%;
+		height: 0.45rem;
+		font-size: 0.14rem;
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+		background: $mainColor;
+		position: absolute;
+		top: 0;
+		left: 0;
+		a {
+			color: $fontColor;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 0.16rem;
+			width: 50%;
+			display: block;
+			height: 100%;
+			text-align: center;
+			line-height: 0.45rem;
+		    border-right: 1px solid #2fb755;
+   			border-left: 1px solid #6bdc8b;
+   			letter-spacing: 1px;
+   			box-sizing: border-box;
+   			position: relative;
+   			&:last-of-type {
+   				border-right: none;
+   			}
+   			&:first-of-type {
+   				border-left: none;
+   			}
+   			&.on {
+   				color: #fff;
+   				&:after {
+   					display: block;
+   				}
+   			}
+   			&:after{
+   				width: 8px;
+   				height: 8px;
+   				display: block;
+   				content: "";
+   				background: $mainColor;
+   				-webkit-transform: rotate(45deg);
+   				position: absolute;
+   				left: 50%;
+   				margin-left: -4px;
+   				bottom: -4px;
+   				display: none;
+   			}
+		}
+	}
+	.page {
+		background-image: url(img/user/jf_all_bg.jpg);
+		background-size: cover;
+		background-repeat: no-repeat;
+		.qidai {
+			width: 2.28rem;
+			height: 1.2rem;
+			background-image: url(img/user/jf_all_qidai.png);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			margin: 1.5rem auto;
+		}
+	}
+}
+@media screen and (min-width: 375px) {
+	.user-jf-html {
+		.pay-order {
+			padding-top: 0.20rem;
+		}
+	}
+}

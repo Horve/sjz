@@ -9,5 +9,8 @@ require([
 	'entry/js/src/usernewruanzhuang.js', 
 	'entry/js/src/usernewjiaju.js', 
 	'entry/js/src/usernewjiadian.js', 
+	'entry/js/src/kfuserindex.js', 
+	'entry/js/src/kfstylenav.js', 
+	'entry/js/src/jfpart.js', 
 	'entry/js/src/userproduct.js'], function() {
 });

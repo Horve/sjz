@@ -1,0 +1,123 @@
+$navColor: #424252;
+$mainColor: #3acd64;
+$fontColor: #424252;
+
+.user-kfindex-html {
+	font-size: 100px;
+	.kf-user-index {
+		.page {
+			.page-one {
+				background-color: $mainColor;
+				.stop {
+					height: 63%;
+					background-image: url(img/user/uindex_bg2.jpg);
+					background-color: $mainColor;
+					background-size: 100%;
+					display: -webkit-box;
+					-webkit-box-pack: center;
+					-webkit-box-align: center;
+					.txt {
+						width: 2.28rem;
+						height: 1.2rem;
+						background-image: url(img/user/uindex_t3.png);
+						background-size: 100%;
+					}
+				}
+				.sbottom {
+					height: 37%;
+					display: -webkit-box;
+					-webkit-box-pack: end;
+					-webkit-box-align: center;
+					.pic {
+						width: 2.97rem;
+						height: 0.81rem;
+						background-image: url(img/user/uindex_t4.png);
+						background-size: 100%;
+						position: relative;
+						span {
+							position: absolute;
+							line-height: 0.25rem;
+							font-size: 0.16rem;
+							font-weight: bold;
+							color: $fontColor;
+							left: 0.22rem;
+							top: -0.2rem;
+						}
+					}
+				}
+			}
+			.page-two {
+				.style {
+					width: 100%;
+					height: calc((100% - 0.18rem) / 4);
+					background-size: cover;
+					margin-bottom: 0.06rem;
+					position: relative;
+					display: -webkit-box;
+					text-align: center;
+					-webkit-box-align: center;
+					-webkit-box-pack: center;
+					position: relative;
+					a {
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						top: 0;
+						left: 0;
+						z-index: 30;
+					}
+					span {
+						display: block;
+						position: relative;
+						z-index: 20;
+						color: #fff;
+						&:first-of-type {
+							font-size: 0.16rem;
+						}
+						&:last-of-type {
+							font-size: 0.12rem;
+						}
+					}
+
+					&:after {
+						display: block;
+						content: "";
+						position: absolute;
+						top: 0;
+						left: 0;
+						z-index: 10;
+						width: 100%;
+						height: 100%;
+					}
+					&:last-of-type {
+						margin-bottom: 0;
+					}
+					&.art {
+						background-image: url(img/user/kf_style_01.jpg);
+						&:after {
+							background-color: rgba(255,128,64,0.5);
+						}
+					}
+					&.mag {
+						background-image: url(img/user/kf_style_02.jpg);
+						&:after {
+							background-color: rgba(0,0,0,0.5);
+						}
+					}
+					&.nav {
+						background-image: url(img/user/kf_style_03.jpg);
+						&:after {
+							background-color: rgba(63,154,196,0.5);
+						}
+					}
+					&.cau {
+						background-image: url(img/user/kf_style_04.jpg);
+						&:after {
+							background-color: rgba(160,139,128,0.5);
+						}
+					}
+				}
+			}
+		}
+	}
+}

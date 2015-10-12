@@ -32,20 +32,20 @@ define(['../core/core'], function(core) {
 			var price = 0;
 			switch(index) {
 				case 0: 
-					txt = "一室一厅一厨一卫";
+					txt = "一室一厅";
 					price = 3600;
 					break;
 				case 1: 
-					txt = "两室一厅一厨一卫";
-					price = 4800;
+					txt = "二室一厅";
+					price = 6200;
 					break;
 				case 2: 
-					txt = "三室一厅一厨一卫";
-					price = 6500;
+					txt = "三室一厅";
+					price = 8500;
 					break;
 				case 3: 
-					txt = "单间";
-					price = 2999;
+					txt = "一个卧室";
+					price = 1999;
 					break;
 			}
 			itemsTxt.html(txt);

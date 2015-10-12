@@ -1,6 +1,9 @@
 define(['../core/core'], function(core) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		// alert(navigator.userAgent + isQQUC);
+		// alert();
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v1',{
 			pagination: '.swiper-pagination-h1',

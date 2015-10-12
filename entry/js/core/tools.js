@@ -68,6 +68,11 @@ define(function() {
 					show(imgs, src);
 				}
 			}
+		},
+		// x 减去的额外高度 y 均分的份数
+		calcSepHeight: function(x, y) {
+			var winHei = $(window).height();
+			return (winHei - x) / y;
 		}
 	};
 	var Tools = Tools;

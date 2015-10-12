@@ -3729,6 +3729,11 @@ define('entry/js/core/tools',[],function() {
 					show(imgs, src);
 				}
 			}
+		},
+		// x 减去的额外高度 y 均分的份数
+		calcSepHeight: function(x, y) {
+			var winHei = $(window).height();
+			return (winHei - x) / y;
 		}
 	};
 	var Tools = Tools;
@@ -4341,6 +4346,9 @@ define('entry/js/src/userindex.js',['../core/core'], function(core) {
 define('entry/js/src/usernewyingzhuang.js',['../core/core'], function(core) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		// alert(navigator.userAgent + isQQUC);
+		// alert();
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v1',{
 			pagination: '.swiper-pagination-h1',
@@ -4496,20 +4504,20 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
 			var price = 0;
 			switch(index) {
 				case 0: 
-					txt = "一室一厅一厨一卫";
+					txt = "一室一厅";
 					price = 3600;
 					break;
 				case 1: 
-					txt = "两室一厅一厨一卫";
-					price = 4800;
+					txt = "二室一厅";
+					price = 6200;
 					break;
 				case 2: 
-					txt = "三室一厅一厨一卫";
-					price = 6500;
+					txt = "三室一厅";
+					price = 8500;
 					break;
 				case 3: 
-					txt = "单间";
-					price = 2999;
+					txt = "一个卧室";
+					price = 1999;
 					break;
 			}
 			itemsTxt.html(txt);

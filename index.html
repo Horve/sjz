@@ -16,9 +16,18 @@
     <!-- 由main.sass 生成    -->
 	<link rel="stylesheet" href="dist/main.min.css" />
 	<link rel="stylesheet" href="dist/normalize.css" />
+	<script>
+		var u = window.navigator.userAgent.toLowerCase();
+		var ismobile = /(iphone)|(android)/.test(u);
+		if(ismobile) {
+			window.location.href = "http://www.s-jz.com/html/user";
+		} else {
+			window.location.href = "http://www.s-jz.com/pc";
+		}
+	</script>
 </head>
 <body class="user-yuyue">
-	<div class="page">
+	<div class="page" data-render-id="index">
 		<div class="logo"></div>
 		<div class="form-set form-set-yy">
 			<p class="item">
@@ -31,7 +40,7 @@
 		<a class="button-comm button-comm-yy">提交预约</a>
 		<a class="button-comm button-comm-bj">试试智能秒出报价</a>
 	</div>
-
+	<script type="text/javascript" src="dist/build.js"></script>
 	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->
 </body>
 </html>

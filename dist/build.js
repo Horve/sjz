@@ -3769,6 +3769,17 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/swiper.js'], func
 	}
 	return core;
 });
+define('entry/js/src/index',['../core/core'], function(core) {
+	core.onrender("index", function(dom) {
+		var u = window.navigator.userAgent.toLowerCase();
+		var ismobile = /(iphone)|(android)/.test(u);
+		if(ismobile) {
+			window.location.href = "http://www.s-jz.com/html/user";
+		} else {
+			window.location.href = "http://www.s-jz.com/pc";
+		}
+	});
+});
 define('entry/js/src/component/slideOptions',['../../core/core'], function(core) {
 	var isfirst = true;
 	var isChoose = false;
@@ -4605,6 +4616,7 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 });
 // main.js
 require([
+	'entry/js/src/index',
 	'entry/js/src/workerapply',
 	'entry/js/src/quote', 
 	'entry/js/src/quoteres', 

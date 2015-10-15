@@ -10,6 +10,19 @@ define(['../core/core'], function(core) {
 				}
 			});
 		};
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+			$('.swiper-slide-jiaju-three .item-show', dom)
+			.css(
+				"marginLeft", 
+				$('.swiper-slide-jiaju-three .content').width() - 114 + "px"
+			);
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v3',{
 			pagination: '.swiper-pagination-h3',

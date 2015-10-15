@@ -10,6 +10,12 @@ define(['../core/core'], function(core) {
 				}
 			});
 		};
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var Tools = core.Tools;
+		if (isQQUC) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v2',{
 			pagination: '.swiper-pagination-h2',

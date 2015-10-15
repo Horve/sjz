@@ -3731,9 +3731,23 @@ define('entry/js/core/tools',[],function() {
 			}
 		},
 		// x 减去的额外高度 y 均分的份数
-		calcSepHeight: function(x, y) {
-			var winHei = $(window).height();
-			return (winHei - x) / y;
+		calcSepHeight: function(x, y, direction) {
+			var dir = direction || "a"; // a垂直 h 水平
+			var args = Array.prototype.slice.call(arguments);
+			var width, height;
+			if (!!args[args.length - 1] && typeof args[args.length - 1] === 'object') {
+				width = $(args[args.length - 1]).width();
+				height = $(args[args.length - 1]).height();
+			} else {
+				width = $(window).width();
+				height = $(window).height();
+			}
+			if(dir === 'a') {
+				return (height - x) / y;
+			} else if (dir === 'h') {
+				return (width - x) / y;
+			}
+			
 		}
 	};
 	var Tools = Tools;
@@ -3771,13 +3785,7 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/swiper.js'], func
 });
 define('entry/js/src/index',['../core/core'], function(core) {
 	core.onrender("index", function(dom) {
-		var u = window.navigator.userAgent.toLowerCase();
-		var ismobile = /(iphone)|(android)/.test(u);
-		if(ismobile) {
-			window.location.href = "http://www.s-jz.com/html/user";
-		} else {
-			window.location.href = "http://www.s-jz.com/pc";
-		}
+		
 	});
 });
 define('entry/js/src/component/slideOptions',['../../core/core'], function(core) {
@@ -4358,8 +4366,25 @@ define('entry/js/src/usernewyingzhuang.js',['../core/core'], function(core) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		// alert(navigator.userAgent + isQQUC);
-		// alert();
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h1 = Tools.calcSepHeight(91, 2);
+			var w1 = Tools.calcSepHeight(6, 2, "h");
+			var h2 = Tools.calcSepHeight(135, 1, "a");
+			console.log(h1,w1,h2);
+			$('.yingzhuang-li-comm .list .lrow', dom).css("height", h1 + "px");
+			$('.yingzhuang-li-comm .list .lcol', dom).css("width", w1 + "px");
+			$('.swiper-slide-yingzhuang-six .container', dom).css("height", h2 + "px");
+
+			var h3 = Tools.calcSepHeight(0, 8, "a", $('.swiper-slide-yingzhuang-six .container', dom));
+			$('.swiper-slide-yingzhuang-six .container .row', dom).css("heiht", h3 + "px");
+
+			$('html').removeClass("ios").addClass("android");
+		} else {
+			$('html').removeClass("android").addClass("ios");
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v1',{
 			pagination: '.swiper-pagination-h1',
@@ -4391,6 +4416,12 @@ define('entry/js/src/usernewruanzhuang.js',['../core/core'], function(core) {
 				}
 			});
 		};
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var Tools = core.Tools;
+		if (isQQUC) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v2',{
 			pagination: '.swiper-pagination-h2',
@@ -4422,6 +4453,19 @@ define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
 				}
 			});
 		};
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+			$('.swiper-slide-jiaju-three .item-show', dom)
+			.css(
+				"marginLeft", 
+				$('.swiper-slide-jiaju-three .content').width() - 114 + "px"
+			);
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v3',{
 			pagination: '.swiper-pagination-h3',
@@ -4444,6 +4488,19 @@ define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
 define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
 	core.onrender("user-new-jiadian", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+			$('.swiper-slide-jiadian-two .item-show', dom)
+			.css(
+				"marginLeft", 
+				$('.swiper-slide-jiadian-two .bg-content').width() - 114 + "px"
+			);
+		}
 		var lazyLoad = function(imgs) {
 			[].forEach.call(imgs, function(img) {
 				var src = $(img).attr("data-src");
@@ -4475,7 +4532,14 @@ define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
 define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
 	core.onrender("kf-userindex", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(63, 4);
+			$('.page-two .style', dom).css("height", h + "px");
+		}
 		var mySwiper1 = new Swiper('.swiper-container',{
 			direction: 'vertical'
 		});

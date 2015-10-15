@@ -1466,6 +1466,9 @@ input {
 .user-index-html .item-show .user-choose-list ul li span {
   width: 64px;
 }
+.user-index-html .swiper-slide {
+  overflow: hidden;
+}
 .user-index-html .swiper-slide-one .stop {
   background-image: url(img/user/uindex_bg1.jpg);
   background-size: 100%;
@@ -1855,6 +1858,7 @@ input {
 .user-index-html .swiper-slide-jiaju-three .content {
   width: 75%;
   margin: 0.73rem auto 0;
+  overflow: hidden;
 }
 .user-index-html .swiper-slide-jiaju-three .content .txt {
   width: 1.85rem;
@@ -2102,6 +2106,7 @@ input {
     -webkit-transform: scale(1);
   }
 }
+/* android */
 .user-kfindex-html {
   font-size: 100px;
 }
@@ -2156,6 +2161,7 @@ input {
   -webkit-box-align: center;
   -webkit-box-pack: center;
   position: relative;
+  -webkit-transition: height .2s ease-in-out;
 }
 .user-kfindex-html .kf-user-index .page .page-two .style a {
   position: absolute;

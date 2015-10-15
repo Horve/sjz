@@ -207,7 +207,9 @@ $fontColor: #424252;
 			}
 		} 
 	}
-	
+    .swiper-slide {
+        overflow: hidden;
+    }
     .swiper-slide-one {
 	    .stop {
 			background-image: url(img/user/uindex_bg1.jpg);
@@ -646,6 +648,7 @@ $fontColor: #424252;
     	.content {
     		width: 75%;
     		margin: 0.73rem auto 0;
+            overflow: hidden;
     		.txt {
     			width: 1.85rem;
     			height: 0.54rem;
@@ -902,3 +905,5 @@ $fontColor: #424252;
 		-webkit-transform: scale(1); 
 	}
 }
+
+/* android */

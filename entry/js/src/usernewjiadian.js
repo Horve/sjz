@@ -1,6 +1,19 @@
 define(['../core/core'], function(core) {
 	core.onrender("user-new-jiadian", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+			$('.swiper-slide-jiadian-two .item-show', dom)
+			.css(
+				"marginLeft", 
+				$('.swiper-slide-jiadian-two .bg-content').width() - 114 + "px"
+			);
+		}
 		var lazyLoad = function(imgs) {
 			[].forEach.call(imgs, function(img) {
 				var src = $(img).attr("data-src");

@@ -70,9 +70,23 @@ define(function() {
 			}
 		},
 		// x 减去的额外高度 y 均分的份数
-		calcSepHeight: function(x, y) {
-			var winHei = $(window).height();
-			return (winHei - x) / y;
+		calcSepHeight: function(x, y, direction) {
+			var dir = direction || "a"; // a垂直 h 水平
+			var args = Array.prototype.slice.call(arguments);
+			var width, height;
+			if (!!args[args.length - 1] && typeof args[args.length - 1] === 'object') {
+				width = $(args[args.length - 1]).width();
+				height = $(args[args.length - 1]).height();
+			} else {
+				width = $(window).width();
+				height = $(window).height();
+			}
+			if(dir === 'a') {
+				return (height - x) / y;
+			} else if (dir === 'h') {
+				return (width - x) / y;
+			}
+			
 		}
 	};
 	var Tools = Tools;

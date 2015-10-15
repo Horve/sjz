@@ -58,6 +58,7 @@ $fontColor: #424252;
 					-webkit-box-align: center;
 					-webkit-box-pack: center;
 					position: relative;
+					-webkit-transition: height .2s ease-in-out;
 					a {
 						position: absolute;
 						width: 100%;

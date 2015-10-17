@@ -6,7 +6,7 @@ define(['../core/core'], function(core) {
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
 		if (isAndroid) {
-			var h = Tools.calcSepHeight(63, 4);
+			var h = Tools.calcSepHeight(68, 4);
 			$('.page-two .style', dom).css("height", h + "px");
 		}
 		var mySwiper1 = new Swiper('.swiper-container',{

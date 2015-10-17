@@ -6,9 +6,9 @@ define(['../core/core'], function(core) {
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
 		if (isAndroid) {
-			var h1 = Tools.calcSepHeight(91, 2);
+			var h1 = Tools.calcSepHeight(96, 2);
 			var w1 = Tools.calcSepHeight(6, 2, "h");
-			var h2 = Tools.calcSepHeight(135, 1, "a");
+			var h2 = Tools.calcSepHeight(140, 1, "a");
 			console.log(h1,w1,h2);
 			$('.yingzhuang-li-comm .list .lrow', dom).css("height", h1 + "px");
 			$('.yingzhuang-li-comm .list .lcol', dom).css("width", w1 + "px");

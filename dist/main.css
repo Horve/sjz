@@ -15,6 +15,9 @@
 }
 .form-set input {
   height: 24px;
+  line-height: 24px;
+  width: 100%;
+  font-size: 14px;
 }
 .form-set p {
   margin: 0;
@@ -24,17 +27,18 @@
   border-bottom: 2px solid #19ad5e;
   border-left: 2px solid #19ad5e;
   border-right: 2px solid #19ad5e;
+  overflow: hidden;
 }
 .form-set p.item:first-of-type, .form-set p.item-sub:first-of-type {
   border: 2px solid #19ad5e;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 .form-set p.item:last-of-type, .form-set p.item-sub:last-of-type {
   border-bottom: 2px solid #19ad5e;
   border-top: 0;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 .form-set p.item:nth-of-type(1) {
   border-top: 2px solid #19ad5e;
@@ -48,8 +52,8 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 0px;
+  left: 0px;
 }
 .form-set p.item.droplist span {
   display: block;
@@ -57,7 +61,7 @@
   height: 100%;
   width: 18%;
   background: #fff;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 4px 4px 0;
   top: -2px;
   right: -2px;
   border: 2px solid #19ad5e;
@@ -674,6 +678,22 @@ button.swiper-pagination-bullet {
   }
 }
 /*! pages */
+@font-face {
+  font-family: 'sjz';
+  src: url("fonts/sjz.eot?-bvlfrg");
+  src: url("fonts/sjz.eot?#iefix-bvlfrg") format("embedded-opentype"), url("fonts/sjz.woff?-bvlfrg") format("woff"), url("fonts/sjz.ttf?-bvlfrg") format("truetype"), url("fonts/sjz.svg?-bvlfrg#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+.iconfont {
+  font-family: "sjz" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body.user-yuyue {
   background-image: url("img/yybg.jpg");
   background-size: cover;
@@ -818,7 +838,7 @@ input {
 }
 
 .navbar {
-  height: 45px;
+  height: 50px;
   background: #424252;
   position: absolute;
   width: 100%;
@@ -829,16 +849,33 @@ input {
   -webkit-box-pack: justify;
 }
 .navbar .item {
-  border-right: 1px solid #23232c;
-  border-left: 1px solid #65656d;
-  height: 100%;
+  /*border-right: 1px solid #23232c;
+  border-left: 1px solid #65656d;*/
+  border-right: 1px solid #d0d0d4;
+  height: 40px;
   box-sizing: border-box;
   font-size: 14px;
-  width: 25%;
+  width: 20%;
   color: #3ad064;
   text-align: center;
-  line-height: 45px;
+  line-height: 40px;
   position: relative;
+  margin-top: 5px;
+  /*font-weight: 100;*/
+}
+.navbar .item i {
+  display: block;
+  font-size: 35px;
+  width: 100%;
+  height: 24px;
+  line-height: 28px;
+  text-align: center;
+}
+.navbar .item em {
+  display: block;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
 }
 .navbar .item.on {
   color: #fff;
@@ -1744,7 +1781,7 @@ input {
 }
 .user-index-html .ruanzhuang-show-comm .content {
   width: 100%;
-  height: calc(100% - 85px);
+  height: calc(100% - 90px);
   margin-top: 0.4rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -2066,7 +2103,7 @@ input {
   width: 100%;
   position: absolute;
   top: 0.4rem;
-  height: calc(100% - 85px);
+  height: calc(100% - 90px);
 }
 .user-index-html .user-new-yz .yingzhuang-li-comm .list .lrow {
   height: calc((100% - 6px) / 2);
@@ -2152,7 +2189,7 @@ input {
 }
 .user-kfindex-html .kf-user-index .page .page-two .style {
   width: 100%;
-  height: calc((100% - 0.18rem) / 4);
+  height: calc((100% - 0.68rem) / 4);
   background-size: cover;
   margin-bottom: 0.06rem;
   position: relative;
@@ -2673,6 +2710,197 @@ input {
   .user-jf-html .pay-order {
     padding-top: 0.20rem;
   }
+}
+.payment {
+  font-size: 100px;
+}
+.payment .order-bar {
+  height: 0.6rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: #f8f8f8;
+  display: -webkit-box;
+  -webkit-box-pack: justify;
+}
+.payment .order-bar .price-info {
+  width: 68%;
+  height: 100%;
+  border-top: 1px solid #d1d1d1;
+  position: relative;
+}
+.payment .order-bar .price-info .price-txt {
+  height: 0.5rem;
+  position: absolute;
+  top: 0.05rem;
+  right: 0.1rem;
+  line-height: 0.25rem;
+  font-size: 0.14rem;
+  text-align: right;
+}
+.payment .order-bar .price-info .price-txt span {
+  display: block;
+}
+.payment .order-bar .price-info .price-txt em {
+  color: #f59393;
+  margin-left: 0.05rem;
+}
+.payment .order-bar .gopay {
+  width: 32%;
+  height: 100%;
+  background: #19ad5e;
+  font-size: 0.18rem;
+  text-align: center;
+  color: #fff;
+  display: block;
+  text-decoration: none;
+  border-top: 1px solid #19ad5e;
+  line-height: 0.6rem;
+}
+.payment .order-bar .select-all {
+  position: absolute;
+  left: 0.07rem;
+  top: 50%;
+  margin-top: -0.09rem;
+  font-size: 0.16rem;
+  text-indent: 0.23rem;
+  line-height: 0.18rem;
+}
+.payment .order-bar .select-all i {
+  text-indent: 0;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 0;
+  left: 0;
+  font-size: 0.18rem;
+  color: #999;
+}
+.payment .order-bar .select-all i.on {
+  color: #19ad5e;
+}
+.payment .user-payment {
+  background: #eff0f4;
+}
+.payment .user-payment .page {
+  background: #eff0f4;
+}
+.payment .user-payment .order-list {
+  margin-top: 0.1rem;
+  margin-bottom: 0.75rem;
+}
+.payment .user-payment .order-list .order {
+  border-top: 1px solid #d1d1d1;
+  border-bottom: 1px solid #d1d1d1;
+  background: #fff;
+  margin-bottom: 0.1rem;
+}
+.payment .user-payment .order-list .order .top-bottom {
+  height: 0.45rem;
+  line-height: 0.45rem;
+  font-size: 0.14rem;
+  color: #999;
+  padding: 0 0.1rem;
+}
+.payment .user-payment .order-list .order .top-bottom span.price {
+  float: right;
+  color: #000;
+}
+.payment .user-payment .order-list .order .cnt {
+  padding: 0.15rem 0.1rem;
+  background: #eff0f4;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt {
+  padding: 0 0 0 0.2rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .name {
+  line-height: 0.18rem;
+  font-size: 0.16rem;
+  color: #000;
+  position: relative;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .name i {
+  display: block;
+  width: 0.18rem;
+  height: 0.18rem;
+  position: absolute;
+  color: #999;
+  font-size: 0.18rem;
+  left: -0.23rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .name i.on {
+  color: #19ad5e;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose {
+  margin: 0.15rem 0 0 0;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set {
+  font-size: 0.14rem;
+  margin: 0;
+  width: 0.75rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set input {
+  font-size: 12px;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set p {
+  border-width: 1px;
+  padding: 5px 4px;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set p span {
+  width: 25px;
+  top: -1px;
+  right: -1px;
+  border-width: 1px;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set p span i {
+  background-size: 10px 6px;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set.square {
+  width: 0.7rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set.square input {
+  text-align: center;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set.path-room {
+  width: 0.97rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose .form-set.sun-plateform {
+  width: 0.83rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose.Horizontal {
+  display: -webkit-box;
+  -webkit-box-pack: justify;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .choose.Horizontal .form-set {
+  display: block;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .step-list {
+  color: #999;
+  margin-top: 0.15rem;
+  font-size: 0.14rem;
+  line-height: 0.25rem;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .step-list .row {
+  position: relative;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .step-list .row i.on {
+  color: #19ad5e;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .step-list span.price {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .delete {
+  position: absolute;
+  display: block;
+  line-height: 0.18rem;
+  font-size: 0.16rem;
+  color: #999;
+  right: 0;
+  top: 0;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -40,6 +40,7 @@ $mainColor: #3ad064;
 			margin: 5% auto;
 			overflow-x: hidden;
 			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
 		}
 		.close-rule {
 			width: 0.2rem;

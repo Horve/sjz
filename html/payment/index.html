@@ -12,7 +12,7 @@
     <meta name="x5-orientation" content="portrait"/>
     <meta name="x5-fullscreen" content="true"/>
     <meta name="x5-page-mode" content="app"/>
-	<title>购物车-S+互联网家装</title>
+	<title>个人中心</title>
     <!-- 由main.sass 生成    -->
 	<link rel="stylesheet" href="../../dist/main.min.css" />
 	<link rel="stylesheet" href="../../dist/normalize.css" />
@@ -20,17 +20,17 @@
 <body class="user-payment">
 	<div class="page" data-render-id="shop-cart">
 		<div class="order-list">
-			<div class="order">
+			<div class="order kuaifan-order">
 				<div class="top-bottom">订单编号：1150622312</div>
 				<div class="cnt">
 					<div class="sub-cnt">
 						<div class="name">
-							<i class="iconfont on">&#xe60b;</i>
+							<i class="iconfont on choose-cbtn" data-type="kuaifan-order">&#xe60b;</i>
 							<span>快翻套餐</span>
 							<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>
 						</div>
 						<div class="choose">
-							<div class="form-set" id="h-shi">
+							<div class="form-set kf-house">
 								<p class="droplist item">
 									<em></em>
 									<input type="text" placeholder="一居室" readonly="readonly" data-id="1">
@@ -41,59 +41,34 @@
 					</div>
 				</div>
 				<div class="top-bottom">
-					<span>2015.10.06 16:22:13</span>
+					<span class="date-time">2015.10.06 16:22:13</span>
 					<span class="price">￥3000</span>
 				</div>
 			</div>
-			<div class="order">
+			<div class="order yingzhuang-order">
 				<div class="top-bottom">订单编号：1150622312</div>
 				<div class="cnt">
 					<div class="sub-cnt">
 						<div class="name">
-							<i class="iconfont on">&#xe60b;</i>
-							<span>快翻套餐</span>
-							<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>
-						</div>
-						<div class="choose">
-							<div class="form-set" id="h-shi">
-								<p class="droplist item">
-									<em></em>
-									<input type="text" placeholder="一居室" readonly="readonly" data-id="1">
-									<span><i></i></span>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="top-bottom">
-					<span>2015.10.06 16:22:13</span>
-					<span class="price">￥3000</span>
-				</div>
-			</div>
-			<div class="order">
-				<div class="top-bottom">订单编号：1150622312</div>
-				<div class="cnt">
-					<div class="sub-cnt">
-						<div class="name">
-							<i class="iconfont on">&#xe60b;</i>
+							<i class="iconfont on choose-cbtn" data-type="yingzhuang-order">&#xe60b;</i>
 							<span>硬装套餐</span>
 							<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>
 						</div>
 						<div class="choose Horizontal">
-							<div class="form-set square">
+							<div class="form-set square yz-square">
 								<p class="item">
 									<em></em>
-									<input type="text" placeholder="100平米" readonly="readonly" data-id="1">
+									<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">
 								</p>
 							</div>
-							<div class="form-set path-room">
+							<div class="form-set path-room yz-bathroom">
 								<p class="droplist item">
 									<em></em>
 									<input type="text" placeholder="一个卫生间" readonly="readonly" data-id="1">
 									<span><i></i></span>
 								</p>
 							</div>
-							<div class="form-set sun-plateform">
+							<div class="form-set sun-plateform yz-platform">
 								<p class="droplist item">
 									<em></em>
 									<input type="text" placeholder="一个阳台" readonly="readonly" data-id="1">
@@ -103,17 +78,17 @@
 						</div>
 						<div class="step-list">
 							<div class="row">
-								<i class="iconfont on">&#xe60b;</i>
+								<i class="iconfont on choose-cbtn shuidian">&#xe60b;</i>
 								<span>水电阶段完工</span>
 								<span class="price">￥3000</span>
 							</div>
 							<div class="row">
-								<i class="iconfont on">&#xe60b;</i>
+								<i class="iconfont choose-cbtn muwa">&#xe60b;</i>
 								<span>木瓦阶段完工</span>
 								<span class="price">￥1600</span>
 							</div>
 							<div class="row">
-								<i class="iconfont">&#xe60b;</i>
+								<i class="iconfont choose-cbtn youqi">&#xe60b;</i>
 								<span>油漆阶段完工</span>
 								<span class="price">￥300</span>
 							</div>
@@ -140,4 +115,5 @@
 	<script type="text/javascript" src="../../dist/build.js"></script>
 	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->
 </body>
+
 </html>

@@ -12,6 +12,7 @@ $fontFace: microsoft yahei, simsun;
 		left: 0;
 		width: 100%;
 		box-sizing: border-box;
+		z-index: 300;
 		
 		background: #f8f8f8;
 		display: -webkit-box;
@@ -66,7 +67,7 @@ $fontFace: microsoft yahei, simsun;
 				top: 0;
 				left: 0;
 				font-size: 0.18rem;
-				color: $fontColor;
+				color: #ccc;
 				&.on {
 					color: $mainColor;
 				}
@@ -113,7 +114,7 @@ $fontFace: microsoft yahei, simsun;
 								width: 0.18rem;
 								height: 0.18rem;
 								position: absolute;
-								color: $fontColor;
+								color: #ccc;
 								font-size: 0.18rem;
 								left: -0.23rem;
 								&.on {
@@ -180,6 +181,9 @@ $fontFace: microsoft yahei, simsun;
 								position: absolute;
 								right: 0;
 								top: 0;
+							}
+							i {
+								color: #ccc;
 							}
 						}
 						.delete {

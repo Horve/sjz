@@ -3797,6 +3797,9 @@ define('entry/js/src/ucenter',['../core/core'], function(core) {
 			ruletxt.removeClass("hide");
 			cover.show();
 		});
+
+		alert(location.search);
+
 	});
 });
 

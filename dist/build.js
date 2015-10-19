@@ -4599,6 +4599,43 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
 		});
 		var imgLists = $('img', '.pic-lists');
     	Tools.lazyLoad(imgLists);
+
+    	$('.ordernow').off('click').on('click', function() {
+    		$.ajax({
+    			url: "http://www.s-jz.com/Sbuild/orderCtrl/addOrder.htm",
+    			data: {"orders": [{"productId": 1, "layout": 1}]},
+    			dataType: "json",
+    			success: function(res) {
+    				var code = res.ret;
+    				alert(code);
+    				// 未登录
+    				if (code == 302) {
+    					// 请求微信授权接口wxf25cf835f9d71720
+    					// window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					// wxAuth();
+    				} else if (code == 1) {
+    					// 已登录 进入购物车
+    				} else if (code == -1) {
+    					// 登录失败。提示重试
+    				}
+    			}
+    		});
+    	});
+
+    	// 请求微信授权接口
+    	function wxAuth() {
+    		$.ajax({
+    			url: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect",
+    			dataType: "json",
+    			success: function(res) {
+    				alert(JSON.stringify(res));
+    			},
+    			error: function(res) {
+    				alert("err:" + JSON.stringify(res));
+    			}
+    		});
+    	}
 	});
 });
 define('entry/js/src/jfpart.js',['../core/core'], function(core) {
@@ -4784,6 +4821,32 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 		});
 	});
 });
+define('entry/js/src/redirect',['../core/core'], function(core) {
+	core.onrender("redirect", function(dom) {
+		var url = location.search;
+		if (url) {
+			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
+			$.ajax({
+				url: "http://www.s-jz.com/Sbuild/user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
+				dataType: "json",
+				success: function(res) {
+					var ret = res.ret;
+					var uinfo = res.userInfo;
+					if (ret == 2) {
+						var nickName = uinfo.nickName
+							, mobile = uinfo.mobile
+							, head = uinfo.head
+							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
+						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
+					}
+				}
+			});
+		} else {
+			window.location = "http://www.s-jz.com";
+		}
+		
+	});
+});
 // main.js
 require([
 	'entry/js/src/index',
@@ -4800,7 +4863,8 @@ require([
 	'entry/js/src/kfstylenav.js', 
 	'entry/js/src/jfpart.js', 
 	'entry/js/src/shopcart.js', 
-	'entry/js/src/userproduct.js'], function() {
+	'entry/js/src/userproduct.js',
+	'entry/js/src/redirect',], function() {
 });
 define("entry/js/main", function(){});
 

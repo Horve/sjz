@@ -14,5 +14,6 @@ require([
 	'entry/js/src/kfstylenav.js', 
 	'entry/js/src/jfpart.js', 
 	'entry/js/src/shopcart.js', 
-	'entry/js/src/userproduct.js'], function() {
+	'entry/js/src/userproduct.js',
+	'entry/js/src/redirect',], function() {
 });

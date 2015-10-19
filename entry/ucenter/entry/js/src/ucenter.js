@@ -12,5 +12,8 @@ define(['../core/core'], function(core) {
 			ruletxt.removeClass("hide");
 			cover.show();
 		});
+
+		alert(location.search);
+
 	});
 });

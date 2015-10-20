@@ -3783,12 +3783,75 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/swiper.js'], func
 	}
 	return core;
 });
-define('entry/js/src/ucenter',['../core/core'], function(core) {
+define('entry/js/src/component/dialog',['../../core/core'], function(core) {
+	var isfirst = true;
+	var allData = [];
+	var dialog = {
+		TEMPLATE: '<div class="dialog-mask"></div><div class="dialog-body"><p></p><a class="button-ok">确定</a></div>',
+		add: function(txt) {
+			console.log("Enter dialog Component!");
+			var _this = this;
+			_this.beforeShow(txt);
+		},
+		beforeShow: function(txt) {
+			var _this = this;
+			var dialog;
+			if (!$('.dialog-mask').length) {
+				dialog = $(_this.TEMPLATE);
+				isfirst = true;
+			} else {
+				dialog = $('.dialog-mask, .dialog-body');
+				isfirst = false;
+			}
+			dialog.find('p').html(txt);
+			if (isfirst) {
+				$('body').append(dialog);
+				setTimeout(function() {
+					_this.show($('.dialog-body'), _this);
+				}, 100);
+			} else {
+				$('.dialog-body, .dialog-mask').show();
+				_this.show($('.dialog-body'), _this);
+			}
+		},
+
+		show: function(el, _this) {
+			var elH = $(el).height();
+			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
+			_this.hideBind(el);
+		},
+		hide: function(el) {
+			// $(el).removeClass("anim");
+			$(el).attr("style", "-webkit-transform: translate3d(0,0,0);");
+			$('.dialog-mask').hide();
+			this.afterHide();
+		},
+		hideBind: function(el) {
+			var _this = this;
+			$('.dialog-mask, .button-ok').off('click').on('click', function() {
+				_this.hide(el);
+			});
+		},
+		afterHide: function() {
+			setTimeout(function() {
+				$('.dialog-body').hide();
+			}, 300);
+		}
+	};
+
+	return dialog;
+});
+define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(core, dialog) {
 	core.onrender("ucenter-editinfo", function(dom) {
 		var ruletxt = $('.rule-txt')
 			, close = $('.close-rule')
 			, cover = $('.cover')
-			, ruleLink = $('.user-rule .rule-detail', dom);
+			, ruleLink = $('.user-rule .rule-detail', dom)
+			, EL_uname = $('#uname', dom)
+			, EL_unick = $('#unick', dom)
+			, EL_uphone = $('#uphone', dom)
+			, EL_ulocate = $('#ulocate', dom)
+			, EL_uaddress = $('#uaddress', dom);
 		close.off('click').on('click', function() {
 			ruletxt.addClass("hide");
 			cover.hide();
@@ -3798,8 +3861,65 @@ define('entry/js/src/ucenter',['../core/core'], function(core) {
 			cover.show();
 		});
 
-		alert(location.search);
+		var paramArr = location.search.replace(/\?/, "").split("&");
+		var params = {};
+		[].forEach.call(paramArr, function(param) {
+			var _arr = param.split("=");
+			params[_arr[0]] = _arr[1];
+		});
+		var nickname = decodeURIComponent(params.nickName)
+			, mobile = (params.mobile == "null" ? "" : params.mobile)
+			, headpic = params.head;
+		EL_unick.val(nickname);
+		mobile && EL_uphone.val(mobile);
 
+		var valid = [
+			["uname", /^[0-9|a-z|A-Z]{1,20}$/, "请输入0-20个由大小、写字母或数字组成的用户名"],
+			["unick", /^.+$/, "请输入正确的20个字符以内的昵称"],
+			["uphone", /^\d{11}$/, "请输入11位数字的手机号码"],
+			["ulocate", /^.{1,20}$/, "请输入所在省份"],
+			["uaddress", /^.+$/, "请输入详细住址"]
+		];
+		var checkDet = function() {
+			var flag = true;
+			for(var i = 0, n = valid.length; i < n; i++) {
+				var val = $('#' + valid[i][0]).val().trim();
+				if (!valid[i][1].test(val)) {
+					dialog.add(valid[i][2]);
+					flag = false;
+					break;
+				}
+			}
+			return flag;
+		};
+		$('#submit', dom).off("click").on('click', function() {
+			var flag = checkDet();
+			var uname = "";
+			console.log(params);
+			if (flag) {
+				uname = EL_uname.val().trim()
+					, unick = EL_unick.val().trim()
+					, uphone = EL_uphone.val().trim()
+					, ulocate = EL_ulocate.val().trim()
+					, uaddress = EL_uaddress.val().trim()
+					, params = ""
+					+ "userName=" + uname
+					+ "&nickName=" + unick
+					+ "&mobile=" + uphone
+					+ "&province=" + ulocate
+					+ "&addr=" + uaddress;
+				$.ajax({
+					url: "http://www.s-jz.com/Sbuild/user/register.htm?" + params,
+					dataType: "json",
+					success: function(res) {
+						alert("res:" + JSON.stringify(res));
+					},
+					error: function(err) {
+						alert("err:" + JSON.stringify(res));
+					}
+				});
+			}
+		});
 	});
 });
 

@@ -4607,7 +4607,6 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
     			dataType: "json",
     			success: function(res) {
     				var code = res.ret;
-    				alert(code);
     				// 未登录
     				if (code == 302) {
     					// 请求微信授权接口wxf25cf835f9d71720
@@ -4838,7 +4837,13 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 							, head = uinfo.head
 							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
 						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
+					} else if (ret == 1) {
+						// 登陆成功
+						window.location.href = "http://www.s-jz.com/";
 					}
+				},
+				error: function(data){
+					alert(JSON.stringify(data));
 				}
 			});
 		} else {

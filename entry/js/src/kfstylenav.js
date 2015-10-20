@@ -61,7 +61,6 @@ define(['../core/core'], function(core) {
     			dataType: "json",
     			success: function(res) {
     				var code = res.ret;
-    				alert(code);
     				// 未登录
     				if (code == 302) {
     					// 请求微信授权接口wxf25cf835f9d71720

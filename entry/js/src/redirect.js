@@ -15,7 +15,13 @@ define(['../core/core'], function(core) {
 							, head = uinfo.head
 							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
 						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
+					} else if (ret == 1) {
+						// 登陆成功
+						window.location.href = "http://www.s-jz.com/";
 					}
+				},
+				error: function(data){
+					alert(JSON.stringify(data));
 				}
 			});
 		} else {

@@ -7,6 +7,8 @@ define(['../core/core'], function(core) {
 		var itemsTxt = $('.choose-style .items-intro', dom);
 		var itemsPrice = $('.choose-style .price', dom);
 		var swipcnt = $('.swiper-container', dom);
+		var layout = 1;
+		var nums = null;
 		var mySwiper1 = new Swiper('.swiper-container',{
 			// direction: 'vertical'
 			pagination: '.pagination-style',
@@ -27,25 +29,32 @@ define(['../core/core'], function(core) {
 		$(items).off('click').on('click', function() {
 			var index = $(this).index();
 			$(this).addClass("on").siblings().removeClass("on");
-			console.log(index);
 			var txt = "";
 			var price = 0;
 			switch(index) {
 				case 0: 
 					txt = "一室一厅";
 					price = 3600;
+					layout = 1;
+					nums = null;
 					break;
 				case 1: 
 					txt = "二室一厅";
 					price = 6200;
+					layout = 2;
+					nums = null;
 					break;
 				case 2: 
 					txt = "三室一厅";
 					price = 8500;
+					layout = 3;
+					nums = null;
 					break;
 				case 3: 
 					txt = "一个卧室";
 					price = 1999;
+					layout = null;
+					nums = 1;
 					break;
 			}
 			itemsTxt.html(txt);
@@ -55,22 +64,32 @@ define(['../core/core'], function(core) {
     	Tools.lazyLoad(imgLists);
 
     	$('.ordernow').off('click').on('click', function() {
+    		var location = window.location.href;
+    		var params = "";
+    		if (!!nums) {
+    			params = '"nums": 1';
+    		} else {
+    			params = '"layout": ' + layout;
+    		}
     		$.ajax({
     			url: "http://www.s-jz.com/Sbuild/orderCtrl/addOrder.htm",
-    			data: {"orders": [{"productId": 1, "layout": 1}]},
+    			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
     			dataType: "json",
     			success: function(res) {
-    				var code = res.ret;
+    				var code = res.ret
+    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
     				// 未登录
     				if (code == 302) {
     					// 请求微信授权接口wxf25cf835f9d71720
     					// window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
-    					window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					window.location.href = jumpurl;
     					// wxAuth();
     				} else if (code == 1) {
     					// 已登录 进入购物车
+    					window.location.href = "http://www.s-jz.com/html/payment/";
     				} else if (code == -1) {
     					// 登录失败。提示重试
+    					alert("登录失败！");
     				}
     			}
     		});

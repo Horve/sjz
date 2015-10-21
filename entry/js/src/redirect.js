@@ -17,7 +17,8 @@ define(['../core/core'], function(core) {
 						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
 					} else if (ret == 1) {
 						// 登陆成功
-						window.location.href = "http://www.s-jz.com/";
+						// window.location.href = "http://www.s-jz.com/";
+						window.history.go(-1);
 					}
 				},
 				error: function(data){

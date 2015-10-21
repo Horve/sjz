@@ -4553,6 +4553,8 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
 		var itemsTxt = $('.choose-style .items-intro', dom);
 		var itemsPrice = $('.choose-style .price', dom);
 		var swipcnt = $('.swiper-container', dom);
+		var layout = 1;
+		var nums = null;
 		var mySwiper1 = new Swiper('.swiper-container',{
 			// direction: 'vertical'
 			pagination: '.pagination-style',
@@ -4573,25 +4575,32 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
 		$(items).off('click').on('click', function() {
 			var index = $(this).index();
 			$(this).addClass("on").siblings().removeClass("on");
-			console.log(index);
 			var txt = "";
 			var price = 0;
 			switch(index) {
 				case 0: 
 					txt = "一室一厅";
 					price = 3600;
+					layout = 1;
+					nums = null;
 					break;
 				case 1: 
 					txt = "二室一厅";
 					price = 6200;
+					layout = 2;
+					nums = null;
 					break;
 				case 2: 
 					txt = "三室一厅";
 					price = 8500;
+					layout = 3;
+					nums = null;
 					break;
 				case 3: 
 					txt = "一个卧室";
 					price = 1999;
+					layout = null;
+					nums = 1;
 					break;
 			}
 			itemsTxt.html(txt);
@@ -4601,22 +4610,32 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
     	Tools.lazyLoad(imgLists);
 
     	$('.ordernow').off('click').on('click', function() {
+    		var location = window.location.href;
+    		var params = "";
+    		if (!!nums) {
+    			params = '"nums": 1';
+    		} else {
+    			params = '"layout": ' + layout;
+    		}
     		$.ajax({
     			url: "http://www.s-jz.com/Sbuild/orderCtrl/addOrder.htm",
-    			data: {"orders": [{"productId": 1, "layout": 1}]},
+    			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
     			dataType: "json",
     			success: function(res) {
-    				var code = res.ret;
+    				var code = res.ret
+    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
     				// 未登录
     				if (code == 302) {
     					// 请求微信授权接口wxf25cf835f9d71720
     					// window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
-    					window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					window.location.href = jumpurl;
     					// wxAuth();
     				} else if (code == 1) {
     					// 已登录 进入购物车
+    					window.location.href = "http://www.s-jz.com/html/payment/";
     				} else if (code == -1) {
     					// 登录失败。提示重试
+    					alert("登录失败！");
     				}
     			}
     		});
@@ -4774,6 +4793,94 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions'], 
 				$(this).addClass('on');
 			}
 		});
+
+		var shopCart = {
+			EL_orderLis: $('.order-list', dom),
+
+			init: function() {
+				// 请求订单列表
+				this.getUnfinishedOrder();
+			},
+			getUnfinishedOrder: function() {
+				var This = this;
+				$.ajax({
+					// 未完成订单
+					url: "http://www.s-jz.com/Sbuild/orderCtrl/getOrders.htm?type=1",
+					dataType: "json",
+					success: function(res) {
+						// alert("ret:" + JSON.stringify(res));
+						// alert("ret:" + JSON.stringify(res.orderInfos));
+						if (res.ret == 1) {
+							// 获取订单信息成功
+							var orderList = res.orderInfos;
+							var str = "";
+							// alert(typeof orderList);
+							try	{
+								[].forEach.call(orderList, function(order) {
+									if (order.productType == 1) {
+										var layout = order.layout
+											, nums = order.nums
+											, inputVal = ""
+											, dataid = null;
+										if (layout) {
+											switch(layout) {
+												case 1: 
+													inputVal = "一居室";
+													dataid = 1;
+													break;
+												case 2:
+													inputVal = "两居室";
+													dataid = 2;
+													break;
+												case 3:
+													inputVal = "三居室";
+													dataid = 3;
+											}
+										} else {
+											inputVal = "单间";
+											dataid = 4;
+										}
+										// 快翻订单
+										str += '\
+											<div class="order kuaifan-order">\
+											<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+											<div class="cnt">\
+												<div class="sub-cnt">\
+													<div class="name">\
+														<i class="iconfont on choose-cbtn" data-type="kuaifan-order">&#xe60b;</i>\
+														<span>快翻套餐</span>\
+														<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>\
+													</div>\
+													<div class="choose">\
+														<div class="form-set kf-house">\
+															<p class="droplist item">\
+																<em></em>\
+																<input type="text" placeholder="一居室" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																<span><i></i></span>\
+															</p>\
+														</div>\
+													</div>\
+												</div>\
+											</div>\
+											<div class="top-bottom">\
+												<span class="date-time">' + order.createTime + '</span>\
+												<span class="price">￥' + order.total + '</span>\
+											</div>\
+										</div>\
+										';
+									}
+								});
+								This.EL_orderLis.html(str);
+							} catch(err) {
+								alert(JSON.stringify(err));
+							}
+							
+						}
+					}
+				});
+			}
+		};
+		shopCart.init();
 	});
 });
 define('entry/js/src/userproduct.js',['../core/core'], function(core) {
@@ -4839,7 +4946,8 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
 					} else if (ret == 1) {
 						// 登陆成功
-						window.location.href = "http://www.s-jz.com/";
+						// window.location.href = "http://www.s-jz.com/";
+						window.history.go(-1);
 					}
 				},
 				error: function(data){

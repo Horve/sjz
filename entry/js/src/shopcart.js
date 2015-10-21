@@ -103,5 +103,93 @@ define(['../core/core', './component/slideOptions'], function(core, slideOption)
 				$(this).addClass('on');
 			}
 		});
+
+		var shopCart = {
+			EL_orderLis: $('.order-list', dom),
+
+			init: function() {
+				// 请求订单列表
+				this.getUnfinishedOrder();
+			},
+			getUnfinishedOrder: function() {
+				var This = this;
+				$.ajax({
+					// 未完成订单
+					url: "http://www.s-jz.com/Sbuild/orderCtrl/getOrders.htm?type=1",
+					dataType: "json",
+					success: function(res) {
+						// alert("ret:" + JSON.stringify(res));
+						// alert("ret:" + JSON.stringify(res.orderInfos));
+						if (res.ret == 1) {
+							// 获取订单信息成功
+							var orderList = res.orderInfos;
+							var str = "";
+							// alert(typeof orderList);
+							try	{
+								[].forEach.call(orderList, function(order) {
+									if (order.productType == 1) {
+										var layout = order.layout
+											, nums = order.nums
+											, inputVal = ""
+											, dataid = null;
+										if (layout) {
+											switch(layout) {
+												case 1: 
+													inputVal = "一居室";
+													dataid = 1;
+													break;
+												case 2:
+													inputVal = "两居室";
+													dataid = 2;
+													break;
+												case 3:
+													inputVal = "三居室";
+													dataid = 3;
+											}
+										} else {
+											inputVal = "单间";
+											dataid = 4;
+										}
+										// 快翻订单
+										str += '\
+											<div class="order kuaifan-order">\
+											<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+											<div class="cnt">\
+												<div class="sub-cnt">\
+													<div class="name">\
+														<i class="iconfont on choose-cbtn" data-type="kuaifan-order">&#xe60b;</i>\
+														<span>快翻套餐</span>\
+														<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>\
+													</div>\
+													<div class="choose">\
+														<div class="form-set kf-house">\
+															<p class="droplist item">\
+																<em></em>\
+																<input type="text" placeholder="一居室" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																<span><i></i></span>\
+															</p>\
+														</div>\
+													</div>\
+												</div>\
+											</div>\
+											<div class="top-bottom">\
+												<span class="date-time">' + order.createTime + '</span>\
+												<span class="price">￥' + order.total + '</span>\
+											</div>\
+										</div>\
+										';
+									}
+								});
+								This.EL_orderLis.html(str);
+							} catch(err) {
+								alert(JSON.stringify(err));
+							}
+							
+						}
+					}
+				});
+			}
+		};
+		shopCart.init();
 	});
 });

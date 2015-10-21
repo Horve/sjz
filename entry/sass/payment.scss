@@ -1,0 +1,203 @@
+$mainColor: #19ad5e;
+$bgColor: #eff0f4;
+$fontColor: #999;
+$fontFace: microsoft yahei, simsun;
+
+.payment {
+	font-size: 100px;
+	.order-bar {
+		height: 0.6rem;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		box-sizing: border-box;
+		z-index: 300;
+		
+		background: #f8f8f8;
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+		.price-info {
+			width: 68%;
+			height: 100%;
+			border-top: 1px solid #d1d1d1;
+			position: relative;
+			.price-txt {
+				height: 0.5rem;
+				position: absolute;
+				top: 0.05rem;
+				right: 0.1rem;
+				line-height: 0.25rem;
+				font-size: 0.14rem;
+				text-align: right;
+				span {
+					display: block;
+				}
+				em	{
+					color: #f59393;
+					margin-left: 0.05rem;
+				}
+			}
+		}
+		.gopay {
+			width: 32%;
+			height: 100%;
+			background: $mainColor;
+			font-size: 0.18rem;
+			text-align: center;
+			color: #fff;
+			display: block;
+			text-decoration: none;
+			border-top: 1px solid $mainColor;
+			line-height: 0.6rem;
+		}
+		.select-all {
+			position: absolute;
+			left: 0.07rem;
+			top: 50%;
+			margin-top: -0.09rem;
+			font-size: 0.16rem;
+			text-indent: 0.23rem;
+			line-height: 0.18rem;
+			i {
+				text-indent: 0;
+				position: absolute;
+				width: 18px;
+				height: 18px;
+				top: 0;
+				left: 0;
+				font-size: 0.18rem;
+				color: #ccc;
+				&.on {
+					color: $mainColor;
+				}
+			}
+		}
+	}
+	.user-payment {
+		background: $bgColor;
+		.page {
+			background: $bgColor;
+		}
+		.order-list {
+			margin-top: 0.1rem;
+			margin-bottom: 0.75rem;
+			.order {
+				border-top: 1px solid #d1d1d1;
+				border-bottom: 1px solid #d1d1d1;
+				background: #fff;
+				margin-bottom: 0.1rem;
+				.top-bottom {
+					height: 0.45rem;
+					line-height: 0.45rem;
+					font-size: 0.14rem;
+					color: $fontColor;
+					padding: 0 0.1rem;
+					span.price {
+						float: right;
+						color: #000;
+					}
+				}
+				.cnt {
+					padding: 0.15rem 0.1rem;
+					background: $bgColor;
+					.sub-cnt {
+						padding: 0 0 0 0.2rem;
+						.name {
+							line-height: 0.18rem;
+							font-size: 0.16rem;
+							color: #000;
+							position: relative;
+
+							i {
+								display: block;
+								width: 0.18rem;
+								height: 0.18rem;
+								position: absolute;
+								color: #ccc;
+								font-size: 0.18rem;
+								left: -0.23rem;
+								&.on {
+									color: $mainColor;
+								}
+							}
+						}
+						.choose {
+							margin: 0.15rem 0 0 0;
+							.form-set {
+								font-size: 0.14rem;
+								margin: 0;
+								width: 0.75rem;
+								input {
+									font-size: 12px;
+								}
+								p {
+									border-width: 1px;
+									padding: 5px 4px;
+									span {
+										width: 25px;
+										top: -1px;
+										right: -1px;
+										border-width: 1px;
+										i {
+											background-size: 10px 6px;
+										}
+									}
+								}
+								&.square {
+									width: 0.7rem;
+									input {
+										text-align: center;
+									}
+								}
+								&.path-room {
+									width: 0.97rem;
+								}
+								&.sun-plateform {
+									width: 0.83rem;
+								}
+							}
+							&.Horizontal {
+								display: -webkit-box;
+								-webkit-box-pack: justify;
+								.form-set {
+									display: block;
+								}
+							}
+						}
+						.step-list {
+							.row {
+								position: relative;
+								i.on {
+									color: $mainColor;
+								}
+							}
+							color: $fontColor;
+							margin-top: 0.15rem;
+							font-size: 0.14rem;
+							line-height: 0.25rem;
+
+							span.price {
+								position: absolute;
+								right: 0;
+								top: 0;
+							}
+							i {
+								color: #ccc;
+							}
+						}
+						.delete {
+							position: absolute;
+							display: block;
+							line-height: 0.18rem;
+							font-size: 0.16rem;
+							color: $fontColor;
+							right: 0;
+							top: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}

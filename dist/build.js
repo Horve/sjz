@@ -3701,7 +3701,53 @@ define('entry/js/core/tools',[],function() {
 					}
 				}, 50);
 			}
-
+		},
+		lazyLoad: function(imgs) {
+			function show(imgs, src) {
+				$(imgs).css("opacity", 0);
+				setTimeout(function() {
+					$(imgs).attr("src", src);
+					$(imgs).removeAttr("data-src");
+					setTimeout(function(){
+						$(imgs).css("opacity", 1);
+					}, 0);
+				},200);
+			}
+			if (typeof imgs === 'object' && Object.prototype.toString.call(imgs) === '[object Array]') {
+				[].forEach.call(imgs, function(img) {
+					(function() {
+						var src = $(img).attr("data-src");
+						if (src) {
+							show(img, src);
+						}
+					})(img);
+					
+				});
+			} else {
+				var src = $(imgs).attr("data-src");
+				if (src) {
+					show(imgs, src);
+				}
+			}
+		},
+		// x 减去的额外高度 y 均分的份数
+		calcSepHeight: function(x, y, direction) {
+			var dir = direction || "a"; // a垂直 h 水平
+			var args = Array.prototype.slice.call(arguments);
+			var width, height;
+			if (!!args[args.length - 1] && typeof args[args.length - 1] === 'object') {
+				width = $(args[args.length - 1]).width();
+				height = $(args[args.length - 1]).height();
+			} else {
+				width = $(window).width();
+				height = $(window).height();
+			}
+			if(dir === 'a') {
+				return (height - x) / y;
+			} else if (dir === 'h') {
+				return (width - x) / y;
+			}
+			
 		}
 	};
 	var Tools = Tools;
@@ -3737,9 +3783,15 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/swiper.js'], func
 	}
 	return core;
 });
+define('entry/js/src/index',['../core/core'], function(core) {
+	core.onrender("index", function(dom) {
+		
+	});
+});
 define('entry/js/src/component/slideOptions',['../../core/core'], function(core) {
 	var isfirst = true;
 	var isChoose = false;
+	var allData = [];
 	var slideOption = {
 		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span><em class="slide-cancel">取消</em></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i></i></li></ul></div>',
 		// {
@@ -3757,7 +3809,7 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function(core)
 				options.initOption(elem, options.data);
 			}
 			$(elem).off("click").on("click", function() {
-				console.log(111);
+				allData = options.data;
 				_this.beforeShow(elem, options);
 			});
 		},
@@ -3780,7 +3832,7 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function(core)
 			});
 			slide.find('.slide-item-ul').html(content.join(""));
 			if (isfirst) {
-				$('.page').append(slide);
+				$('body').append(slide);
 				setTimeout(function() {
 					_this.show($('.form-slide'), _this, elem, options.callback);
 				}, 100);
@@ -3829,11 +3881,9 @@ define('entry/js/src/component/slideOptions',['../../core/core'], function(core)
 			}
 
 			$('.form-slide li').off('click').on('click', function() {
+				var index = $(this).index();
 				if(callback && typeof callback === "function") {
-					callback({
-						id: $(this).attr("data-id"),
-						txt: $(this).find('span').html()
-					});
+					callback(allData[index]);
 				}
 				$(this).addClass("on").siblings().removeClass("on");
 				setTimeout(function() {
@@ -4314,6 +4364,26 @@ define('entry/js/src/userindex.js',['../core/core'], function(core) {
 define('entry/js/src/usernewyingzhuang.js',['../core/core'], function(core) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h1 = Tools.calcSepHeight(96, 2);
+			var w1 = Tools.calcSepHeight(6, 2, "h");
+			var h2 = Tools.calcSepHeight(140, 1, "a");
+			console.log(h1,w1,h2);
+			$('.yingzhuang-li-comm .list .lrow', dom).css("height", h1 + "px");
+			$('.yingzhuang-li-comm .list .lcol', dom).css("width", w1 + "px");
+			$('.swiper-slide-yingzhuang-six .container', dom).css("height", h2 + "px");
+
+			var h3 = Tools.calcSepHeight(0, 8, "a", $('.swiper-slide-yingzhuang-six .container', dom));
+			$('.swiper-slide-yingzhuang-six .container .row', dom).css("heiht", h3 + "px");
+
+			$('html').removeClass("ios").addClass("android");
+		} else {
+			$('html').removeClass("android").addClass("ios");
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v1',{
 			pagination: '.swiper-pagination-h1',
@@ -4345,6 +4415,12 @@ define('entry/js/src/usernewruanzhuang.js',['../core/core'], function(core) {
 				}
 			});
 		};
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var Tools = core.Tools;
+		if (isQQUC) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v2',{
 			pagination: '.swiper-pagination-h2',
@@ -4376,6 +4452,19 @@ define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
 				}
 			});
 		};
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+			$('.swiper-slide-jiaju-three .item-show', dom)
+			.css(
+				"marginLeft", 
+				$('.swiper-slide-jiaju-three .content').width() - 114 + "px"
+			);
+		}
 		var sliders = $('.swiper-slide', dom);
 		var mySwiper2 = new Swiper('.swiper-container-v3',{
 			pagination: '.swiper-pagination-h3',
@@ -4398,6 +4487,19 @@ define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
 define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
 	core.onrender("user-new-jiadian", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(0, 3);
+			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
+			$('.swiper-slide-jiadian-two .item-show', dom)
+			.css(
+				"marginLeft", 
+				$('.swiper-slide-jiadian-two .bg-content').width() - 114 + "px"
+			);
+		}
 		var lazyLoad = function(imgs) {
 			[].forEach.call(imgs, function(img) {
 				var src = $(img).attr("data-src");
@@ -4422,6 +4524,254 @@ define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
 				// 延迟加载
 				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
 				lazyLoad(imgs);
+			}
+		});
+	});
+});
+define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
+	core.onrender("kf-userindex", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var Tools = core.Tools;
+		if (isAndroid) {
+			var h = Tools.calcSepHeight(68, 4);
+			$('.page-two .style', dom).css("height", h + "px");
+		}
+		var mySwiper1 = new Swiper('.swiper-container',{
+			direction: 'vertical'
+		});
+	});
+});
+define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
+	core.onrender("kf-style", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var Tools = core.Tools;
+		var imgs = $('img', $('.swiper-container'));
+		var items = $('.choose-style .items span', dom);
+		var itemsTxt = $('.choose-style .items-intro', dom);
+		var itemsPrice = $('.choose-style .price', dom);
+		var swipcnt = $('.swiper-container', dom);
+		var mySwiper1 = new Swiper('.swiper-container',{
+			// direction: 'vertical'
+			pagination: '.pagination-style',
+			autoplay: 3000,
+			onInit: function(swiper){
+		    	console.log("init");
+		    	var width = parseInt(Tools.getCurrentStyle(swipcnt[0], "width"));
+		    	var height = width * 0.6875;
+		    	swipcnt.css("height", height + "px");
+		    	Tools.lazyLoad([imgs[0], imgs[1]]);
+		    },
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				// 延迟加载
+				Tools.lazyLoad(imgs[index + 1]);
+			}
+		});
+		$(items).off('click').on('click', function() {
+			var index = $(this).index();
+			$(this).addClass("on").siblings().removeClass("on");
+			console.log(index);
+			var txt = "";
+			var price = 0;
+			switch(index) {
+				case 0: 
+					txt = "一室一厅";
+					price = 3600;
+					break;
+				case 1: 
+					txt = "二室一厅";
+					price = 6200;
+					break;
+				case 2: 
+					txt = "三室一厅";
+					price = 8500;
+					break;
+				case 3: 
+					txt = "一个卧室";
+					price = 1999;
+					break;
+			}
+			itemsTxt.html(txt);
+			itemsPrice.html(price);
+		});
+		var imgLists = $('img', '.pic-lists');
+    	Tools.lazyLoad(imgLists);
+
+    	$('.ordernow').off('click').on('click', function() {
+    		$.ajax({
+    			url: "http://www.s-jz.com/Sbuild/orderCtrl/addOrder.htm",
+    			data: {"orders": [{"productId": 1, "layout": 1}]},
+    			dataType: "json",
+    			success: function(res) {
+    				var code = res.ret;
+    				// 未登录
+    				if (code == 302) {
+    					// 请求微信授权接口wxf25cf835f9d71720
+    					// window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					// wxAuth();
+    				} else if (code == 1) {
+    					// 已登录 进入购物车
+    				} else if (code == -1) {
+    					// 登录失败。提示重试
+    				}
+    			}
+    		});
+    	});
+
+    	// 请求微信授权接口
+    	function wxAuth() {
+    		$.ajax({
+    			url: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect",
+    			dataType: "json",
+    			success: function(res) {
+    				alert(JSON.stringify(res));
+    			},
+    			error: function(res) {
+    				alert("err:" + JSON.stringify(res));
+    			}
+    		});
+    	}
+	});
+});
+define('entry/js/src/jfpart.js',['../core/core'], function(core) {
+	core.onrender("jf-part", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var Tools = core.Tools;
+		var swipcnt = $('.swiper-container', dom);
+		var imgs = $('img', $('.swiper-container'));
+		var chosBtns = $('.price-sec .btn', dom);
+		var mySwiper1 = new Swiper('.swiper-container',{
+			// direction: 'vertical'
+			pagination: '.pagination-style',
+			autoplay: 3000,
+			onInit: function(swiper){
+		    	var width = parseInt(Tools.getCurrentStyle(swipcnt[0], "width"));
+		    	var height = width * 0.74375;
+		    	swipcnt.css("height", height + "px");
+		    	Tools.lazyLoad([imgs[0], imgs[1]]);
+		    },
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				// 延迟加载
+				Tools.lazyLoad(imgs[index + 1]);
+			}
+		});
+		chosBtns.off('click').on('click', function() {
+			if ($(this).hasClass("on")) {
+				$(this).removeClass("on");
+			} else {
+				$(this).addClass("on");
+			}
+		});
+	});
+});
+define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions'], function(core, slideOption) {
+	core.onrender("shop-cart", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var Tools = core.Tools;
+		// 初始化价格
+		var priceInit = {
+			kuaifan: 3600,
+			bathroom: 50000
+		};
+		var kfOrder = $('.kuaifan-order', dom)
+			, yzOrder = $('.yingzhuang-order', dom)
+			, chooseBtns = $('.choose-cbtn');
+		slideOption.add($('.kf-house'), {
+			title: "选择居室 - 快翻套餐",
+			data: [
+				{
+					id: 1,
+					txt: "一居室",
+					price: 3600
+				},
+				{
+					id: 2,
+					txt: "二居室",
+					price: 6200
+				},
+				{
+					id: 3,
+					txt: "三居室",
+					price: 8500
+				},
+				{
+					id: 4,
+					txt: "单间",
+					price: 1999
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
+			},
+			callback: function(data) {
+				$('.kf-house input').val(data.txt);
+				$('.kf-house input').attr("data-id", data.id);
+				console.log(data);
+				priceInit.kuaifan = data.price;
+				console.log(priceInit);
+			}
+		});
+		slideOption.add($('.yz-bathroom'), {
+			title: "选择卫生间 - 硬装套餐",
+			data: [
+				{
+					id: 1,
+					txt: "一个卫生间"
+				},
+				{
+					id: 2,
+					txt: "两个卫生间"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
+			},
+			callback: function(data) {
+				$('.yz-bathroom input').val(data.txt);
+				$('.yz-bathroom input').attr("data-id", data.id);
+			}
+		});
+		slideOption.add($('.yz-platform'), {
+			title: "选择居室 - 快翻套餐",
+			data: [
+				{
+					id: 1,
+					txt: "一个阳台"
+				},
+				{
+					id: 2,
+					txt: "两个阳台"
+				}
+			],
+			choose: true, // 是否是选项列表
+			// 设置初始选项 不设置为null
+			initOption: function(el, datas) {
+				$(el).find('input').val(datas[0].txt);
+				$(el).find('input').attr("data-id", datas[0].id);
+			},
+			callback: function(data) {
+				$('.yz-platform input').val(data.txt);
+				$('.yz-platform input').attr("data-id", data.id);
+			}
+		});
+
+		// 选择与放弃选择
+		chooseBtns.off('click').on('click', function() {
+			if ($(this).hasClass('on')) {
+				$(this).removeClass('on');
+			} else {
+				$(this).addClass('on');
 			}
 		});
 	});
@@ -4470,8 +4820,41 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 		});
 	});
 });
+define('entry/js/src/redirect',['../core/core'], function(core) {
+	core.onrender("redirect", function(dom) {
+		var url = location.search;
+		if (url) {
+			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
+			$.ajax({
+				url: "http://www.s-jz.com/Sbuild/user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
+				dataType: "json",
+				success: function(res) {
+					var ret = res.ret;
+					var uinfo = res.userInfo;
+					if (ret == 2) {
+						var nickName = uinfo.nickName
+							, mobile = uinfo.mobile
+							, head = uinfo.head
+							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
+						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
+					} else if (ret == 1) {
+						// 登陆成功
+						window.location.href = "http://www.s-jz.com/";
+					}
+				},
+				error: function(data){
+					alert(JSON.stringify(data));
+				}
+			});
+		} else {
+			window.location = "http://www.s-jz.com";
+		}
+		
+	});
+});
 // main.js
 require([
+	'entry/js/src/index',
 	'entry/js/src/workerapply',
 	'entry/js/src/quote', 
 	'entry/js/src/quoteres', 
@@ -4481,7 +4864,12 @@ require([
 	'entry/js/src/usernewruanzhuang.js', 
 	'entry/js/src/usernewjiaju.js', 
 	'entry/js/src/usernewjiadian.js', 
-	'entry/js/src/userproduct.js'], function() {
+	'entry/js/src/kfuserindex.js', 
+	'entry/js/src/kfstylenav.js', 
+	'entry/js/src/jfpart.js', 
+	'entry/js/src/shopcart.js', 
+	'entry/js/src/userproduct.js',
+	'entry/js/src/redirect',], function() {
 });
 define("entry/js/main", function(){});
 

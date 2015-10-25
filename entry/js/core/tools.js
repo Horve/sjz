@@ -87,6 +87,23 @@ define(function() {
 				return (width - x) / y;
 			}
 			
+		},
+		timeFormat: function(time) {
+			var time = new Date(time);
+			function check(num) {
+				if (parseInt(num) < 10) {
+					return "0" + num;
+				} else {
+					return "" + num;
+ 				}
+			}
+			return ""
+				+ time.getFullYear() + "-"
+				+ check(time.getMonth() + 1) + "-"
+				+ check(time.getDate()) + " "
+				+ check(time.getHours()) + ":"
+				+ check(time.getMinutes()) + ":"
+				+ check(time.getSeconds());
 		}
 	};
 	var Tools = Tools;

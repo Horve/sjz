@@ -12,14 +12,21 @@
     <meta name="x5-orientation" content="portrait"/>
     <meta name="x5-fullscreen" content="true"/>
     <meta name="x5-page-mode" content="app"/>
-	<title>个人中心</title>
+	<title>我的订单</title>
     <!-- 由main.sass 生成    -->
 	<link rel="stylesheet" href="../../dist/main.min.css" />
 	<link rel="stylesheet" href="../../dist/normalize.css" />
 </head>
 <body class="user-payment">
+	<div class="order-type">
+		<a class="type-item on">未支付</a>
+		<a class="type-item">已开工</a>
+		<a class="type-item">已完工</a>
+		<a class="type-item">历史订单</a>
+	</div>
 	<div class="page" data-render-id="shop-cart">
-		<div class="order-list">
+		<div class="blank46"></div>
+		<div class="order-list not-pay">
 			<!-- <div class="order kuaifan-order">
 				<div class="top-bottom">订单编号：1150622312</div>
 				<div class="cnt">
@@ -106,11 +113,11 @@
 		<div class="price-info">
 			<a class="select-all"><i class="iconfont on">&#xe60b;</i>全选</a>
 			<div class="price-txt">
-				<span>已支付<em>￥99</em></span>
-				<span>合计<em>￥23699</em></span>
+				<span>需支付定金<em id="need-pay">￥0</em></span>
+				<span>合计<em id="total-price">￥0</em></span>
 			</div>
 		</div>
-		<a href="" class="gopay">结算</a>
+		<a href="" class="gopay">99元开工</a>
 	</div>
 	<script type="text/javascript" src="../../dist/build.js"></script>
 	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->

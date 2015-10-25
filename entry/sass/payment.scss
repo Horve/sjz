@@ -5,6 +5,36 @@ $fontFace: microsoft yahei, simsun;
 
 .payment {
 	font-size: 100px;
+	.blank46 {
+		height: 0.46rem;
+	}
+	.order-type {
+		height: 0.45rem;
+		line-height: 0.45rem;
+		border-bottom: 1px solid #d1d1d1;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: 300;
+		background: #fff;
+		font-size: 0.14rem;
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+
+		a.type-item {
+			display: block;
+			width: 25%;
+			height: 100%;
+			text-align: center;
+			border-bottom: none;
+			box-sizing: border-box;
+			&.on {
+				color: $mainColor;
+				border-bottom: 2px solid $mainColor;
+			}
+		}
+	}
 	.order-bar {
 		height: 0.6rem;
 		position: absolute;
@@ -87,12 +117,18 @@ $fontFace: microsoft yahei, simsun;
 				border-bottom: 1px solid #d1d1d1;
 				background: #fff;
 				margin-bottom: 0.1rem;
+				-webkit-transition: all .3s ease-in-out;
+				&.hide1 {
+					border-bottom: 0;
+					-webkit-transform: translateX(-640px);
+				}
 				.top-bottom {
 					height: 0.45rem;
 					line-height: 0.45rem;
 					font-size: 0.14rem;
 					color: $fontColor;
 					padding: 0 0.1rem;
+					white-space: nowrap;
 					span.price {
 						float: right;
 						color: #000;
@@ -199,5 +235,13 @@ $fontFace: microsoft yahei, simsun;
 				}
 			}
 		}
+	}
+}
+@-webkit-keyframes paymentHide {
+	0% {
+		display: block;
+	}
+	100% {
+		display: none;
 	}
 }

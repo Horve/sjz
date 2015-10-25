@@ -1,6 +1,8 @@
-define(['../core/core'], function(core) {
+define(['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var baseUrl = "http://www.s-jz.com/Sbuild/";
+		var productStyle = "艺术学院";
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
 		var u = navigator.userAgent;
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
@@ -37,6 +39,18 @@ define(['../core/core'], function(core) {
 					}
 				});
 			}
+		});
+
+		// style
+		var styleLis = $('.user-choose-list ul li', dom);
+		styleLis.off('click').on('click', function() {
+			$(this).addClass("on").siblings().removeClass("on");
+			productStyle = $(this).find('span').html();
+		});
+
+		$('.order', dom).off('click').on('click', function() {
+			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
+    		OrderConfig.addOrderAjax(2, params);
 		});
 	});
 });

@@ -4379,7 +4379,7 @@ define('entry/js/src/userindex.js',['../core/core'], function(core) {
 	});
 });
 define('entry/js/src/order',['../core/core'], function(core) {
-	var baseUrl = "http://www.s-jz.com/Sbuild/";
+	var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 	var OrderConfig = {};
 	// 下订单
 	OrderConfig.addOrderAjax = function(productId, params) {
@@ -4389,7 +4389,7 @@ define('entry/js/src/order',['../core/core'], function(core) {
 			dataType: "json",
 			success: function(res) {
 				var code = res.ret
-					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
 				// 未登录
 				if (code == 302) {
 					// 请求微信授权接口wxf25cf835f9d71720
@@ -4412,7 +4412,7 @@ define('entry/js/src/order',['../core/core'], function(core) {
 define('entry/js/src/usernewyingzhuang.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
-		var baseUrl = "http://www.s-jz.com/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var productStyle = "艺术学院";
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
 		var u = navigator.userAgent;
@@ -4609,6 +4609,7 @@ define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
 define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
 	core.onrender("kf-style", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools;
 		var imgs = $('img', $('.swiper-container'));
 		var items = $('.choose-style .items span', dom);
@@ -4680,12 +4681,13 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
     			params = '"layout": ' + layout;
     		}
     		$.ajax({
-    			url: "http://www.s-jz.com/Sbuild/orderCtrl/addOrder.htm",
+    			url:  baseUrl + "orderCtrl/addOrder.htm",
     			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
     			dataType: "json",
     			success: function(res) {
     				var code = res.ret
-    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fpub%2FSbuild%2Fpay%2Ftest%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					// , jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
     				// 未登录
     				if (code == 302) {
     					// 请求微信授权接口wxf25cf835f9d71720
@@ -4694,7 +4696,8 @@ define('entry/js/src/kfstylenav.js',['../core/core'], function(core) {
     					// wxAuth();
     				} else if (code == 1) {
     					// 已登录 进入购物车
-    					window.location.href = "http://www.s-jz.com/html/payment/";
+    					// window.location.href = "http://www.s-jz.com/html/payment/";
+    					window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/payment/";
     				} else if (code == -1) {
     					// 登录失败。提示重试
     					alert("登录失败！");
@@ -4811,22 +4814,30 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', './component/dialog'], function(core, slideOption, dialog) {
 	core.onrender("shop-cart", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools
 			, yzOrderDtl = {}
 			// 初始化价格
 			, priceDetail = {}
+			, selectedOrder = {};
 
 		var kfOrder = $('.kuaifan-order', dom)
 			, yzOrder = $('.yingzhuang-order', dom)
 			, chooseBtns = $('.choose-cbtn', dom)
-			, priceEl = $('#total-price');
+			, priceEl = $('#total-price')
+			, payButton = $('.gopay');
 
 		var shopCart = {
 			EL_orderLis: $('.order-list', dom),
 			init: function() {
+				var This = this;
 				// 请求订单列表
 				this.getUnfinishedOrder();
 				this._eventBindChoose();
+				// 支付事件绑定
+				payButton.off('click').on('click', function() {
+					This.wxPay_qianzheng();
+				});
 			},
 			// get price
 			_getPrice: function() {
@@ -5000,7 +5011,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 			},
 			_ajaxModifyOrder: function(oid, param) {
 				$.ajax({
-					url: "http://www.s-jz.com/Sbuild/orderCtrl/updateOrders.htm",
+					url: baseUrl + "orderCtrl/updateOrders.htm",
 					data: {"ordersStr": '{"orders": [{"orderId":' + parseInt(oid) + ',' + param + '}]}'}, 
 					//{"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
 					success: function(res) {
@@ -5015,7 +5026,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 				console.log(id);
 				var This = this;
 				$.ajax({
-					url: "http://www.s-jz.com/Sbuild/orderCtrl/cancelOrder.htm?orderId=" + id,
+					url: baseUrl + "orderCtrl/cancelOrder.htm?orderId=" + id,
 					dataType: "json",
 					success: function(res) {
 						console.log(res);
@@ -5044,7 +5055,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 				var This = this;
 				$.ajax({
 					// 未完成订单
-					url: "http://www.s-jz.com/Sbuild/orderCtrl/getOrders.htm?type=1",
+					url: baseUrl + "orderCtrl/getOrders.htm?type=1",
 					dataType: "json",
 					success: function(res) {
 						// alert("ret:" + JSON.stringify(res));
@@ -5218,11 +5229,79 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 								console.log(err);
 							}
 							
+						} else if (res.ret == -1) {
+							dialog.add("ret:-1 订单列表返回失败，请重试！");
+						} else if (res.ret == 302) {
+							dialog.add("需登录！");
 						}
+					}
+				});
+			},
+			// js-jdk签证所需信息
+			wxPay_qianzheng: function() {
+				var This = this;
+				$.ajax({
+					url: baseUrl + "wxsingctrl/sigin.htm?url=" + window.location.href,
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						This.wxPay_getParams();
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+					}
+				});
+			},
+			// 获取支付方法所需参数
+			wxPay_getParams: function() {
+				$.ajax({
+					url: baseUrl + "pay/test/preparePay.htm?orderIds=" 
+						+ "18866000100" 
+						+ "&isFirst99=true",
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						try {
+							if (res.ret == 1) {
+								// 成功获取参数
+								function onBridgeReady(){
+									WeixinJSBridge.invoke('getBrandWCPayRequest', {
+											"appId": "wx4d6a2dce4f09dfd0", //公众号名称，由商户传入     
+											"timeStamp": res.timeStamp, //时间戳，自1970年以来的秒数     
+											"nonceStr": res.nonceStr, //随机串     
+											"package": res.package,     
+											"signType": res.signType, //微信签名方式：     
+											"paySign": res.paySign //微信签名 
+										},
+										function(res){     
+											if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+												alert(2);
+											}
+										}
+									); 
+								}
+								if (typeof WeixinJSBridge == "undefined"){
+									if( document.addEventListener ){
+									   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+									}else if (document.attachEvent){
+									   document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+									   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+									}
+								}else{
+									onBridgeReady();
+								}
+							}
+						} catch(e) {
+							alert(JSON.stringify(e));
+						}
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
 					}
 				});
 			}
 		};
+		// bbb
 		shopCart.init();
 	});
 });
@@ -5273,12 +5352,14 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 define('entry/js/src/redirect',['../core/core'], function(core) {
 	core.onrender("redirect", function(dom) {
 		var url = location.search;
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		if (url) {
 			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
 			$.ajax({
-				url: "http://www.s-jz.com/Sbuild/user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
+				url: baseUrl + "user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
 				dataType: "json",
 				success: function(res) {
+					alert(JSON.stringify(res));
 					var ret = res.ret;
 					var uinfo = res.userInfo;
 					if (ret == 2) {
@@ -5286,7 +5367,8 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 							, mobile = uinfo.mobile
 							, head = uinfo.head
 							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
-						window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
+						// window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
+						window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/ucenter/uedit.html?" + param;
 					} else if (ret == 1) {
 						// 登陆成功
 						// window.location.href = "http://www.s-jz.com/";

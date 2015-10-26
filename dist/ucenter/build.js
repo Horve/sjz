@@ -3843,6 +3843,7 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 });
 define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(core, dialog) {
 	core.onrender("ucenter-editinfo", function(dom) {
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var ruletxt = $('.rule-txt')
 			, close = $('.close-rule')
 			, cover = $('.cover')
@@ -3909,7 +3910,7 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(c
 					+ "&province=" + ulocate
 					+ "&addr=" + uaddress;
 				$.ajax({
-					url: "http://www.s-jz.com/Sbuild/user/register.htm?" + params,
+					url: baseUrl + "user/register.htm?" + params,
 					dataType: "json",
 					success: function(res) {
 						alert("res:" + JSON.stringify(res));

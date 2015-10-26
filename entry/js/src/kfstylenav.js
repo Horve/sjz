@@ -1,6 +1,7 @@
 define(['../core/core'], function(core) {
 	core.onrender("kf-style", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools;
 		var imgs = $('img', $('.swiper-container'));
 		var items = $('.choose-style .items span', dom);
@@ -72,12 +73,13 @@ define(['../core/core'], function(core) {
     			params = '"layout": ' + layout;
     		}
     		$.ajax({
-    			url: "http://www.s-jz.com/Sbuild/orderCtrl/addOrder.htm",
+    			url:  baseUrl + "orderCtrl/addOrder.htm",
     			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
     			dataType: "json",
     			success: function(res) {
     				var code = res.ret
-    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf25cf835f9d71720&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fpub%2FSbuild%2Fpay%2Ftest%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    					// , jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
     				// 未登录
     				if (code == 302) {
     					// 请求微信授权接口wxf25cf835f9d71720
@@ -86,7 +88,8 @@ define(['../core/core'], function(core) {
     					// wxAuth();
     				} else if (code == 1) {
     					// 已登录 进入购物车
-    					window.location.href = "http://www.s-jz.com/html/payment/";
+    					// window.location.href = "http://www.s-jz.com/html/payment/";
+    					window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/payment/";
     				} else if (code == -1) {
     					// 登录失败。提示重试
     					alert("登录失败！");

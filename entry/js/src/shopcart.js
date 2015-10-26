@@ -1,6 +1,7 @@
 define(['../core/core', './component/slideOptions', './component/dialog'], function(core, slideOption, dialog) {
 	core.onrender("shop-cart", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools
 			, yzOrderDtl = {}
 			// 初始化价格
@@ -10,14 +11,20 @@ define(['../core/core', './component/slideOptions', './component/dialog'], funct
 		var kfOrder = $('.kuaifan-order', dom)
 			, yzOrder = $('.yingzhuang-order', dom)
 			, chooseBtns = $('.choose-cbtn', dom)
-			, priceEl = $('#total-price');
+			, priceEl = $('#total-price')
+			, payButton = $('.gopay');
 
 		var shopCart = {
 			EL_orderLis: $('.order-list', dom),
 			init: function() {
+				var This = this;
 				// 请求订单列表
 				this.getUnfinishedOrder();
 				this._eventBindChoose();
+				// 支付事件绑定
+				payButton.off('click').on('click', function() {
+					This.wxPay_qianzheng();
+				});
 			},
 			// get price
 			_getPrice: function() {
@@ -191,7 +198,7 @@ define(['../core/core', './component/slideOptions', './component/dialog'], funct
 			},
 			_ajaxModifyOrder: function(oid, param) {
 				$.ajax({
-					url: "http://www.s-jz.com/Sbuild/orderCtrl/updateOrders.htm",
+					url: baseUrl + "orderCtrl/updateOrders.htm",
 					data: {"ordersStr": '{"orders": [{"orderId":' + parseInt(oid) + ',' + param + '}]}'}, 
 					//{"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
 					success: function(res) {
@@ -206,7 +213,7 @@ define(['../core/core', './component/slideOptions', './component/dialog'], funct
 				console.log(id);
 				var This = this;
 				$.ajax({
-					url: "http://www.s-jz.com/Sbuild/orderCtrl/cancelOrder.htm?orderId=" + id,
+					url: baseUrl + "orderCtrl/cancelOrder.htm?orderId=" + id,
 					dataType: "json",
 					success: function(res) {
 						console.log(res);
@@ -235,7 +242,7 @@ define(['../core/core', './component/slideOptions', './component/dialog'], funct
 				var This = this;
 				$.ajax({
 					// 未完成订单
-					url: "http://www.s-jz.com/Sbuild/orderCtrl/getOrders.htm?type=1",
+					url: baseUrl + "orderCtrl/getOrders.htm?type=1",
 					dataType: "json",
 					success: function(res) {
 						// alert("ret:" + JSON.stringify(res));
@@ -409,11 +416,79 @@ define(['../core/core', './component/slideOptions', './component/dialog'], funct
 								console.log(err);
 							}
 							
+						} else if (res.ret == -1) {
+							dialog.add("ret:-1 订单列表返回失败，请重试！");
+						} else if (res.ret == 302) {
+							dialog.add("需登录！");
 						}
+					}
+				});
+			},
+			// js-jdk签证所需信息
+			wxPay_qianzheng: function() {
+				var This = this;
+				$.ajax({
+					url: baseUrl + "wxsingctrl/sigin.htm?url=" + window.location.href,
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						This.wxPay_getParams();
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+					}
+				});
+			},
+			// 获取支付方法所需参数
+			wxPay_getParams: function() {
+				$.ajax({
+					url: baseUrl + "pay/test/preparePay.htm?orderIds=" 
+						+ "18866000100" 
+						+ "&isFirst99=true",
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						try {
+							if (res.ret == 1) {
+								// 成功获取参数
+								function onBridgeReady(){
+									WeixinJSBridge.invoke('getBrandWCPayRequest', {
+											"appId": "wx4d6a2dce4f09dfd0", //公众号名称，由商户传入     
+											"timeStamp": res.timeStamp, //时间戳，自1970年以来的秒数     
+											"nonceStr": res.nonceStr, //随机串     
+											"package": res.package,     
+											"signType": res.signType, //微信签名方式：     
+											"paySign": res.paySign //微信签名 
+										},
+										function(res){     
+											if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+												alert(2);
+											}
+										}
+									); 
+								}
+								if (typeof WeixinJSBridge == "undefined"){
+									if( document.addEventListener ){
+									   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+									}else if (document.attachEvent){
+									   document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+									   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+									}
+								}else{
+									onBridgeReady();
+								}
+							}
+						} catch(e) {
+							alert(JSON.stringify(e));
+						}
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
 					}
 				});
 			}
 		};
+		// bbb
 		shopCart.init();
 	});
 });

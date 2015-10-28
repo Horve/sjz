@@ -3914,6 +3914,19 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(c
 					dataType: "json",
 					success: function(res) {
 						alert("res:" + JSON.stringify(res));
+						// 1 成功
+						// 0 失败 
+						// -1失败
+						// 2 用户名被占用
+						// 3 用户名不能为空
+						// 4 用户名长度不符合4-20
+						// 7 昵称长度不符合4-20
+						// 8 openId已经绑定过用户
+						// 9 未得到微信授权
+						// 10已注册过，返回用信息
+						if (res.ret == 1) {
+							window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/user/";
+						}
 					},
 					error: function(err) {
 						alert("err:" + JSON.stringify(res));

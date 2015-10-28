@@ -51,7 +51,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				this.getOrder(1);
 				// 支付事件绑定
 				payButton.off('click').on('click', function() {
-					alert(selectedOrder);
+					// alert(selectedOrder);
 					if (!!selectedOrder.length) {
 						This.wxPay_qianzheng(payState, productType);
 					} else {
@@ -626,8 +626,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			},
 			// 获取支付方法所需参数 payState 支付阶段（0:99/1:结算） type 产品类型(硬装/翻新)
 			wxPay_getParams: function(payState, type) {
-				alert(payState);
-				alert(type);
+				// alert(payState);
+				// alert(type);
 				var This = this
 					, params = ""
 					, payState = payState || 1;
@@ -647,7 +647,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					}
 				}
 				
-				alert(params);
+				// alert(params);
 				$.ajax({
 					url: baseUrl + "pay/test/preparePay.htm?orderIds=" 
 						+ selectedOrder 

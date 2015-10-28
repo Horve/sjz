@@ -3841,9 +3841,65 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 
 	return dialog;
 });
-define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(core, dialog) {
+define('entry/js/src/jump',[],function() {
+	var baseUrl = "http://www.s-jz.com/pub/Sbuild/"
+		, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fpub%2FSbuild%2Fpay%2Ftest%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
+		, shopChartUrl = baseUrl + "pay/test/html/payment/"
+		, checkUsr = {};
+
+	checkUsr.doJump = function() {
+		window.location.href = jumpurl;
+	};
+	checkUsr.toShopChart = function() {
+		window.location.href = shopChartUrl;
+	};
+	return checkUsr;
+});
+define('entry/js/src/ucenter',['../core/core', './component/dialog', './jump'], function(core, dialog, checkUsr) {
+	var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+
+	core.onrender("ucenter-index", function(dom) {
+		var headBg = $('.headpic-bg', dom)
+			, headPic = $('.head-pic img', dom)
+			, unameEL = $('.user-info .uname', dom);
+		var getUserInfo = function() {
+			if (localStorage.getItem("sjz-uname")) {
+				var uname = localStorage.getItem("sjz-uname")
+					upic = localStorage.getItem("sjz-hdpic");
+				headBg.attr("src", upic);
+				headPic.attr("src", upic);
+				unameEL.html(uname);	
+			} else {
+				$.ajax({
+					url: baseUrl + "user/getUserInfo.htm",
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						if (res.ret == 1) {
+							// 获取信息成功
+							// dialog.add("获取信息成功！");
+							var userInfo = res.userInfo;
+							headBg.attr("src", userInfo.head);
+							headPic.attr("src", userInfo.head);
+							unameEL.html(userInfo.nickName);
+							localStorage.setItem("sjz-uname", userInfo.nickName);
+							localStorage.setItem("sjz-hdpic", userInfo.head);
+						} else if (res.ret == -1) {
+							dialog.add("res:-1 获取信息失败！");
+						} else if (res.ret == 302) {
+							// 未登录
+							checkUsr.doJump();
+						}
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+					}
+				});
+			}
+		};
+		getUserInfo();
+	});
 	core.onrender("ucenter-editinfo", function(dom) {
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var ruletxt = $('.rule-txt')
 			, close = $('.close-rule')
 			, cover = $('.cover')
@@ -3863,16 +3919,18 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(c
 		});
 
 		var paramArr = location.search.replace(/\?/, "").split("&");
-		var params = {};
-		[].forEach.call(paramArr, function(param) {
-			var _arr = param.split("=");
-			params[_arr[0]] = _arr[1];
-		});
-		var nickname = decodeURIComponent(params.nickName)
-			, mobile = (params.mobile == "null" ? "" : params.mobile)
-			, headpic = params.head;
-		EL_unick.val(nickname);
-		mobile && EL_uphone.val(mobile);
+		if (paramArr.length > 0 && !!paramArr[0]) {
+			var params = {};
+			[].forEach.call(paramArr, function(param) {
+				var _arr = param.split("=");
+				params[_arr[0]] = _arr[1];
+			});
+			var nickname = decodeURIComponent(params.nickName)
+				, mobile = (params.mobile == "null" ? "" : params.mobile)
+				, headpic = params.head;
+			EL_unick.val(nickname);
+			mobile && EL_uphone.val(mobile);
+		}
 
 		var valid = [
 			["uname", /^[0-9|a-z|A-Z]{1,20}$/, "请输入0-20个由大小、写字母或数字组成的用户名"],
@@ -3914,6 +3972,19 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog'], function(c
 					dataType: "json",
 					success: function(res) {
 						alert("res:" + JSON.stringify(res));
+						// 1 成功
+						// 0 失败 
+						// -1失败
+						// 2 用户名被占用
+						// 3 用户名不能为空
+						// 4 用户名长度不符合4-20
+						// 7 昵称长度不符合4-20
+						// 8 openId已经绑定过用户
+						// 9 未得到微信授权
+						// 10已注册过，返回用信息
+						if (res.ret == 1) {
+							window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/user/";
+						}
 					},
 					error: function(err) {
 						alert("err:" + JSON.stringify(res));

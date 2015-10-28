@@ -1,4 +1,4 @@
-define(['../core/core'], function(core) {
+define(['../core/core', './jump'], function(core, checkUsr) {
 	core.onrender("kf-style", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
@@ -77,19 +77,13 @@ define(['../core/core'], function(core) {
     			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
     			dataType: "json",
     			success: function(res) {
-    				var code = res.ret
-    					, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fpub%2FSbuild%2Fpay%2Ftest%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
-    					// , jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fredirect.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
+    				var code = res.ret;
     				// 未登录
     				if (code == 302) {
-    					// 请求微信授权接口wxf25cf835f9d71720
-    					// window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
-    					window.location.href = jumpurl;
-    					// wxAuth();
+    					checkUsr.doJump();
     				} else if (code == 1) {
     					// 已登录 进入购物车
-    					// window.location.href = "http://www.s-jz.com/html/payment/";
-    					window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/payment/";
+    					checkUsr.toShopChart();
     				} else if (code == -1) {
     					// 登录失败。提示重试
     					alert("登录失败！");

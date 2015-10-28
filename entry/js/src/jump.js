@@ -10,5 +10,11 @@ define(function() {
 	checkUsr.toShopChart = function() {
 		window.location.href = shopChartUrl;
 	};
+	checkUsr.toIndex = function() {
+		window.location.href = baseUrl + "pay/test/html/user/";
+	};
+	checkUsr.toUserInfo = function() {
+		window.location.href = baseUrl + "pay/test/html/ucenter/uinfo.html";
+	};
 	return checkUsr;
 });

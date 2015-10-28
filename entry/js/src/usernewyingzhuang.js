@@ -52,5 +52,9 @@ define(['../core/core', '../src/order'], function(core, OrderConfig) {
 			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
     		OrderConfig.addOrderAjax(2, params);
 		});
+		$('.shopcart', dom).off('click').on('click', function() {
+			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
+    		OrderConfig.addToShopChart(2, params);
+		});
 	});
 });

@@ -1071,6 +1071,19 @@ input {
   top: 1px;
   border-radius: 2px;
 }
+.ucenter .user-rule .checkbox:after {
+  content: "";
+  width: 0.1rem;
+  height: 0.1rem;
+  position: absolute;
+  top: 0.01rem;
+  left: 0.01rem;
+  background: #3ad064;
+  display: none;
+}
+.ucenter .user-rule .checkbox.on:after {
+  display: block;
+}
 .ucenter .button-2 {
   margin: 0.4rem 0.1rem;
   color: #fff;

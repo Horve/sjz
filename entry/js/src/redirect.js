@@ -8,7 +8,7 @@ define(['../core/core'], function(core) {
 				url: baseUrl + "user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
 				dataType: "json",
 				success: function(res) {
-					alert(JSON.stringify(res));
+					// alert(JSON.stringify(res));
 					var ret = res.ret;
 					var uinfo = res.userInfo;
 					if (ret == 2) {

@@ -4390,9 +4390,73 @@ define('entry/js/src/jump',[],function() {
 	checkUsr.toShopChart = function() {
 		window.location.href = shopChartUrl;
 	};
+	checkUsr.toIndex = function() {
+		window.location.href = baseUrl + "pay/test/html/user/";
+	};
+	checkUsr.toUserInfo = function() {
+		window.location.href = baseUrl + "pay/test/html/ucenter/uinfo.html";
+	};
 	return checkUsr;
 });
-define('entry/js/src/order',['../core/core', './jump'], function(core, checkUsr) {
+define('entry/js/src/component/dialog',['../../core/core'], function(core) {
+	var isfirst = true;
+	var allData = [];
+	var dialog = {
+		TEMPLATE: '<div class="dialog-mask"></div><div class="dialog-body"><p></p><a class="button-ok">确定</a></div>',
+		add: function(txt) {
+			console.log("Enter dialog Component!");
+			var _this = this;
+			_this.beforeShow(txt);
+		},
+		beforeShow: function(txt) {
+			var _this = this;
+			var dialog;
+			if (!$('.dialog-mask').length) {
+				dialog = $(_this.TEMPLATE);
+				isfirst = true;
+			} else {
+				dialog = $('.dialog-mask, .dialog-body');
+				isfirst = false;
+			}
+			dialog.find('p').html(txt);
+			if (isfirst) {
+				$('body').append(dialog);
+				setTimeout(function() {
+					_this.show($('.dialog-body'), _this);
+				}, 100);
+			} else {
+				$('.dialog-body, .dialog-mask').show();
+				_this.show($('.dialog-body'), _this);
+			}
+		},
+
+		show: function(el, _this) {
+			var elH = $(el).height();
+			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
+			_this.hideBind(el);
+		},
+		hide: function(el) {
+			// $(el).removeClass("anim");
+			$(el).attr("style", "-webkit-transform: translate3d(0,0,0);");
+			$('.dialog-mask').hide();
+			this.afterHide();
+		},
+		hideBind: function(el) {
+			var _this = this;
+			$('.dialog-mask, .button-ok').off('click').on('click', function() {
+				_this.hide(el);
+			});
+		},
+		afterHide: function() {
+			setTimeout(function() {
+				$('.dialog-body').hide();
+			}, 300);
+		}
+	};
+
+	return dialog;
+});
+define('entry/js/src/order',['../core/core', './jump', './component/dialog'], function(core, checkUsr, dialog) {
 	var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 	var OrderConfig = {};
 	// 下订单
@@ -4413,6 +4477,29 @@ define('entry/js/src/order',['../core/core', './jump'], function(core, checkUsr)
 				} else if (code == 1) {
 					// 已登录 进入购物车
 					checkUsr.toShopChart();
+				} else if (code == -1) {
+					// 登录失败。提示重试
+					alert("登录失败！");
+				}
+			}
+		});
+	};
+	OrderConfig.addToShopChart = function(productId, params) {
+		$.ajax({
+			url: baseUrl + "orderCtrl/addOrder.htm",
+			data: {"ordersStr": '{"orders": [{"productId":' + productId + ', ' + params + '}]}'},
+			dataType: "json",
+			success: function(res) {
+				// alert(JSON.stringify(res));
+				var code = res.ret;
+				// 未登录
+				if (code == 302) {
+					window.location.href = jumpurl;
+					checkUsr.doJump();
+					// wxAuth();
+				} else if (code == 1) {
+					// 已登录 提示加入购物车成功
+					dialog.add("已成功加入购物车！");
 				} else if (code == -1) {
 					// 登录失败。提示重试
 					alert("登录失败！");
@@ -4477,9 +4564,13 @@ define('entry/js/src/usernewyingzhuang.js',['../core/core', '../src/order'], fun
 			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
     		OrderConfig.addOrderAjax(2, params);
 		});
+		$('.shopcart', dom).off('click').on('click', function() {
+			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
+    		OrderConfig.addToShopChart(2, params);
+		});
 	});
 });
-define('entry/js/src/usernewruanzhuang.js',['../core/core'], function(core) {
+define('entry/js/src/usernewruanzhuang.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-ruanzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var lazyLoad = function(imgs) {
@@ -4514,9 +4605,26 @@ define('entry/js/src/usernewruanzhuang.js',['../core/core'], function(core) {
 				lazyLoad(imgs);
 			}
 		});
+		// style
+		var productStyle = "艺术学院";
+		var styleLis = $('.user-choose-list ul li', dom);
+		styleLis.off('click').on('click', function() {
+			$(this).addClass("on").siblings().removeClass("on");
+			productStyle = $(this).find('span').html();
+		});
+		// 下单
+		var layout = 1;
+		$('.order', dom).off('click').on('click', function() {
+			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
+    		OrderConfig.addOrderAjax(3, params);
+		});
+		$('.shopcart', dom).off('click').on('click', function() {
+			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
+    		OrderConfig.addToShopChart(3, params);
+		});
 	});
 });
-define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
+define('entry/js/src/usernewjiaju.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-jiaju", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var lazyLoad = function(imgs) {
@@ -4558,9 +4666,26 @@ define('entry/js/src/usernewjiaju.js',['../core/core'], function(core) {
 				lazyLoad(imgs);
 			}
 		});
+		// style
+		var productStyle = "艺术学院";
+		var styleLis = $('.user-choose-list ul li', dom);
+		styleLis.off('click').on('click', function() {
+			$(this).addClass("on").siblings().removeClass("on");
+			productStyle = $(this).find('span').html();
+		});
+		// 下单
+		var layout = 1;
+		$('.order', dom).off('click').on('click', function() {
+			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
+    		OrderConfig.addOrderAjax(4, params);
+		});
+		$('.shopcart', dom).off('click').on('click', function() {
+			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
+    		OrderConfig.addToShopChart(4, params);
+		});
 	});
 });
-define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
+define('entry/js/src/usernewjiadian.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-jiadian", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
@@ -4602,6 +4727,23 @@ define('entry/js/src/usernewjiadian.js',['../core/core'], function(core) {
 				lazyLoad(imgs);
 			}
 		});
+		// style
+		var productStyle = "艺术学院";
+		var styleLis = $('.user-choose-list ul li', dom);
+		styleLis.off('click').on('click', function() {
+			$(this).addClass("on").siblings().removeClass("on");
+			productStyle = $(this).find('span').html();
+		});
+		// 下单
+		var layout = 1;
+		$('.order', dom).off('click').on('click', function() {
+			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
+    		OrderConfig.addOrderAjax(5, params);
+		});
+		$('.shopcart', dom).off('click').on('click', function() {
+			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
+    		OrderConfig.addToShopChart(5, params);
+		});
 	});
 });
 define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
@@ -4620,7 +4762,7 @@ define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
 		});
 	});
 });
-define('entry/js/src/kfstylenav.js',['../core/core', './jump'], function(core, checkUsr) {
+define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
 	core.onrender("kf-style", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
@@ -4694,39 +4836,36 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump'], function(core, c
     		} else {
     			params = '"layout": ' + layout;
     		}
-    		$.ajax({
-    			url:  baseUrl + "orderCtrl/addOrder.htm",
-    			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
-    			dataType: "json",
-    			success: function(res) {
-    				var code = res.ret;
-    				// 未登录
-    				if (code == 302) {
-    					checkUsr.doJump();
-    				} else if (code == 1) {
-    					// 已登录 进入购物车
-    					checkUsr.toShopChart();
-    				} else if (code == -1) {
-    					// 登录失败。提示重试
-    					alert("登录失败！");
-    				}
-    			}
-    		});
+    		OrderConfig.addOrderAjax(1, params);
+    		// $.ajax({
+    		// 	url:  baseUrl + "orderCtrl/addOrder.htm",
+    		// 	data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
+    		// 	dataType: "json",
+    		// 	success: function(res) {
+    		// 		var code = res.ret;
+    		// 		// 未登录
+    		// 		if (code == 302) {
+    		// 			checkUsr.doJump();
+    		// 		} else if (code == 1) {
+    		// 			// 已登录 进入购物车
+    		// 			checkUsr.toShopChart();
+    		// 		} else if (code == -1) {
+    		// 			// 登录失败。提示重试
+    		// 			alert("登录失败！");
+    		// 		}
+    		// 	}
+    		// });
     	});
-
-    	// 请求微信授权接口
-    	function wxAuth() {
-    		$.ajax({
-    			url: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect",
-    			dataType: "json",
-    			success: function(res) {
-    				alert(JSON.stringify(res));
-    			},
-    			error: function(res) {
-    				alert("err:" + JSON.stringify(res));
-    			}
-    		});
-    	}
+    	$('.shopchart').off('click').on('click', function() {
+    		var location = window.location.href;
+    		var params = "";
+    		if (!!nums) {
+    			params = '"nums": 1';
+    		} else {
+    			params = '"layout": ' + layout;
+    		}
+    		OrderConfig.addToShopChart(1, params);
+    	});
 	});
 });
 define('entry/js/src/jfpart.js',['../core/core'], function(core) {
@@ -4760,64 +4899,6 @@ define('entry/js/src/jfpart.js',['../core/core'], function(core) {
 			}
 		});
 	});
-});
-define('entry/js/src/component/dialog',['../../core/core'], function(core) {
-	var isfirst = true;
-	var allData = [];
-	var dialog = {
-		TEMPLATE: '<div class="dialog-mask"></div><div class="dialog-body"><p></p><a class="button-ok">确定</a></div>',
-		add: function(txt) {
-			console.log("Enter dialog Component!");
-			var _this = this;
-			_this.beforeShow(txt);
-		},
-		beforeShow: function(txt) {
-			var _this = this;
-			var dialog;
-			if (!$('.dialog-mask').length) {
-				dialog = $(_this.TEMPLATE);
-				isfirst = true;
-			} else {
-				dialog = $('.dialog-mask, .dialog-body');
-				isfirst = false;
-			}
-			dialog.find('p').html(txt);
-			if (isfirst) {
-				$('body').append(dialog);
-				setTimeout(function() {
-					_this.show($('.dialog-body'), _this);
-				}, 100);
-			} else {
-				$('.dialog-body, .dialog-mask').show();
-				_this.show($('.dialog-body'), _this);
-			}
-		},
-
-		show: function(el, _this) {
-			var elH = $(el).height();
-			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
-			_this.hideBind(el);
-		},
-		hide: function(el) {
-			// $(el).removeClass("anim");
-			$(el).attr("style", "-webkit-transform: translate3d(0,0,0);");
-			$('.dialog-mask').hide();
-			this.afterHide();
-		},
-		hideBind: function(el) {
-			var _this = this;
-			$('.dialog-mask, .button-ok').off('click').on('click', function() {
-				_this.hide(el);
-			});
-		},
-		afterHide: function() {
-			setTimeout(function() {
-				$('.dialog-body').hide();
-			}, 300);
-		}
-	};
-
-	return dialog;
 });
 define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', './component/dialog', './jump'], function(core, slideOption, dialog, checkUsr) {
 	core.onrender("shop-cart", function(dom) {
@@ -4876,7 +4957,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 					if (!!selectedOrder.length) {
 						This.wxPay_qianzheng(payState, productType);
 					} else {
-						dialog.add("没有可支付的订单");
+						dialog.add("没有选择可支付的订单");
 					}
 				});
 				// 顶部导航点击
@@ -5005,7 +5086,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 						},
 						{
 							id: 2,
-							txt: "二居室",
+							txt: "两居室",
 							price: 6200
 						},
 						{
@@ -5048,6 +5129,165 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 							case 4:
 								priceDetail[id] = 1999;
 								break;	
+						}
+						This._getPrice();//计算新价格并写入
+						console.log(priceDetail);
+					}
+				});
+			},
+			_eventBindRZSlide: function(el, id, initId) {
+				var This = this;
+				slideOption.add(el, {
+					title: "选择居室 - 软装套餐",
+					data: [
+						{
+							id: 1,
+							txt: "一居室",
+							price: 1300
+						},
+						{
+							id: 2,
+							txt: "两居室",
+							price: 2200
+						},
+						{
+							id: 3,
+							txt: "三居室",
+							price: 2900
+						}
+					],
+					choose: true, // 是否是选项列表
+					// 设置初始选项 不设置为null
+					initOption: function(el, datas) {
+						// $(el).find('input').val(datas[0].txt);
+						$(el).find('input').attr("data-id", datas[0].id);
+					},
+					callback: function(data) {
+						$(el).find('input').val(data.txt);
+						$(el).find('input').attr("data-id", data.id);
+						console.log(data);
+						$('#price_' + id).html(data.price);
+						if (data.id <= 3) {
+							This._ajaxModifyOrder(id, '"layout":' + data.id);
+						} else {
+							This._ajaxModifyOrder(id, '"nums":1');
+						}
+						switch(data.id) {
+							case 1:
+								priceDetail[id] = 1300;
+								break;
+							case 2:
+								priceDetail[id] = 2200;
+								break;
+							case 3:
+								priceDetail[id] = 2900;
+								break;
+						}
+						This._getPrice();//计算新价格并写入
+						console.log(priceDetail);
+					}
+				});
+			},
+			_eventBindJJSlide: function(el, id, initId) {
+				var This = this;
+				slideOption.add(el, {
+					title: "选择居室 - 家具套餐",
+					data: [
+						{
+							id: 1,
+							txt: "一居室",
+							price: 3000
+						},
+						{
+							id: 2,
+							txt: "两居室",
+							price: 4800
+						},
+						{
+							id: 3,
+							txt: "三居室",
+							price: 6500
+						}
+					],
+					choose: true, // 是否是选项列表
+					// 设置初始选项 不设置为null
+					initOption: function(el, datas) {
+						// $(el).find('input').val(datas[0].txt);
+						$(el).find('input').attr("data-id", datas[0].id);
+					},
+					callback: function(data) {
+						$(el).find('input').val(data.txt);
+						$(el).find('input').attr("data-id", data.id);
+						console.log(data);
+						$('#price_' + id).html(data.price);
+						if (data.id <= 3) {
+							This._ajaxModifyOrder(id, '"layout":' + data.id);
+						} else {
+							This._ajaxModifyOrder(id, '"nums":1');
+						}
+						switch(data.id) {
+							case 1:
+								priceDetail[id] = 3000;
+								break;
+							case 2:
+								priceDetail[id] = 4800;
+								break;
+							case 3:
+								priceDetail[id] = 6500;
+								break;
+						}
+						This._getPrice();//计算新价格并写入
+						console.log(priceDetail);
+					}
+				});
+			},
+			_eventBindJDSlide: function(el, id, initId) {
+				var This = this;
+				slideOption.add(el, {
+					title: "选择居室 - 家电套餐",
+					data: [
+						{
+							id: 1,
+							txt: "一居室",
+							price: 4000
+						},
+						{
+							id: 2,
+							txt: "两居室",
+							price: 5500
+						},
+						{
+							id: 3,
+							txt: "三居室",
+							price: 7000
+						}
+					],
+					choose: true, // 是否是选项列表
+					// 设置初始选项 不设置为null
+					initOption: function(el, datas) {
+						// $(el).find('input').val(datas[0].txt);
+						$(el).find('input').attr("data-id", datas[0].id);
+					},
+					callback: function(data) {
+						$(el).find('input').val(data.txt);
+						$(el).find('input').attr("data-id", data.id);
+						console.log(data);
+						$('#price_' + id).html(data.price);
+						if (data.id <= 3) {
+							This._ajaxModifyOrder(id, '"layout":' + data.id);
+						} else {
+							This._ajaxModifyOrder(id, '"nums":1');
+						}
+						switch(data.id) {
+							case 1:
+								priceDetail[id] = 4000;
+								break;
+							case 2:
+								priceDetail[id] = 5500;
+								break;
+							case 3:
+								priceDetail[id] = 7000;
+								break;
 						}
 						This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
@@ -5116,7 +5356,776 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 								if (!!orderList.length) {
 									[].forEach.call(orderList, function(order) {
 										priceDetail[order.orderId] = order.total;
-										if (order.state == 0) {
+										if (type != 4) {
+											if (order.state == 0) {
+												if (order.productType == 1) {
+													var layout = order.layout
+														, nums = order.nums
+														, inputVal = ""
+														, dataid = null;
+													if (layout) {
+														switch(layout) {
+															case 1: 
+																inputVal = "一居室";
+																dataid = 1;
+																break;
+															case 2:
+																inputVal = "两居室";
+																dataid = 2;
+																break;
+															case 3:
+																inputVal = "三居室";
+																dataid = 3;
+														}
+													} else {
+														inputVal = "单间";
+														dataid = 4;
+													}
+													// 快翻订单
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">快翻套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 2) {
+													// 硬装订单
+													yzOrderDtl[order.orderId] = {};
+													yzOrderDtl[order.orderId].balconyNum = order.balconyNum;
+													yzOrderDtl[order.orderId].toiletNum = order.toiletNum;
+													var acreage = order.acreage
+														, balconyNum = order.balconyNum
+														, toiletNum = order.toiletNum
+														, productStyle = order.productStyle
+														, balconyNumTxt = ""
+														, toiletNumTxt = "";
+													switch(balconyNum) {
+														case 1: 
+															balconyNumTxt = "一个阳台";
+															break;
+														case 2:
+															balconyNumTxt = "两个阳台";
+															break;
+													}
+													switch(toiletNum) {
+														case 1: 
+															toiletNumTxt = "一个卫生间";
+															break;
+														case 2:
+															toiletNumTxt = "两个卫生间";
+															break;
+													}
+													
+													str += '\
+														<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">硬装套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose Horizontal">\
+																		<div class="form-set square yz-square">\
+																			<p class="item">\
+																				<em></em>\
+																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
+																			</p>\
+																		</div>\
+																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																		<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span>' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 3) {
+													// 软装
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">软装套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 4) {
+													// 家具套餐
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">家具套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 5) {
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">家电套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												}
+											} else if (order.state == 1) {
+												// 已付99 订单进行中
+												if (order.productType == 1) {
+													// 快翻订单
+													var layout = order.layout
+														, nums = order.nums
+														, inputVal = ""
+														, dataid = null;
+													if (layout) {
+														switch(layout) {
+															case 1: 
+																inputVal = "一居室";
+																dataid = 1;
+																break;
+															case 2:
+																inputVal = "两居室";
+																dataid = 2;
+																break;
+															case 3:
+																inputVal = "三居室";
+																dataid = 3;
+														}
+													} else {
+														inputVal = "单间";
+														dataid = 4;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-protype="kuaifan" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">快翻套餐</span>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 2) {
+													var acreage = order.acreage
+														, balconyNum = order.balconyNum
+														, toiletNum = order.toiletNum
+														, productStyle = order.productStyle
+														, balconyNumTxt = ""
+														, toiletNumTxt = "";
+													switch(balconyNum) {
+														case 1: 
+															balconyNumTxt = "一个阳台";
+															break;
+														case 2:
+															balconyNumTxt = "两个阳台";
+															break;
+													}
+													switch(toiletNum) {
+														case 1: 
+															toiletNumTxt = "一个卫生间";
+															break;
+														case 2:
+															toiletNumTxt = "两个卫生间";
+															break;
+													}
+													var stepStr = ""
+														, payStepId = "";//可以支付的stepid
+													[].forEach.call(order.stepInfos, function(step) {
+														(step.state == 5) && (payStepId = step.stepId);
+														stepStr += '\
+															<div class="row">\
+																<i class="iconfont choose-cbtn ' + stepCal(step.state).on + '">&#xe60b;</i>\
+																<span>' + step.stepName + stepCal(step.state).txt + '</span>\
+																<span class="price">￥' + step.stepTotalCost + '</span>\
+															</div>\
+														';
+													});
+													str += '\
+														<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '" data-paystep="' + payStepId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-protype="yingzhuang" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">硬装套餐</span>\
+																	</div>\
+																	<div class="choose Horizontal">\
+																		<div class="form-set square yz-square">\
+																			<p class="item">\
+																				<em></em>\
+																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
+																			</p>\
+																		</div>\
+																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
+																			</p>\
+																		</div>\
+																		<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																	<div class="step-list">' + stepStr + '\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span>' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 3) {
+													// 软装
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">软装套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 4) {
+													// 家具套餐
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">家具套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 5) {
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">家电套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												}
+											} else if (order.state == 2) {
+												// 已完工
+												if (order.productType == 1) {
+													var layout = order.layout
+														, nums = order.nums
+														, inputVal = ""
+														, dataid = null;
+													if (layout) {
+														switch(layout) {
+															case 1: 
+																inputVal = "一居室";
+																dataid = 1;
+																break;
+															case 2:
+																inputVal = "两居室";
+																dataid = 2;
+																break;
+															case 3:
+																inputVal = "三居室";
+																dataid = 3;
+														}
+													} else {
+														inputVal = "单间";
+														dataid = 4;
+													}
+													// 快翻订单
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<span data-id="' + order.orderId + '">快翻套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">已完工</span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 2) {
+													// 硬装订单
+													yzOrderDtl[order.orderId] = {};
+													yzOrderDtl[order.orderId].balconyNum = order.balconyNum;
+													yzOrderDtl[order.orderId].toiletNum = order.toiletNum;
+													var acreage = order.acreage
+														, balconyNum = order.balconyNum
+														, toiletNum = order.toiletNum
+														, productStyle = order.productStyle
+														, balconyNumTxt = ""
+														, toiletNumTxt = "";
+													switch(balconyNum) {
+														case 1: 
+															balconyNumTxt = "一个阳台";
+															break;
+														case 2:
+															balconyNumTxt = "两个阳台";
+															break;
+													}
+													switch(toiletNum) {
+														case 1: 
+															toiletNumTxt = "一个卫生间";
+															break;
+														case 2:
+															toiletNumTxt = "两个卫生间";
+															break;
+													}
+													
+													str += '\
+														<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<span data-id="' + order.orderId + '">硬装套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose Horizontal">\
+																		<div class="form-set square yz-square">\
+																			<p class="item">\
+																				<em></em>\
+																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
+																			</p>\
+																		</div>\
+																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
+																			</p>\
+																		</div>\
+																		<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
+																				<span><i></i></span>\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span>' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">已完工</span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 3) {
+													// 软装
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<span data-id="' + order.orderId + '">软装套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">已完工</span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 4) {
+													// 家具套餐
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<span data-id="' + order.orderId + '">家具套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">已完工</span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType == 5) {
+													var layout = order.layout
+														, inputVal = ""
+														, dataid = null;
+													switch(layout) {
+														case 1: 
+															inputVal = "一居室";
+															dataid = 1;
+															break;
+														case 2:
+															inputVal = "两居室";
+															dataid = 2;
+															break;
+														case 3:
+															inputVal = "三居室";
+															dataid = 3;
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<span data-id="' + order.orderId + '">家电套餐</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="choose">\
+																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																			<p class="droplist item">\
+																				<em></em>\
+																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">已完工</span>\
+															</div>\
+														</div>\
+													';
+												}
+											}
+										} else if (type == 4) {
+											// 历史订单
+											var orderStep = "";
+											if (order.state == 0) {
+												orderStep = "未支付";
+											} else if (order.state == 1) {
+												orderStep = "开工中";
+											} else if (order.state == 2) {
+												orderStep = "已完工";
+											}
 											if (order.productType == 1) {
 												var layout = order.layout
 													, nums = order.nums
@@ -5147,16 +6156,13 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 														<div class="cnt">\
 															<div class="sub-cnt">\
 																<div class="name">\
-																	<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
 																	<span data-id="' + order.orderId + '">快翻套餐</span>\
-																	<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																</div>\
 																<div class="choose">\
 																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
 																		<p class="droplist item">\
 																			<em></em>\
 																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			<span><i></i></span>\
 																		</p>\
 																	</div>\
 																</div>\
@@ -5164,7 +6170,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 														</div>\
 														<div class="top-bottom">\
 															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															<span class="price">' + orderStep + '</span>\
 														</div>\
 													</div>\
 												';
@@ -5202,9 +6208,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 														<div class="cnt">\
 															<div class="sub-cnt">\
 																<div class="name">\
-																	<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-id="' + order.orderId + '">&#xe60b;</i>\
 																	<span data-id="' + order.orderId + '">硬装套餐</span>\
-																	<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																</div>\
 																<div class="choose Horizontal">\
 																	<div class="form-set square yz-square">\
@@ -5217,14 +6221,12 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 																		<p class="droplist item">\
 																			<em></em>\
 																			<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
-																			<span><i></i></span>\
 																		</p>\
 																	</div>\
 																	<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
 																		<p class="droplist item">\
 																			<em></em>\
 																			<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
-																			<span><i></i></span>\
 																		</p>\
 																	</div>\
 																</div>\
@@ -5232,37 +6234,27 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 														</div>\
 														<div class="top-bottom">\
 															<span>' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															<span class="price">' + orderStep + '</span>\
 														</div>\
 													</div>\
 												';
-											}
-										} else if (order.state == 1) {
-											// alert("ret:" + JSON.stringify(res));
-											// 已付99 订单进行中
-											if (order.productType == 1) {
-												// 快翻订单
+											} else if (order.productType == 3) {
+												// 软装
 												var layout = order.layout
-													, nums = order.nums
 													, inputVal = ""
 													, dataid = null;
-												if (layout) {
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-												} else {
-													inputVal = "单间";
-													dataid = 4;
+												switch(layout) {
+													case 1: 
+														inputVal = "一居室";
+														dataid = 1;
+														break;
+													case 2:
+														inputVal = "两居室";
+														dataid = 2;
+														break;
+													case 3:
+														inputVal = "三居室";
+														dataid = 3;
 												}
 												str += '\
 													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
@@ -5270,8 +6262,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 														<div class="cnt">\
 															<div class="sub-cnt">\
 																<div class="name">\
-																	<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																	<span data-id="' + order.orderId + '">快翻套餐</span>\
+																	<span data-id="' + order.orderId + '">软装套餐</span>\
 																</div>\
 																<div class="choose">\
 																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
@@ -5285,88 +6276,95 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 														</div>\
 														<div class="top-bottom">\
 															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															<span class="price">' + orderStep + '</span>\
 														</div>\
 													</div>\
 												';
-											} else if (order.productType == 2) {
-												var acreage = order.acreage
-													, balconyNum = order.balconyNum
-													, toiletNum = order.toiletNum
-													, productStyle = order.productStyle
-													, balconyNumTxt = ""
-													, toiletNumTxt = "";
-												switch(balconyNum) {
+											} else if (order.productType == 4) {
+												// 家具套餐
+												var layout = order.layout
+													, inputVal = ""
+													, dataid = null;
+												switch(layout) {
 													case 1: 
-														balconyNumTxt = "一个阳台";
+														inputVal = "一居室";
+														dataid = 1;
 														break;
 													case 2:
-														balconyNumTxt = "两个阳台";
+														inputVal = "两居室";
+														dataid = 2;
 														break;
+													case 3:
+														inputVal = "三居室";
+														dataid = 3;
 												}
-												switch(toiletNum) {
-													case 1: 
-														toiletNumTxt = "一个卫生间";
-														break;
-													case 2:
-														toiletNumTxt = "两个卫生间";
-														break;
-												}
-												var stepStr = ""
-													, payStepId = "";//可以支付的stepid
-												[].forEach.call(order.stepInfos, function(step) {
-													(step.state == 5) && (payStepId = step.stepId);
-													stepStr += '\
-														<div class="row">\
-															<i class="iconfont choose-cbtn ' + stepCal(step.state).on + '">&#xe60b;</i>\
-															<span>' + step.stepName + stepCal(step.state).txt + '</span>\
-															<span class="price">￥' + step.stepTotalCost + '</span>\
-														</div>\
-													';
-												});
 												str += '\
-													<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '" data-paystep="' + payStepId + '">\
+													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
 														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
 														<div class="cnt">\
 															<div class="sub-cnt">\
 																<div class="name">\
-																	<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-protype="yingzhuang" data-id="' + order.orderId + '">&#xe60b;</i>\
-																	<span data-id="' + order.orderId + '">硬装套餐</span>\
+																	<span data-id="' + order.orderId + '">家具套餐</span>\
 																</div>\
-																<div class="choose Horizontal">\
-																	<div class="form-set square yz-square">\
-																		<p class="item">\
-																			<em></em>\
-																			<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
-																		</p>\
-																	</div>\
-																	<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
+																<div class="choose">\
+																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
 																		<p class="droplist item">\
 																			<em></em>\
-																			<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
+																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
 																		</p>\
 																	</div>\
-																	<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
-																		</p>\
-																	</div>\
-																</div>\
-																<div class="step-list">' + stepStr + '\
 																</div>\
 															</div>\
 														</div>\
 														<div class="top-bottom">\
-															<span>' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+															<span class="price">' + orderStep + '</span>\
+														</div>\
+													</div>\
+												';
+											} else if (order.productType == 5) {
+												var layout = order.layout
+													, inputVal = ""
+													, dataid = null;
+												switch(layout) {
+													case 1: 
+														inputVal = "一居室";
+														dataid = 1;
+														break;
+													case 2:
+														inputVal = "两居室";
+														dataid = 2;
+														break;
+													case 3:
+														inputVal = "三居室";
+														dataid = 3;
+												}
+												str += '\
+													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+														<div class="cnt">\
+															<div class="sub-cnt">\
+																<div class="name">\
+																	<span data-id="' + order.orderId + '">家电套餐</span>\
+																</div>\
+																<div class="choose">\
+																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
+																		<p class="droplist item">\
+																			<em></em>\
+																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
+																		</p>\
+																	</div>\
+																</div>\
+															</div>\
+														</div>\
+														<div class="top-bottom">\
+															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+															<span class="price">' + orderStep + '</span>\
 														</div>\
 													</div>\
 												';
 											}
-											
-										} else if (order.state == 4) {
-											// 已完成 历史订单
+											$('.order-bar').hide();
 										}
 									});	
 								} else {
@@ -5391,10 +6389,30 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 											initId_b = order.balconyNum;
 											This._eventBindYZToiletSlide($('#toilet_' + orderId), orderId, initId_t);
 											This._eventBindYZBalconySlide($('#balcony_' + orderId), orderId, initId_b);
+										} else if (order.productType == 3) {
+											// 软装
+											initId = order.layout;
+											This._eventBindRZSlide($('#order_' + orderId), orderId, initId);
+										} else if (order.productType == 4) {
+											// 家具
+											initId = order.layout;
+											This._eventBindJJSlide($('#order_' + orderId), orderId, initId);
+										} else if (order.productType == 5) {
+											// 家电
+											initId = order.layout;
+											This._eventBindJDSlide($('#order_' + orderId), orderId, initId);
 										}
 										payButton.html('99元开工');
+										$('.order-bar').show();
 									} else if (order.state == 1) {
 										payButton.html('结算');
+										$('.order-bar').show();
+										$('input').css("textAlign", "center");
+									} else if (order.state == 2) {
+										$('input').css("textAlign", "center");
+									} else {
+										$('.order-bar').hide();
+										$('input').css("textAlign", "center");
 									}
 								});
 								// 绑定删除
@@ -5409,6 +6427,8 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 									$('.sub-cnt .name .choose-cbtn').removeClass("on");
 									if ($(this).attr('data-protype') && $(this).attr('data-protype') == "yingzhuang") {
 										productType = 2;
+									} else {
+										productType = 1;
 									}
 									if (!$(this).hasClass("on")) {
 										selectedOrder = orderId;
@@ -5578,7 +6598,7 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 				url: baseUrl + "user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
 				dataType: "json",
 				success: function(res) {
-					alert(JSON.stringify(res));
+					// alert(JSON.stringify(res));
 					var ret = res.ret;
 					var uinfo = res.userInfo;
 					if (ret == 2) {

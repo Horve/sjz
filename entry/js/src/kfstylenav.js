@@ -1,4 +1,4 @@
-define(['../core/core', './jump'], function(core, checkUsr) {
+define(['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
 	core.onrender("kf-style", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
@@ -72,38 +72,35 @@ define(['../core/core', './jump'], function(core, checkUsr) {
     		} else {
     			params = '"layout": ' + layout;
     		}
-    		$.ajax({
-    			url:  baseUrl + "orderCtrl/addOrder.htm",
-    			data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
-    			dataType: "json",
-    			success: function(res) {
-    				var code = res.ret;
-    				// 未登录
-    				if (code == 302) {
-    					checkUsr.doJump();
-    				} else if (code == 1) {
-    					// 已登录 进入购物车
-    					checkUsr.toShopChart();
-    				} else if (code == -1) {
-    					// 登录失败。提示重试
-    					alert("登录失败！");
-    				}
-    			}
-    		});
+    		OrderConfig.addOrderAjax(1, params);
+    		// $.ajax({
+    		// 	url:  baseUrl + "orderCtrl/addOrder.htm",
+    		// 	data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
+    		// 	dataType: "json",
+    		// 	success: function(res) {
+    		// 		var code = res.ret;
+    		// 		// 未登录
+    		// 		if (code == 302) {
+    		// 			checkUsr.doJump();
+    		// 		} else if (code == 1) {
+    		// 			// 已登录 进入购物车
+    		// 			checkUsr.toShopChart();
+    		// 		} else if (code == -1) {
+    		// 			// 登录失败。提示重试
+    		// 			alert("登录失败！");
+    		// 		}
+    		// 	}
+    		// });
     	});
-
-    	// 请求微信授权接口
-    	function wxAuth() {
-    		$.ajax({
-    			url: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect",
-    			dataType: "json",
-    			success: function(res) {
-    				alert(JSON.stringify(res));
-    			},
-    			error: function(res) {
-    				alert("err:" + JSON.stringify(res));
-    			}
-    		});
-    	}
+    	$('.shopchart').off('click').on('click', function() {
+    		var location = window.location.href;
+    		var params = "";
+    		if (!!nums) {
+    			params = '"nums": 1';
+    		} else {
+    			params = '"layout": ' + layout;
+    		}
+    		OrderConfig.addToShopChart(1, params);
+    	});
 	});
 });

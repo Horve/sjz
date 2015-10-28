@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html class="payment">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="full-screen" content="yes"/>
+    <meta name="browsermode" content="application"/>
+    <!-- QQ强制竖屏 QQ强制全屏 -->
+    <meta name="x5-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="x5-page-mode" content="app"/>
+	<title>我的订单</title>
+    <!-- 由main.sass 生成    -->
+	<link rel="stylesheet" href="../../dist/main.min.css" />
+	<link rel="stylesheet" href="../../dist/normalize.css" />
+</head>
+<body class="user-payment">
+	<div class="order-type">
+		<a class="type-item on">未支付</a>
+		<a class="type-item">已开工</a>
+		<a class="type-item">已完工</a>
+		<a class="type-item">历史订单</a>
+	</div>
+	<div class="page" data-render-id="shop-cart">
+		<div class="blank46"></div>
+		<div class="order-list not-pay">
+			<div class="order kuaifan-order">
+				<div class="top-bottom">订单编号：1150622312</div>
+				<div class="cnt">
+					<div class="sub-cnt">
+						<div class="name">
+							<i class="iconfont on choose-cbtn" data-type="kuaifan-order">&#xe60b;</i>
+							<span>快翻套餐</span>
+							<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>
+						</div>
+						<div class="choose">
+							<div class="form-set kf-house">
+								<p class="droplist item">
+									<em></em>
+									<input type="text" placeholder="一居室" readonly="readonly" data-id="1">
+									<span><i></i></span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="top-bottom">
+					<span class="date-time">2015.10.06 16:22:13</span>
+					<span class="price">￥3000</span>
+				</div>
+			</div>
+			<div class="order yingzhuang-order">
+				<div class="top-bottom">订单编号：1150622312</div>
+				<div class="cnt">
+					<div class="sub-cnt">
+						<div class="name">
+							<i class="iconfont on choose-cbtn" data-type="yingzhuang-order">&#xe60b;</i>
+							<span>硬装套餐</span>
+							<a class="delete"><i class="iconfont">&#xe60b;</i>删除</a>
+						</div>
+						<div class="choose Horizontal">
+							<div class="form-set square yz-square">
+								<p class="item">
+									<em></em>
+									<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">
+								</p>
+							</div>
+							<div class="form-set path-room yz-bathroom">
+								<p class="droplist item">
+									<em></em>
+									<input type="text" placeholder="一个卫生间" readonly="readonly" data-id="1">
+									<span><i></i></span>
+								</p>
+							</div>
+							<div class="form-set sun-plateform yz-platform">
+								<p class="droplist item">
+									<em></em>
+									<input type="text" placeholder="一个阳台" readonly="readonly" data-id="1">
+									<span><i></i></span>
+								</p>
+							</div>
+						</div>
+						<div class="step-list">
+							<div class="row">
+								<i class="iconfont on choose-cbtn shuidian">&#xe60b;</i>
+								<span>水电阶段完工</span>
+								<span class="price">￥3000</span>
+							</div>
+							<div class="row">
+								<i class="iconfont choose-cbtn muwa">&#xe60b;</i>
+								<span>木瓦阶段完工</span>
+								<span class="price">￥1600</span>
+							</div>
+							<div class="row">
+								<i class="iconfont choose-cbtn youqi">&#xe60b;</i>
+								<span>油漆阶段完工</span>
+								<span class="price">￥300</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="top-bottom">
+					<span>2015.10.06 16:22:13</span>
+					<span class="price">￥3000</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="order-bar">
+		<div class="price-info">
+			<!-- <a class="select-all"><i class="iconfont on">&#xe60b;</i>全选</a> -->
+			<div class="price-txt">
+				<span>需支付定金<em id="need-pay">￥0</em></span>
+				<span>合计<em id="total-price">￥0</em></span>
+			</div>
+		</div>
+		<a class="gopay">99元开工</a>
+	</div>
+	<!-- <script type="text/javascript" src="../../dist/build.js"></script> -->
+	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->
+</body>
+
+</html>

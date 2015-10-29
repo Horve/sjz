@@ -2772,6 +2772,20 @@ input {
 .payment .blank46 {
   height: 0.46rem;
 }
+.payment .order-empty {
+  width: 100%;
+  font-size: 0.16rem;
+  color: #666;
+  margin-top: 30%;
+  text-align: center;
+}
+.payment .order-empty h3, .payment .order-empty h4 {
+  margin-bottom: 0.1rem;
+}
+.payment .order-empty .button-2 {
+  width: 70%;
+  margin: 0.3rem auto 0;
+}
 .payment .order-type {
   height: 0.45rem;
   line-height: 0.45rem;

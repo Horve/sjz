@@ -124,6 +124,39 @@ module.exports = function (grunt) {
         }
     },
 
+    uglify: {
+      // options: {
+      //   banner: '<%= banner %>',
+      //   compress: true,
+      //   mangle: true,
+      //   preserveComments: false
+      // },
+      // user: {
+      //   src: '<%= meta.distPath %>build.all.js',
+      //   dest: '<%= meta.distPath %>build.js'
+      // },
+      // ucenter: {
+      //   src: '<%= meta.distPath %>ucenter/build.all.js',
+      //   dest: '<%= meta.distPath %>ucenter/build.js'
+      // }
+      user: {
+        files: [
+          {
+            src: '<%= meta.distPath %>build.all.js',
+            dest: '<%= meta.distPath %>build.js'
+          }
+        ]
+      },
+      ucenter: {
+        files: [
+          {
+            src: '<%= meta.distPath %>ucenter/build.all.js',
+            dest: '<%= meta.distPath %>ucenter/build.js'
+          }
+        ]
+      }
+    },
+
     requirejs: {
       sjz: {
         options: {
@@ -135,7 +168,7 @@ module.exports = function (grunt) {
           include : [
             '<%= meta.entry %>js/main'
           ],
-          out: '<%= meta.distPath %>build.js',
+          out: '<%= meta.distPath %>build.all.js',
           // optimize : 'uglify2',
           optimize : 'none',
           wrap : true
@@ -150,6 +183,6 @@ module.exports = function (grunt) {
 
   // server
   grunt.registerTask('server', 'Run server', ['connect', 'open',  'watch']);
-  grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'copy', 'requirejs']);
+  grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'copy', 'requirejs', 'uglify']);
   // grunt.registerTask('hotel', ['sass:hotel', 'sass:hotelForSearch', 'requirejs:hotelFromOrder', 'requirejs:hotelBeforeOrder', 'requirejs:hotelForSearch', 'cssmin:hotel', 'cssmin:hotelForSearch']);
 };

@@ -1,4 +1,4 @@
-define(['../core/core', './component/slideOptions', './component/dialog', './jump'], function(core, slideOption, dialog, checkUsr) {
+define(['../core/core', './component/slideOptions', './component/dialog', './jump', './order'], function(core, slideOption, dialog, checkUsr, OrderConfig) {
 	core.onrender("shop-cart", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
@@ -14,7 +14,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			, chooseBtns = $('.choose-cbtn', dom)
 			, priceEl = $('#total-price')
 			, topNav = $('.order-type .type-item')
-			, payButton = $('.gopay');
+			, payButton = $('.gopay')
+			, priceTxtEl = $('#price-txt');
 
 		var stepCal = function(num) {
 			if (num == 0) {
@@ -66,15 +67,15 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				});
 			},
 			// get price
-			_getPrice: function() {
-				var total = 0;
-				console.log("!!!!");
-				console.log(priceDetail);
-				for (var i in priceDetail) {
-					total += priceDetail[i];
-				}
-				priceEl.html("￥" + total);
-			},
+			// _getPrice: function() {
+			// 	var total = 0;
+			// 	console.log("!!!!");
+			// 	console.log(priceDetail);
+			// 	for (var i in priceDetail) {
+			// 		total += priceDetail[i];
+			// 	}
+			// 	priceEl.html("￥" + total);
+			// },
 
 			// 未选中订单不可选逻辑处理
 			_unChooseOrder: function(orders) {
@@ -114,16 +115,17 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 						$(el).find('input').val(data.txt);
 						$(el).find('input').attr("data-id", data.id);
 						var preSelNum = yzOrderDtl[id].toiletNum; //上一次选择的数量
-						switch(data.id) {
-							case 1:
-								priceDetail[id] = preSelNum > 1 ? priceDetail[id] - 3500 : priceDetail[id];
-								break;
-							case 2:
-								priceDetail[id] = preSelNum > 1 ? priceDetail[id] : priceDetail[id] + 3500;
-								break;
-						}
+						// switch(data.id) {
+						// 	case 1:
+						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] - 3500 : priceDetail[id];
+						// 		break;
+						// 	case 2:
+						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] : priceDetail[id] + 3500;
+						// 		break;
+						// }
+						This._ajaxModifyOrder(id, '"toiletNum":' + data.id);
 						yzOrderDtl[id].toiletNum = data.id;
-						This._getPrice();//计算新价格并写入
+						// This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
 					}
 				});
@@ -158,16 +160,17 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 						$(el).find('input').val(data.txt);
 						$(el).find('input').attr("data-id", data.id);
 						var preSelNum = yzOrderDtl[id].balconyNum; //上一次选择的数量
-						switch(data.id) {
-							case 1:
-								priceDetail[id] = preSelNum > 1 ? priceDetail[id] - 1000 : priceDetail[id];
-								break;
-							case 2:
-								priceDetail[id] = preSelNum > 1 ? priceDetail[id] : priceDetail[id] + 1000;
-								break;
-						}
+						// switch(data.id) {
+						// 	case 1:
+						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] - 1000 : priceDetail[id];
+						// 		break;
+						// 	case 2:
+						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] : priceDetail[id] + 1000;
+						// 		break;
+						// }
+						This._ajaxModifyOrder(id, '"balconyNum":' + data.id);
 						yzOrderDtl[id].balconyNum = data.id;
-						This._getPrice();//计算新价格并写入
+						// This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
 					}
 				});
@@ -208,27 +211,26 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 						$(el).find('input').val(data.txt);
 						$(el).find('input').attr("data-id", data.id);
 						console.log(data);
-						$('#price_' + id).html(data.price);
 						if (data.id <= 3) {
 							This._ajaxModifyOrder(id, '"layout":' + data.id);
 						} else {
 							This._ajaxModifyOrder(id, '"nums":1');
 						}
-						switch(data.id) {
-							case 1:
-								priceDetail[id] = 3600;
-								break;
-							case 2:
-								priceDetail[id] = 6200;
-								break;
-							case 3:
-								priceDetail[id] = 8500;
-								break;
-							case 4:
-								priceDetail[id] = 1999;
-								break;	
-						}
-						This._getPrice();//计算新价格并写入
+						// switch(data.id) {
+						// 	case 1:
+						// 		priceDetail[id] = 3600;
+						// 		break;
+						// 	case 2:
+						// 		priceDetail[id] = 6200;
+						// 		break;
+						// 	case 3:
+						// 		priceDetail[id] = 8500;
+						// 		break;
+						// 	case 4:
+						// 		priceDetail[id] = 1999;
+						// 		break;	
+						// }
+						// This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
 					}
 				});
@@ -264,24 +266,19 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 						$(el).find('input').val(data.txt);
 						$(el).find('input').attr("data-id", data.id);
 						console.log(data);
-						$('#price_' + id).html(data.price);
-						if (data.id <= 3) {
-							This._ajaxModifyOrder(id, '"layout":' + data.id);
-						} else {
-							This._ajaxModifyOrder(id, '"nums":1');
-						}
-						switch(data.id) {
-							case 1:
-								priceDetail[id] = 1300;
-								break;
-							case 2:
-								priceDetail[id] = 2200;
-								break;
-							case 3:
-								priceDetail[id] = 2900;
-								break;
-						}
-						This._getPrice();//计算新价格并写入
+						This._ajaxModifyOrder(id, '"layout":' + data.id);
+						// switch(data.id) {
+						// 	case 1:
+						// 		priceDetail[id] = 1300;
+						// 		break;
+						// 	case 2:
+						// 		priceDetail[id] = 2200;
+						// 		break;
+						// 	case 3:
+						// 		priceDetail[id] = 2900;
+						// 		break;
+						// }
+						// This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
 					}
 				});
@@ -317,24 +314,20 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 						$(el).find('input').val(data.txt);
 						$(el).find('input').attr("data-id", data.id);
 						console.log(data);
-						$('#price_' + id).html(data.price);
-						if (data.id <= 3) {
-							This._ajaxModifyOrder(id, '"layout":' + data.id);
-						} else {
-							This._ajaxModifyOrder(id, '"nums":1');
-						}
-						switch(data.id) {
-							case 1:
-								priceDetail[id] = 3000;
-								break;
-							case 2:
-								priceDetail[id] = 4800;
-								break;
-							case 3:
-								priceDetail[id] = 6500;
-								break;
-						}
-						This._getPrice();//计算新价格并写入
+
+						This._ajaxModifyOrder(id, '"layout":' + data.id);
+						// switch(data.id) {
+						// 	case 1:
+						// 		priceDetail[id] = 3000;
+						// 		break;
+						// 	case 2:
+						// 		priceDetail[id] = 4800;
+						// 		break;
+						// 	case 3:
+						// 		priceDetail[id] = 6500;
+						// 		break;
+						// }
+						// This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
 					}
 				});
@@ -370,24 +363,20 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 						$(el).find('input').val(data.txt);
 						$(el).find('input').attr("data-id", data.id);
 						console.log(data);
-						$('#price_' + id).html(data.price);
-						if (data.id <= 3) {
-							This._ajaxModifyOrder(id, '"layout":' + data.id);
-						} else {
-							This._ajaxModifyOrder(id, '"nums":1');
-						}
-						switch(data.id) {
-							case 1:
-								priceDetail[id] = 4000;
-								break;
-							case 2:
-								priceDetail[id] = 5500;
-								break;
-							case 3:
-								priceDetail[id] = 7000;
-								break;
-						}
-						This._getPrice();//计算新价格并写入
+						This._ajaxModifyOrder(id, '"layout":' + data.id);
+
+						// switch(data.id) {
+						// 	case 1:
+						// 		priceDetail[id] = 4000;
+						// 		break;
+						// 	case 2:
+						// 		priceDetail[id] = 5500;
+						// 		break;
+						// 	case 3:
+						// 		priceDetail[id] = 7000;
+						// 		break;
+						// }
+						// This._getPrice();//计算新价格并写入
 						console.log(priceDetail);
 					}
 				});
@@ -398,7 +387,20 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					data: {"ordersStr": '{"orders": [{"orderId":' + parseInt(oid) + ',' + param + '}]}'}, 
 					//{"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
 					success: function(res) {
-						console.log(res);
+						if (res.ret == 1) {
+							// 修改成功
+							var price = 0;
+							var orders = res.orderInfos;
+							for (var i = 0, n = orders.length; i < n; i++) {
+								if (orders[i].orderId == oid) {
+									price = orders[i].total;
+									break;
+								}
+							}
+							$('#price_' + oid).html(price);
+							priceDetail[oid] = price;
+						}
+						// alert(JSON.stringify(res));
 					},
 					error: function(err) {
 						console.log(err);
@@ -437,6 +439,13 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			getOrder: function(type) {
 				var This = this;
 				payState = type;
+				selectedOrder = "";
+				priceEl.html("￥0");
+				if (type > 2) {
+					$('.order-bar').hide();
+				} else {
+					$('.order-bar').show();
+				}
 				topNav.eq(type - 1).addClass('on').siblings().removeClass('on');
 				$.ajax({
 					// 未完成订单
@@ -455,6 +464,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 									[].forEach.call(orderList, function(order) {
 										priceDetail[order.orderId] = order.total;
 										if (type != 4) {
+											// ============================
 											if (order.state == 0) {
 												if (order.productType == 1) {
 													var layout = order.layout
@@ -549,7 +559,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																		<div class="form-set square yz-square">\
 																			<p class="item">\
 																				<em></em>\
-																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
+																				<input type="text" readonly="readonly" data-id="1" value="100平米">\
 																			</p>\
 																		</div>\
 																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
@@ -699,6 +709,53 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
 																				<span><i></i></span>\
 																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType >= 6 && order.productType <= 11) {
+													var proType = order.productType
+														, inputVal = ""
+														, dataid = null;
+													switch(proType) {
+														case 6: 
+															inputVal = "地板";
+															break;
+														case 7:
+															inputVal = "乳胶漆";
+															break;
+														case 8:
+															inputVal = "壁纸";
+															break;
+														case 9: 
+															inputVal = "瓷砖";
+															break;
+														case 10:
+															inputVal = "厨卫天花";
+															break;
+														case 11:
+															inputVal = "室内门";
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
+																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
+																	</div>\
+																	<div class="step-list">\
+																		<div class="row">\
+																			<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<span class="price">￥' + order.total + '</span>\
 																		</div>\
 																	</div>\
 																</div>\
@@ -966,6 +1023,52 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 															</div>\
 														</div>\
 													';
+												} else if (order.productType >= 6 && order.productType <= 11) {
+													var proType = order.productType
+														, inputVal = ""
+														, dataid = null;
+													switch(proType) {
+														case 6: 
+															inputVal = "地板";
+															break;
+														case 7:
+															inputVal = "乳胶漆";
+															break;
+														case 8:
+															inputVal = "壁纸";
+															break;
+														case 9: 
+															inputVal = "瓷砖";
+															break;
+														case 10:
+															inputVal = "厨卫天花";
+															break;
+														case 11:
+															inputVal = "室内门";
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
+																	</div>\
+																	<div class="step-list">\
+																		<div class="row">\
+																			<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<span class="price">￥' + order.total + '</span>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
+															</div>\
+														</div>\
+													';
 												}
 											} else if (order.state == 2) {
 												// 已完工
@@ -1202,6 +1305,51 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																				<em></em>\
 																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
 																			</p>\
+																		</div>\
+																	</div>\
+																</div>\
+															</div>\
+															<div class="top-bottom">\
+																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+																<span class="price">已完工</span>\
+															</div>\
+														</div>\
+													';
+												} else if (order.productType >= 6 && order.productType <= 11) {
+													var proType = order.productType
+														, inputVal = ""
+														, dataid = null;
+													switch(proType) {
+														case 6: 
+															inputVal = "地板";
+															break;
+														case 7:
+															inputVal = "乳胶漆";
+															break;
+														case 8:
+															inputVal = "壁纸";
+															break;
+														case 9: 
+															inputVal = "瓷砖";
+															break;
+														case 10:
+															inputVal = "厨卫天花";
+															break;
+														case 11:
+															inputVal = "室内门";
+													}
+													str += '\
+														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+															<div class="cnt">\
+																<div class="sub-cnt">\
+																	<div class="name">\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
+																	</div>\
+																	<div class="step-list">\
+																		<div class="row">\
+																			<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<span class="price">￥' + order.total + '</span>\
 																		</div>\
 																	</div>\
 																</div>\
@@ -1461,58 +1609,110 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 														</div>\
 													</div>\
 												';
+											} else if (order.productType >= 6 && order.productType <= 11) {
+												var proType = order.productType
+													, inputVal = ""
+													, dataid = null;
+												switch(proType) {
+													case 6: 
+														inputVal = "地板";
+														break;
+													case 7:
+														inputVal = "乳胶漆";
+														break;
+													case 8:
+														inputVal = "壁纸";
+														break;
+													case 9: 
+														inputVal = "瓷砖";
+														break;
+													case 10:
+														inputVal = "厨卫天花";
+														break;
+													case 11:
+														inputVal = "室内门";
+												}
+												str += '\
+													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
+														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
+														<div class="cnt">\
+															<div class="sub-cnt">\
+																<div class="name">\
+																	<span data-id="' + order.orderId + '">' + order.productName + '</span>\
+																</div>\
+																<div class="step-list">\
+																	<div class="row">\
+																		<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																		<span class="price">￥' + order.total + '</span>\
+																	</div>\
+																</div>\
+															</div>\
+														</div>\
+														<div class="top-bottom">\
+															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
+															<span class="price">' + orderStep + '</span>\
+														</div>\
+													</div>\
+												';
 											}
-											$('.order-bar').hide();
 										}
 									});	
 								} else {
 									// 订单列表空
+									str = '\
+										<div class="order-empty">\
+											<h3>这里还没有订单，您可以</h3>\
+											<h4>查看其他状态订单，或者</h4>\
+											<a href="http://www.s-jz.com" class="button-2">去首页看看</a>\
+										</div>\
+									';
 								}
 								console.log(priceDetail);
 								console.log(yzOrderDtl);
-								This._getPrice();//计算新价格并写入
+								// This._getPrice();//计算新价格并写入
 								This.EL_orderLis.html(str);
-								[].forEach.call(orderList, function(order) {
-									// alert(JSON.stringify(order));
-									if (order.state == 0) {
-										var orderId = order.orderId
-											, initId = 0
-											, initId_t = 0
-											, initId_b = 0;
-										if (order.productType == 1) {
-											initId = order.layout;
-											This._eventBindKFSlide($('#order_' + orderId), orderId, initId);
-										} else if (order.productType == 2) {
-											initId_t = order.toiletNum;
-											initId_b = order.balconyNum;
-											This._eventBindYZToiletSlide($('#toilet_' + orderId), orderId, initId_t);
-											This._eventBindYZBalconySlide($('#balcony_' + orderId), orderId, initId_b);
-										} else if (order.productType == 3) {
-											// 软装
-											initId = order.layout;
-											This._eventBindRZSlide($('#order_' + orderId), orderId, initId);
-										} else if (order.productType == 4) {
-											// 家具
-											initId = order.layout;
-											This._eventBindJJSlide($('#order_' + orderId), orderId, initId);
-										} else if (order.productType == 5) {
-											// 家电
-											initId = order.layout;
-											This._eventBindJDSlide($('#order_' + orderId), orderId, initId);
+								if (!!orderList.length) {
+									[].forEach.call(orderList, function(order) {
+										if (order.state == 0) {
+											var orderId = order.orderId
+												, initId = 0
+												, initId_t = 0
+												, initId_b = 0;
+											if (order.productType == 1) {
+												initId = order.layout;
+												This._eventBindKFSlide($('#order_' + orderId), orderId, initId);
+											} else if (order.productType == 2) {
+												initId_t = order.toiletNum;
+												initId_b = order.balconyNum;
+												This._eventBindYZToiletSlide($('#toilet_' + orderId), orderId, initId_t);
+												This._eventBindYZBalconySlide($('#balcony_' + orderId), orderId, initId_b);
+											} else if (order.productType == 3) {
+												// 软装
+												initId = order.layout;
+												This._eventBindRZSlide($('#order_' + orderId), orderId, initId);
+											} else if (order.productType == 4) {
+												// 家具
+												initId = order.layout;
+												This._eventBindJJSlide($('#order_' + orderId), orderId, initId);
+											} else if (order.productType == 5) {
+												// 家电
+												initId = order.layout;
+												This._eventBindJDSlide($('#order_' + orderId), orderId, initId);
+											}
+											payButton.html('99元开工');
+											priceTxtEl.html('需支付定金');
+										} else if (order.state == 1) {
+											payButton.html('结算');
+											priceTxtEl.html('已支付定金');
+											$('input').css("textAlign", "center");
+										} else if (order.state == 2) {
+											$('input').css("textAlign", "center");
+										} else {
+											
+											$('input').css("textAlign", "center");
 										}
-										payButton.html('99元开工');
-										$('.order-bar').show();
-									} else if (order.state == 1) {
-										payButton.html('结算');
-										$('.order-bar').show();
-										$('input').css("textAlign", "center");
-									} else if (order.state == 2) {
-										$('input').css("textAlign", "center");
-									} else {
-										$('.order-bar').hide();
-										$('input').css("textAlign", "center");
-									}
-								});
+									});
+								}
 								// 绑定删除
 								$('.not-pay .delete').off('click').on('click', function() {
 									var orderId = $(this).attr("data-id");
@@ -1531,6 +1731,12 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 									if (!$(this).hasClass("on")) {
 										selectedOrder = orderId;
 										$(this).addClass("on");
+										if (payState == 2) {
+											priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
+										} else if (payState == 1) {
+											priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										}
+										
 									}
 								});
 								
@@ -1545,6 +1751,9 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 							// dialog.add("需登录！");
 							checkUsr.doJump();
 						}
+					},
+					error: function(res) {
+						alert("err:" + JSON.stringify(res));
 					}
 				});
 			},

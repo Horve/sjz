@@ -36,7 +36,7 @@ define(['../core/core', './jump', './component/dialog'], function(core, checkUsr
 				var code = res.ret;
 				// 未登录
 				if (code == 302) {
-					window.location.href = jumpurl;
+					// window.location.href = jumpurl;
 					checkUsr.doJump();
 					// wxAuth();
 				} else if (code == 1) {

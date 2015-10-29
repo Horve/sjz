@@ -8,6 +8,21 @@ $fontFace: microsoft yahei, simsun;
 	.blank46 {
 		height: 0.46rem;
 	}
+	.order-empty {
+		width: 100%;
+		font-size: 0.16rem;
+		color: #666;
+		margin-top: 30%;
+		text-align: center;
+
+		h3, h4 {
+			margin-bottom: 0.1rem;
+		}
+		.button-2 {
+			width: 70%;
+			margin: 0.3rem auto 0;
+		}
+	}
 	.order-type {
 		height: 0.45rem;
 		line-height: 0.45rem;

@@ -6,6 +6,7 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 			, headPic = $('.head-pic img', dom)
 			, unameEL = $('.user-info .uname', dom);
 		var getUserInfo = function() {
+			localStorage.clear();
 			if (localStorage.length >= 7) {
 				var unkname = localStorage.getItem("sjz-unkname")
 					, uid = localStorage.getItem("sjz-uid")
@@ -207,6 +208,8 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 								localStorage.setItem("sjz-ucountry", userInfo.country);
 								localStorage.setItem("sjz-uprovince", userInfo.province);
 								localStorage.setItem("sjz-uaddr", userInfo.addr);
+
+							} else if (res.ret == -1) {
 								dialog.add("res:-1 获取信息失败，请重试！");
 							} else if (res.ret == 302) {
 								// 未登录
@@ -243,7 +246,6 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 		$('#submit', dom).off("click").on('click', function() {
 			var flag = checkDet();
 			var uname = "";
-			console.log(params);
 			if (flag) {
 				if (operaType == 1) {
 					// 绑定
@@ -317,7 +319,7 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 							// 302 未登录
 							if (res.ret == 1) {
 								var userInfo = res.userInfo;
-								localStorage.clear();
+								// localStorage.clear();
 								localStorage.setItem("sjz-uid", userInfo.userId);
 								localStorage.setItem("sjz-unkname", userInfo.nickName);
 								localStorage.setItem("sjz-hdpic", userInfo.head);
@@ -326,7 +328,6 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 								localStorage.setItem("sjz-ucountry", userInfo.country);
 								localStorage.setItem("sjz-uprovince", userInfo.province);
 								localStorage.setItem("sjz-uaddr", userInfo.addr);
-
 								checkUsr.toUserInfo();
 							} else if (res.ret == -1) {
 								dialog.add("修改用户信息失败！请重试！");

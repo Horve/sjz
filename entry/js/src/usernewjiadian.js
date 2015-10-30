@@ -1,10 +1,14 @@
 define(['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-jiadian", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
 		var u = navigator.userAgent;
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
+
 		if (isAndroid) {
 			var h = Tools.calcSepHeight(0, 3);
 			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");

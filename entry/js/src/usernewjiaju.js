@@ -1,6 +1,9 @@
 define(['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-jiaju", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var lazyLoad = function(imgs) {
 			[].forEach.call(imgs, function(img) {
 				var src = $(img).attr("data-src");

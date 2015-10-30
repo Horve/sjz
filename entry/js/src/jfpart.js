@@ -1,6 +1,9 @@
 define(['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
 	core.onrender("jf-part", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+
 		var Tools = core.Tools;
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var swipcnt = $('.swiper-container', dom);
@@ -59,11 +62,19 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		$('.shopcart, .order').off('click').on('click', function() {
 			var className = $(this).attr("class");
 			var params = "";
+
+			function danwei_params(id) {
+				if (id !== 11) {
+					return "acreage";
+				} else {
+					return "nums";
+				}
+			}
 			[].forEach.call(selected, function(item, index) {
 				if (index == (selected.length - 1)) {
-					params += '{"productId":' + item + ', "nums":' + initPriceSet[item] + '}';
+					params += '{"productId":' + item + ', "' + danwei_params(item) + '":' + initPriceSet[item] + '}';
 				} else {
-					params += '{"productId":' + item + ', "acreage":' + initPriceSet[item] + '},';
+					params += '{"productId":' + item + ', "' + danwei_params(item) + '":' + initPriceSet[item] + '},';
 				}
 			});
 			var dataParam = {"ordersStr": '{"orders": [' + params + ']}'};

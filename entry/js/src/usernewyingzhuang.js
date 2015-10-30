@@ -1,6 +1,9 @@
 define(['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var productStyle = "艺术学院";
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());

@@ -4513,6 +4513,9 @@ define('entry/js/src/order',['../core/core', './jump', './component/dialog'], fu
 define('entry/js/src/usernewyingzhuang.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-yingzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var productStyle = "艺术学院";
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
@@ -4573,6 +4576,9 @@ define('entry/js/src/usernewyingzhuang.js',['../core/core', '../src/order'], fun
 define('entry/js/src/usernewruanzhuang.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-ruanzhuang", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+
 		var lazyLoad = function(imgs) {
 			[].forEach.call(imgs, function(img) {
 				var src = $(img).attr("data-src");
@@ -4627,6 +4633,9 @@ define('entry/js/src/usernewruanzhuang.js',['../core/core', '../src/order'], fun
 define('entry/js/src/usernewjiaju.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-jiaju", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var lazyLoad = function(imgs) {
 			[].forEach.call(imgs, function(img) {
 				var src = $(img).attr("data-src");
@@ -4688,10 +4697,14 @@ define('entry/js/src/usernewjiaju.js',['../core/core', '../src/order'], function
 define('entry/js/src/usernewjiadian.js',['../core/core', '../src/order'], function(core, OrderConfig) {
 	core.onrender("user-new-jiadian", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
 		var u = navigator.userAgent;
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
+
 		if (isAndroid) {
 			var h = Tools.calcSepHeight(0, 3);
 			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
@@ -4765,6 +4778,9 @@ define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
 define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
 	core.onrender("kf-style", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools;
 		var imgs = $('img', $('.swiper-container'));
@@ -4871,6 +4887,9 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
 	core.onrender("jf-part", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+
 		var Tools = core.Tools;
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var swipcnt = $('.swiper-container', dom);
@@ -4929,11 +4948,19 @@ define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog',
 		$('.shopcart, .order').off('click').on('click', function() {
 			var className = $(this).attr("class");
 			var params = "";
+
+			function danwei_params(id) {
+				if (id !== 11) {
+					return "acreage";
+				} else {
+					return "nums";
+				}
+			}
 			[].forEach.call(selected, function(item, index) {
 				if (index == (selected.length - 1)) {
-					params += '{"productId":' + item + ', "nums":' + initPriceSet[item] + '}';
+					params += '{"productId":' + item + ', "' + danwei_params(item) + '":' + initPriceSet[item] + '}';
 				} else {
-					params += '{"productId":' + item + ', "acreage":' + initPriceSet[item] + '},';
+					params += '{"productId":' + item + ', "' + danwei_params(item) + '":' + initPriceSet[item] + '},';
 				}
 			});
 			var dataParam = {"ordersStr": '{"orders": [' + params + ']}'};
@@ -4972,6 +4999,9 @@ define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog',
 define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', './component/dialog', './jump', './order'], function(core, slideOption, dialog, checkUsr, OrderConfig) {
 	core.onrender("shop-cart", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools
 			, yzOrderDtl = {}
@@ -6889,7 +6919,11 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 					} else if (ret == 1) {
 						// 登陆成功
 						// window.location.href = "http://www.s-jz.com/";
-						window.history.go(-1);
+						if (localStorage.getItem("_prepage")) {
+							window.location.href = localStorage.getItem("_prepage");
+						} else {
+							window.location.href = "http://www.s-jz.com/";
+						}
 					}
 				},
 				error: function(data){

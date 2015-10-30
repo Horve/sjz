@@ -21,7 +21,11 @@ define(['../core/core'], function(core) {
 					} else if (ret == 1) {
 						// 登陆成功
 						// window.location.href = "http://www.s-jz.com/";
-						window.history.go(-1);
+						if (localStorage.getItem("_prepage")) {
+							window.location.href = localStorage.getItem("_prepage");
+						} else {
+							window.location.href = "http://www.s-jz.com/";
+						}
 					}
 				},
 				error: function(data){

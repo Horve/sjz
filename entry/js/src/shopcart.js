@@ -1,6 +1,9 @@
 define(['../core/core', './component/slideOptions', './component/dialog', './jump', './order'], function(core, slideOption, dialog, checkUsr, OrderConfig) {
 	core.onrender("shop-cart", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools
 			, yzOrderDtl = {}

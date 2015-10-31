@@ -500,7 +500,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																<div class="sub-cnt">\
 																	<div class="name">\
 																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">快翻套餐</span>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
 																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																	</div>\
 																	<div class="choose">\
@@ -555,14 +555,13 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																<div class="sub-cnt">\
 																	<div class="name">\
 																		<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">硬装套餐</span>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
 																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																	</div>\
 																	<div class="choose Horizontal">\
 																		<div class="form-set square yz-square">\
 																			<p class="item">\
-																				<em></em>\
-																				<input type="text" readonly="readonly" data-id="1" value="100平米">\
+																				<input type="tel" class="input-square" data-id="' + order.orderId + '" value="' + order.acreage + '平米">\
 																			</p>\
 																		</div>\
 																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
@@ -613,7 +612,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																<div class="sub-cnt">\
 																	<div class="name">\
 																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">软装套餐</span>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
 																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																	</div>\
 																	<div class="choose">\
@@ -658,7 +657,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																<div class="sub-cnt">\
 																	<div class="name">\
 																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">家具套餐</span>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
 																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																	</div>\
 																	<div class="choose">\
@@ -702,7 +701,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																<div class="sub-cnt">\
 																	<div class="name">\
 																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">家电套餐</span>\
+																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
 																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
 																	</div>\
 																	<div class="choose">\
@@ -724,7 +723,10 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 													';
 												} else if (order.productType >= 6 && order.productType <= 11) {
 													var proType = order.productType
+														editState = order.editState
 														, inputVal = ""
+														, isShow = ""
+														, editInfo = "系统默认"
 														, dataid = null;
 													switch(proType) {
 														case 6: 
@@ -745,6 +747,14 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 														case 11:
 															inputVal = "室内门";
 													}
+													if (editState == 0) {
+														editInfo = "系统默认";
+														isShow = "on";
+
+													} else if (editState == 1) {
+														editInfo = "实际面积";
+														isShow = "";
+													}
 													str += '\
 														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
 															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
@@ -757,7 +767,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																	</div>\
 																	<div class="step-list">\
 																		<div class="row">\
-																			<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<span>[' + editInfo + ']-' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<br/><span class="edit-info ' + isShow + '">注：具体以实际量房数据为准。</span>\
 																			<span class="price">￥' + order.total + '</span>\
 																		</div>\
 																	</div>\
@@ -869,7 +880,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																		<div class="form-set square yz-square">\
 																			<p class="item">\
 																				<em></em>\
-																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
+																				<input type="text" placeholder="' + order.acreage + '平米" readonly="readonly" data-id="1" value="100平米">\
 																			</p>\
 																		</div>\
 																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
@@ -1028,7 +1039,10 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 													';
 												} else if (order.productType >= 6 && order.productType <= 11) {
 													var proType = order.productType
+														editState = order.editState
 														, inputVal = ""
+														, isShow = ""
+														, editInfo = "系统默认"
 														, dataid = null;
 													switch(proType) {
 														case 6: 
@@ -1049,6 +1063,14 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 														case 11:
 															inputVal = "室内门";
 													}
+													if (editState == 0) {
+														editInfo = "系统默认";
+														isShow = "on";
+
+													} else if (editState == 1) {
+														editInfo = "实际面积";
+														isShow = "";
+													}
 													str += '\
 														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
 															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
@@ -1060,7 +1082,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																	</div>\
 																	<div class="step-list">\
 																		<div class="row">\
-																			<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<span>[' + editInfo + ']-' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
+																			<br/><span class="edit-info ' + isShow + '">注：具体以实际量房数据为准。</span>\
 																			<span class="price">￥' + order.total + '</span>\
 																		</div>\
 																	</div>\
@@ -1165,7 +1188,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 																		<div class="form-set square yz-square">\
 																			<p class="item">\
 																				<em></em>\
-																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
+																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="' + order.acreage + '平米">\
 																			</p>\
 																		</div>\
 																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
@@ -1666,7 +1689,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 										<div class="order-empty">\
 											<h3>这里还没有订单，您可以</h3>\
 											<h4>查看其他状态订单，或者</h4>\
-											<a href="http://www.s-jz.com" class="button-2">去首页看看</a>\
+											<a href="http://www.s-jz.com/test/Sbuild/html/user/" class="button-2">去首页看看</a>\
 										</div>\
 									';
 								}
@@ -1675,6 +1698,15 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 								// This._getPrice();//计算新价格并写入
 								This.EL_orderLis.html(str);
 								if (!!orderList.length) {
+									$(document).off('click').on('focus', '.input-square', function() {
+										$(this).val($(this).val().replace(/[^\d]/g,""));
+									});
+									$(document).off('click').on('blur', '.input-square', function() {
+										var id = $(this).attr("data-id");
+										var acreage = parseInt($(this).val()).toString().replace(/(\d{3})(.+)/, '$1');
+										This._ajaxModifyOrder(id, '"acreage":' + parseInt(acreage));
+										$(this).val(parseInt($(this).val()).toString().replace(/(\d{3})(.+)/, '$1') + "平米");
+									});
 									[].forEach.call(orderList, function(order) {
 										if (order.state == 0) {
 											var orderId = order.orderId
@@ -1684,6 +1716,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 											if (order.productType == 1) {
 												initId = order.layout;
 												This._eventBindKFSlide($('#order_' + orderId), orderId, initId);
+
 											} else if (order.productType == 2) {
 												initId_t = order.toiletNum;
 												initId_b = order.balconyNum;

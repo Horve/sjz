@@ -1833,7 +1833,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				
 				// alert(params);
 				$.ajax({
-					url: baseUrl + "pay/test/preparePay.htm?orderIds=" 
+					url: baseUrl + "pay/preparePay.htm?orderIds=" 
 						+ selectedOrder 
 						+ params,
 					dataType: "json",

@@ -17,14 +17,14 @@ define(['../core/core'], function(core) {
 							, head = uinfo.head
 							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
 						// window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
-						window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/ucenter/uedit.html?" + param;
+						window.location.href = baseUrl + "html/ucenter/uedit.html?" + param;
 					} else if (ret == 1) {
 						// 登陆成功
 						// window.location.href = "http://www.s-jz.com/";
 						if (localStorage.getItem("_prepage")) {
 							window.location.href = localStorage.getItem("_prepage");
 						} else {
-							window.location.href = "http://www.s-jz.com/";
+							window.location.href = baseUrl + "html/user/";
 						}
 					}
 				},
@@ -33,7 +33,7 @@ define(['../core/core'], function(core) {
 				}
 			});
 		} else {
-			window.location = "http://www.s-jz.com";
+			window.location = baseUrl + "html/user/";;
 		}
 		
 	});

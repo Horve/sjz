@@ -3870,7 +3870,6 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog', './jump'], 
 			, headPic = $('.head-pic img', dom)
 			, unameEL = $('.user-info .uname', dom);
 		var getUserInfo = function() {
-			localStorage.clear();
 			if (localStorage.length >= 7) {
 				var unkname = localStorage.getItem("sjz-unkname")
 					, uid = localStorage.getItem("sjz-uid")
@@ -3880,6 +3879,7 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog', './jump'], 
 					, ucountry = localStorage.getItem("sjz-ucountry")
 					, uprovince = localStorage.getItem("sjz-uprovince")
 					, uaddr = localStorage.getItem("sjz-uaddr");
+				alert(upic);
 				headBg.attr("src", upic);
 				headPic.attr("src", upic);
 				unameEL.html(unkname);	

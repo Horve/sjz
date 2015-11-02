@@ -1685,13 +1685,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 									});	
 								} else {
 									// 订单列表空
-									str = '\
-										<div class="order-empty">\
-											<h3>这里还没有订单，您可以</h3>\
-											<h4>查看其他状态订单，或者</h4>\
-											<a href="http://www.s-jz.com/test/Sbuild/html/user/" class="button-2">去首页看看</a>\
-										</div>\
-									';
+									str = '<div class="order-empty"><h3>这里还没有订单，您可以</h3><h4>查看其他状态订单，或者</h4><a href="http://www.s-jz.com/test/Sbuild/html/user/" class="button-2">去首页看看</a></div>';
 								}
 								console.log(priceDetail);
 								console.log(yzOrderDtl);

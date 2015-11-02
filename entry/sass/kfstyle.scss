@@ -50,6 +50,27 @@ $fontColor: #424252;
 		}
 	}
 	.kf-style {
+		.pic-compare {
+			margin-top: 0.1rem;
+			.item {
+				width: 100%;
+				position: relative;
+				&:nth-of-type(2n) {
+					margin-bottom: 0.1rem;
+				}
+				span {
+					position: absolute;
+					top: 0.2rem;
+					left: 0.2rem;
+					font-size: 0.15rem;
+					color: #fff;
+				}
+				img {
+					width: 100%;
+					display: block;
+				}
+			}
+		}
 		.swiper-container {
 			width: 100%;
 			height: 2.2rem;

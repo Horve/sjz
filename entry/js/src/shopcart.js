@@ -3,7 +3,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		/*-webkit-animation: .5s detail-price-199;*/
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
-		
+
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
 		var Tools = core.Tools
 			, yzOrderDtl = {}
@@ -1666,7 +1666,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 										<div class="order-empty">\
 											<h3>这里还没有订单，您可以</h3>\
 											<h4>查看其他状态订单，或者</h4>\
-											<a href="http://www.s-jz.com" class="button-2">去首页看看</a>\
+											<a href="http://www.s-jz.com/pub/Sbuild/pay/test/html/user" class="button-2">去首页看看</a>\
 										</div>\
 									';
 								}

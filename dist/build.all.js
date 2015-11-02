@@ -6664,7 +6664,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 										<div class="order-empty">\
 											<h3>这里还没有订单，您可以</h3>\
 											<h4>查看其他状态订单，或者</h4>\
-											<a href="http://www.s-jz.com" class="button-2">去首页看看</a>\
+											<a href="http://www.s-jz.com/pub/Sbuild/pay/test/html/user" class="button-2">去首页看看</a>\
 										</div>\
 									';
 								}
@@ -6915,14 +6915,14 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 							, head = uinfo.head
 							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
 						// window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
-						window.location.href = "http://www.s-jz.com/pub/Sbuild/pay/test/html/ucenter/uedit.html?" + param;
+						window.location.href = baseUrl + "pay/test/html/ucenter/uedit.html?" + param;
 					} else if (ret == 1) {
 						// 登陆成功
 						// window.location.href = "http://www.s-jz.com/";
 						if (localStorage.getItem("_prepage")) {
 							window.location.href = localStorage.getItem("_prepage");
 						} else {
-							window.location.href = "http://www.s-jz.com/";
+							window.location.href = baseUrl + "pay/test/html/user/";
 						}
 					}
 				},
@@ -6931,7 +6931,7 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 				}
 			});
 		} else {
-			window.location = "http://www.s-jz.com";
+			window.location = baseUrl + "pay/test/html/user/";
 		}
 		
 	});

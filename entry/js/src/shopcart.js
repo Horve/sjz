@@ -5,6 +5,9 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		localStorage.setItem("_prepage", window.location.href);
 		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		if (localStorage.getItem("_prepage")) {
+			localStorage.removeItem("_prepage");
+		}
 		var Tools = core.Tools
 			, yzOrderDtl = {}
 			// 初始化价格
@@ -1761,12 +1764,12 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 									if (!$(this).hasClass("on")) {
 										selectedOrder = orderId;
 										$(this).addClass("on");
-										if (payState == 2) {
-											priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
-										} else if (payState == 1) {
-											priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
-										}
-										
+										priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										// if (payState == 2) {
+										// 	priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
+										// } else if (payState == 1) {
+										// 	priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										// }
 									}
 								});
 								

@@ -32,7 +32,8 @@ $mainColor: #3ad064;
 		-webkit-transition: all .3s ease-in-out;
 		-webkit-transform: translate3d(0,0,0);
 		&.hide {
-			-webkit-transform: translateY(2000px);
+			/*-webkit-transform: translateY(2000px);*/
+			display: none;
 		}
 		.cnt {
 			width: 90%;

@@ -3904,6 +3904,9 @@ define('entry/js/src/order',['../core/core', './jump', './component/dialog'], fu
 					// 登录失败。提示重试
 					alert("登录失败！");
 				}
+			},
+			error: function(res) {
+				alert(JSON.stringify(res));
 			}
 		});
 	};
@@ -4204,6 +4207,8 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 		localStorage.setItem("_prepage", window.location.href);
 		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var kftype = location.hash.replace(/#!_/,"") || "art";
+		var productStyle = "";
 		var Tools = core.Tools;
 		var imgs = $('img', $('.swiper-container'));
 		var items = $('.choose-style .items span', dom);
@@ -4229,6 +4234,22 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 				Tools.lazyLoad(imgs[index + 1]);
 			}
 		});
+
+		switch(kftype) {
+			case "art": 
+				productStyle = "艺术学院";
+				break;
+			case "mag": 
+				productStyle = "魔法学院";
+				break;
+			case "nav": 
+				productStyle = "海军学院";
+				break;
+			case "cau": 
+				productStyle = "人文学院";
+				break;
+		}
+
 		$(items).off('click').on('click', function() {
 			var index = $(this).index();
 			$(this).addClass("on").siblings().removeClass("on");
@@ -4270,9 +4291,9 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
     		var location = window.location.href;
     		var params = "";
     		if (!!nums) {
-    			params = '"nums": 1';
+    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
     		} else {
-    			params = '"layout": ' + layout;
+    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
     		}
     		OrderConfig.addOrderAjax(1, params);
     		// $.ajax({
@@ -4298,9 +4319,9 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
     		var location = window.location.href;
     		var params = "";
     		if (!!nums) {
-    			params = '"nums": 1';
+    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
     		} else {
-    			params = '"layout": ' + layout;
+    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
     		}
     		OrderConfig.addToShopChart(1, params);
     	});
@@ -4534,6 +4555,9 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 		localStorage.setItem("_prepage", window.location.href);
 		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		if (localStorage.getItem("_prepage")) {
+			localStorage.removeItem("_prepage");
+		}
 		var Tools = core.Tools
 			, yzOrderDtl = {}
 			// 初始化价格
@@ -6290,12 +6314,12 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 									if (!$(this).hasClass("on")) {
 										selectedOrder = orderId;
 										$(this).addClass("on");
-										if (payState == 2) {
-											priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
-										} else if (payState == 1) {
-											priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
-										}
-										
+										priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										// if (payState == 2) {
+										// 	priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
+										// } else if (payState == 1) {
+										// 	priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										// }
 									}
 								});
 								

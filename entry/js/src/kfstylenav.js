@@ -5,6 +5,8 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		localStorage.setItem("_prepage", window.location.href);
 		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var kftype = location.hash.replace(/#!_/,"") || "art";
+		var productStyle = "";
 		var Tools = core.Tools;
 		var imgs = $('img', $('.swiper-container'));
 		var items = $('.choose-style .items span', dom);
@@ -30,6 +32,22 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 				Tools.lazyLoad(imgs[index + 1]);
 			}
 		});
+
+		switch(kftype) {
+			case "art": 
+				productStyle = "艺术学院";
+				break;
+			case "mag": 
+				productStyle = "魔法学院";
+				break;
+			case "nav": 
+				productStyle = "海军学院";
+				break;
+			case "cau": 
+				productStyle = "人文学院";
+				break;
+		}
+
 		$(items).off('click').on('click', function() {
 			var index = $(this).index();
 			$(this).addClass("on").siblings().removeClass("on");
@@ -71,9 +89,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
     		var location = window.location.href;
     		var params = "";
     		if (!!nums) {
-    			params = '"nums": 1';
+    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
     		} else {
-    			params = '"layout": ' + layout;
+    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
     		}
     		OrderConfig.addOrderAjax(1, params);
     		// $.ajax({
@@ -99,9 +117,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
     		var location = window.location.href;
     		var params = "";
     		if (!!nums) {
-    			params = '"nums": 1';
+    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
     		} else {
-    			params = '"layout": ' + layout;
+    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
     		}
     		OrderConfig.addToShopChart(1, params);
     	});

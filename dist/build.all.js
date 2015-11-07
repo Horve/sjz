@@ -4264,13 +4264,13 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 					break;
 				case 1: 
 					txt = "二室一厅";
-					price = 6200;
+					price = 5499;
 					layout = 2;
 					nums = null;
 					break;
 				case 2: 
 					txt = "三室一厅";
-					price = 8500;
+					price = 7399;
 					layout = 3;
 					nums = null;
 					break;

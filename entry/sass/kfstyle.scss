@@ -160,7 +160,6 @@ $fontColor: #424252;
 		}
 		.pic-lists {
 			font-size: 0.14rem;
-			padding-bottom: 0.5rem;
 			.row {
 				height: 1.5rem;
 				display: -webkit-box;
@@ -183,5 +182,17 @@ $fontColor: #424252;
 			}
 		}
 	}
-	
+	.back-info {
+		font-size: 0.12rem;
+		padding:0 0.15rem 0.5rem 0.15rem;
+		line-height: 2em;
+		color: #666;
+		margin-top: 0.1rem;
+		.tle {
+			font-weight: bold;
+			color: $mainColor;
+			border-bottom: 1px solid #ccc;
+			margin-bottom: 0.05rem;
+		}
+	}
 }

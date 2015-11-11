@@ -1652,7 +1652,7 @@ input {
   overflow: hidden;
 }
 .user-index-html .swiper-slide-yingzhuang-six .title {
-  line-height: 0.5rem;
+  line-height: 0.7rem;
   font-size: 0.28rem;
   font-weight: bold;
   color: #3acd64;
@@ -1664,7 +1664,7 @@ input {
   font-size: 0.12rem;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  height: calc(100% - 135px);
+  height: calc(100% - 155px);
 }
 .user-index-html .swiper-slide-yingzhuang-six .container .row {
   border-top: 3px solid #3acd64;
@@ -1672,7 +1672,7 @@ input {
   -webkit-box-pack: justify;
   -webkit-box-flex: 1;
   box-flex: 1;
-  height: calc(100% / 8);
+  height: calc(100% / 7);
 }
 .user-index-html .swiper-slide-yingzhuang-six .container .row .col {
   width: 25%;
@@ -1711,41 +1711,38 @@ input {
   margin-bottom: 0.3rem;
 }
 .user-index-html .swiper-slide-yingzhuang-sev .pics {
-  width: 2.64rem;
+  width: 82%;
   margin: 0 auto 0;
 }
+.user-index-html .swiper-slide-yingzhuang-sev .pics.yz-six {
+  margin-bottom: 0.2rem;
+}
 .user-index-html .swiper-slide-yingzhuang-sev .pics .row {
-  height: 1rem;
+  height: 100%;
   display: -webkit-box;
   -webkit-box-pack: justify;
 }
 .user-index-html .swiper-slide-yingzhuang-sev .pics .row .p {
-  width: 1rem;
-  height: 1rem;
+  width: 50%;
+  height: 100%;
   background-image: url(img/user/uindex_spr1.jpg);
-  background-size: 200%;
-}
-.user-index-html .swiper-slide-yingzhuang-sev .pics .row .p.p1 {
-  background-position: 0 0;
-}
-.user-index-html .swiper-slide-yingzhuang-sev .pics .row .p.p2 {
-  background-position: 0 -1rem;
-}
-.user-index-html .swiper-slide-yingzhuang-sev .pics .row .p.p3 {
-  background-position: -1rem 0;
+  background-size: cover;
+  position: relative;
+  background-position: center center;
 }
 .user-index-html .swiper-slide-yingzhuang-sev .pics .row .p.p4 {
-  background-position: -1rem -1rem;
+  background-image: url(img/user/uindex_spr2.jpg);
 }
 .user-index-html .swiper-slide-yingzhuang-sev .pics .row .p.p5 {
-  width: 2.32rem;
-  background-image: url(img/user/uindex_spr2.jpg);
-  background-position: 0 0;
-  background-size: 100%;
+  width: 100%;
+  background-image: url(img/user/uindex_spr3.jpg);
 }
 .user-index-html .swiper-slide-yingzhuang-sev .pics .row .t {
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 0.32rem;
-  height: 1rem;
+  height: 100%;
   font-size: 14px;
   background: #3acd64;
   color: #fff;

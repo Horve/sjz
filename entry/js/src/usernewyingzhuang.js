@@ -9,16 +9,19 @@ define(['../core/core', '../src/order'], function(core, OrderConfig) {
 		var u = navigator.userAgent;
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
+		var s6h = $('.user-index-html .swiper-slide-yingzhuang-sev .pics').width();
+		$('.swiper-slide-yingzhuang-sev .yz-six').css("height", s6h * 0.38 + "px");
+		$('.swiper-slide-yingzhuang-sev .yz-svn').css("height", s6h * 0.55 + "px");
 		if (isAndroid) {
 			var h1 = Tools.calcSepHeight(96, 2);
 			var w1 = Tools.calcSepHeight(6, 2, "h");
-			var h2 = Tools.calcSepHeight(140, 1, "a");
+			var h2 = Tools.calcSepHeight(155, 1, "a");
 			console.log(h1,w1,h2);
 			$('.yingzhuang-li-comm .list .lrow', dom).css("height", h1 + "px");
 			$('.yingzhuang-li-comm .list .lcol', dom).css("width", w1 + "px");
 			$('.swiper-slide-yingzhuang-six .container', dom).css("height", h2 + "px");
 
-			var h3 = Tools.calcSepHeight(0, 8, "a", $('.swiper-slide-yingzhuang-six .container', dom));
+			var h3 = Tools.calcSepHeight(0, 7, "a", $('.swiper-slide-yingzhuang-six .container', dom));
 			$('.swiper-slide-yingzhuang-six .container .row', dom).css("heiht", h3 + "px");
 
 			$('html').removeClass("ios").addClass("android");

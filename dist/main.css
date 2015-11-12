@@ -7,6 +7,8 @@
  * =====================================================
  */
 
+/*! variables */
+/*! color */
 /*! components */
 .form-set {
   width: 65%;
@@ -3056,6 +3058,69 @@ input {
     display: none;
   }
 }
+/*! 2.0 */
+.index-2-0 {
+  font-size: 100px;
+}
+.index-2-0 .page {
+  /*overflow: hidden;*/
+}
+.index-2-0 #focus-slide {
+  height: 1.76rem;
+}
+.index-2-0 #focus-slide .swiper-slide {
+  background-size: cover;
+}
+.index-2-0 #focus-slide .one {
+  background-image: url(img/2_0/index_bo1.jpg);
+}
+.index-2-0 #focus-slide .two {
+  background-image: url(img/2_0/index_bo2.jpg);
+}
+.index-2-0 #focus-slide .three {
+  background-image: url(img/2_0/index_bo3.jpg);
+}
+.index-2-0 #compare-slide .swiper-slide {
+  background-size: 100% 100%;
+}
+.index-2-0 #compare-slide .one {
+  background-image: url(img/2_0/index_cmp1.jpg);
+}
+.index-2-0 #compare-slide .two {
+  background-image: url(img/2_0/index_cmp2.jpg);
+}
+.index-2-0 .swiper-pagination {
+  font-size: 0;
+}
+.index-2-0 .swiper-pagination .swiper-pagination-bullet {
+  background-color: #d4d4d4;
+}
+.index-2-0 .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: #9ab903;
+}
+.index-2-0 .compare {
+  width: 100%;
+  position: relative;
+}
+.index-2-0 .compare .cmp {
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: top right;
+}
+.index-2-0 .compare .bottom {
+  background-image: url(img/2_0/index_cmp1.jpg);
+}
+.index-2-0 .compare .top {
+  background-size: 200% 100%;
+  background-image: url(img/2_0/index_cmp2.jpg);
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  top: 0;
+  -webkit-transition-duration: 0s;
+}
+
 /*! ucenter */
 .ucenter {
   font-size: 100px;

@@ -6,7 +6,6 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 			, headPic = $('.head-pic img', dom)
 			, unameEL = $('.user-info .uname', dom);
 		var getUserInfo = function() {
-			localStorage.clear();
 			if (localStorage.length >= 7) {
 				var unkname = localStorage.getItem("sjz-unkname")
 					, uid = localStorage.getItem("sjz-uid")

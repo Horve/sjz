@@ -3748,23 +3748,6 @@ define('entry/js/core/tools',[],function() {
 				return (width - x) / y;
 			}
 			
-		},
-		timeFormat: function(time) {
-			var time = new Date(time);
-			function check(num) {
-				if (parseInt(num) < 10) {
-					return "0" + num;
-				} else {
-					return "" + num;
- 				}
-			}
-			return ""
-				+ time.getFullYear() + "-"
-				+ check(time.getMonth() + 1) + "-"
-				+ check(time.getDate()) + " "
-				+ check(time.getHours()) + ":"
-				+ check(time.getMinutes()) + ":"
-				+ check(time.getSeconds());
 		}
 	};
 	var Tools = Tools;
@@ -3799,27 +3782,6 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/swiper.js'], func
 		}
 	}
 	return core;
-});
-define('entry/js/src/jump',[],function() {
-	var baseUrl = "http://www.s-jz.com/pub/Sbuild/"
-		, redirect = encodeURIComponent(baseUrl + "html/redirect.html")
-		, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=" + redirect + "&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-		, shopChartUrl = baseUrl + "html/payment/"
-		, checkUsr = {};
-
-	checkUsr.doJump = function() {
-		window.location.href = jumpurl;
-	};
-	checkUsr.toShopChart = function() {
-		window.location.href = shopChartUrl;
-	};
-	checkUsr.toIndex = function() {
-		window.location.href = baseUrl + "html/user/";
-	};
-	checkUsr.toUserInfo = function() {
-		window.location.href = baseUrl + "html/ucenter/uinfo.html";
-	};
-	return checkUsr;
 });
 define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 	var isfirst = true;
@@ -3879,2527 +3841,143 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 
 	return dialog;
 });
-define('entry/js/src/order',['../core/core', './jump', './component/dialog'], function(core, checkUsr, dialog) {
+define('entry/js/src/jump',[],function() {
+	var baseUrl = "http://www.s-jz.com/pub/Sbuild/"
+		, redirect = encodeURIComponent(baseUrl + "html/redirect.html")
+		, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=" + redirect + "&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
+		, shopChartUrl = baseUrl + "html/payment/"
+		, checkUsr = {};
+
+	checkUsr.doJump = function() {
+		window.location.href = jumpurl;
+	};
+	checkUsr.toShopChart = function() {
+		window.location.href = shopChartUrl;
+	};
+	checkUsr.toIndex = function() {
+		window.location.href = baseUrl + "html/user/";
+	};
+	checkUsr.toUserInfo = function() {
+		window.location.href = baseUrl + "html/ucenter/uinfo.html";
+	};
+	return checkUsr;
+});
+define('entry/js/src/ucenter',['../core/core', './component/dialog', './jump'], function(core, dialog, checkUsr) {
 	var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
-	var OrderConfig = {};
-	// 下订单
-	OrderConfig.addOrderAjax = function(productId, params) {
-		$.ajax({
-			url: baseUrl + "orderCtrl/addOrder.htm",
-			data: {"ordersStr": '{"orders": [{"productId":' + productId + ', ' + params + '}]}'},
-			dataType: "json",
-			success: function(res) {
-				var code = res.ret;
-				// 未登录
-				if (code == 302) {
-					// 请求微信授权接口wxf25cf835f9d71720
-					// window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=http%3A%2F%2Fwww.s-jz.com%2Fhtml%2Fuser&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect";
-					// window.location.href = jumpurl;
-					checkUsr.doJump();
-					// wxAuth();
-				} else if (code == 1) {
-					// 已登录 进入购物车
-					checkUsr.toShopChart();
-				} else if (code == -1) {
-					// 登录失败。提示重试
-					alert("登录失败！");
-				}
-			}
-		});
-	};
-	OrderConfig.addToShopChart = function(productId, params) {
-		$.ajax({
-			url: baseUrl + "orderCtrl/addOrder.htm",
-			data: {"ordersStr": '{"orders": [{"productId":' + productId + ', ' + params + '}]}'},
-			dataType: "json",
-			success: function(res) {
-				// alert(JSON.stringify(res));
-				var code = res.ret;
-				// 未登录
-				if (code == 302) {
-					// window.location.href = jumpurl;
-					checkUsr.doJump();
-					// wxAuth();
-				} else if (code == 1) {
-					// 已登录 提示加入购物车成功
-					dialog.add("已成功加入购物车！");
-				} else if (code == -1) {
-					// 登录失败。提示重试
-					alert("登录失败！");
-				}
-			}
-		});
-	};
 
-	return OrderConfig;
-});
-define('entry/js/src/usernewyingzhuang.js',['../core/core', '../src/order'], function(core, OrderConfig) {
-	core.onrender("user-new-yingzhuang", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-		
-		var productStyle = "艺术学院";
-		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		var u = navigator.userAgent;
-		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-		var Tools = core.Tools;
-		if (isAndroid) {
-			var h1 = Tools.calcSepHeight(96, 2);
-			var w1 = Tools.calcSepHeight(6, 2, "h");
-			var h2 = Tools.calcSepHeight(140, 1, "a");
-			console.log(h1,w1,h2);
-			$('.yingzhuang-li-comm .list .lrow', dom).css("height", h1 + "px");
-			$('.yingzhuang-li-comm .list .lcol', dom).css("width", w1 + "px");
-			$('.swiper-slide-yingzhuang-six .container', dom).css("height", h2 + "px");
-
-			var h3 = Tools.calcSepHeight(0, 8, "a", $('.swiper-slide-yingzhuang-six .container', dom));
-			$('.swiper-slide-yingzhuang-six .container .row', dom).css("heiht", h3 + "px");
-
-			$('html').removeClass("ios").addClass("android");
-		} else {
-			$('html').removeClass("android").addClass("ios");
-		}
-		var sliders = $('.swiper-slide', dom);
-		var mySwiper2 = new Swiper('.swiper-container-v1',{
-			pagination: '.swiper-pagination-h1',
-			direction: 'vertical',
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				// 延迟加载
-				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-				[].forEach.call(imgs, function(img) {
-					var src = $(img).attr("data-src");
-					if (src) {
-						$(img).attr("src", src);
-						$(img).removeAttr("data-src");
-					}
-				});
-			}
-		});
-
-		// style
-		var styleLis = $('.user-choose-list ul li', dom);
-		styleLis.off('click').on('click', function() {
-			$(this).addClass("on").siblings().removeClass("on");
-			productStyle = $(this).find('span').html();
-		});
-
-		$('.order', dom).off('click').on('click', function() {
-			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
-    		OrderConfig.addOrderAjax(2, params);
-		});
-		$('.shopcart', dom).off('click').on('click', function() {
-			var params = '"acreage":100,"balconyNum":1,"toiletNum":1,"productStyle":"' + productStyle + '"';
-    		OrderConfig.addToShopChart(2, params);
-		});
-	});
-});
-define('entry/js/src/usernewruanzhuang.js',['../core/core', '../src/order'], function(core, OrderConfig) {
-	core.onrender("user-new-ruanzhuang", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-
-		var lazyLoad = function(imgs) {
-			[].forEach.call(imgs, function(img) {
-				var src = $(img).attr("data-src");
-				if (src) {
-					$(img).attr("src", src);
-					$(img).removeAttr("data-src");
-				}
-			});
-		};
-		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		var Tools = core.Tools;
-		if (isQQUC) {
-			var h = Tools.calcSepHeight(0, 3);
-			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
-		}
-		var sliders = $('.swiper-slide', dom);
-		var mySwiper2 = new Swiper('.swiper-container-v2',{
-			pagination: '.swiper-pagination-h2',
-			direction: 'vertical',
-			onInit: function(swiper){
-		    	var index = swiper.activeIndex;
-		    	var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-		    	lazyLoad(imgs);
-		    },
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				console.log(index);
-				// 延迟加载
-				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-				lazyLoad(imgs);
-			}
-		});
-		// style
-		var productStyle = "艺术学院";
-		var styleLis = $('.user-choose-list ul li', dom);
-		styleLis.off('click').on('click', function() {
-			$(this).addClass("on").siblings().removeClass("on");
-			productStyle = $(this).find('span').html();
-		});
-		// 下单
-		var layout = 1;
-		$('.order', dom).off('click').on('click', function() {
-			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		OrderConfig.addOrderAjax(3, params);
-		});
-		$('.shopcart', dom).off('click').on('click', function() {
-			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		OrderConfig.addToShopChart(3, params);
-		});
-	});
-});
-define('entry/js/src/usernewjiaju.js',['../core/core', '../src/order'], function(core, OrderConfig) {
-	core.onrender("user-new-jiaju", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-		
-		var lazyLoad = function(imgs) {
-			[].forEach.call(imgs, function(img) {
-				var src = $(img).attr("data-src");
-				if (src) {
-					$(img).attr("src", src);
-					$(img).removeAttr("data-src");
-				}
-			});
-		};
-		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		var u = navigator.userAgent;
-		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-		var Tools = core.Tools;
-		if (isAndroid) {
-			var h = Tools.calcSepHeight(0, 3);
-			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
-			$('.swiper-slide-jiaju-three .item-show', dom)
-			.css(
-				"marginLeft", 
-				$('.swiper-slide-jiaju-three .content').width() - 114 + "px"
-			);
-		}
-		var sliders = $('.swiper-slide', dom);
-		var mySwiper2 = new Swiper('.swiper-container-v3',{
-			pagination: '.swiper-pagination-h3',
-			direction: 'vertical',
-			onInit: function(swiper){
-		    	var index = swiper.activeIndex;
-		    	var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-		    	lazyLoad(imgs);
-		    },
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				console.log(index);
-				// 延迟加载
-				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-				lazyLoad(imgs);
-			}
-		});
-		// style
-		var productStyle = "艺术学院";
-		var styleLis = $('.user-choose-list ul li', dom);
-		styleLis.off('click').on('click', function() {
-			$(this).addClass("on").siblings().removeClass("on");
-			productStyle = $(this).find('span').html();
-		});
-		// 下单
-		var layout = 1;
-		$('.order', dom).off('click').on('click', function() {
-			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		OrderConfig.addOrderAjax(4, params);
-		});
-		$('.shopcart', dom).off('click').on('click', function() {
-			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		OrderConfig.addToShopChart(4, params);
-		});
-	});
-});
-define('entry/js/src/usernewjiadian.js',['../core/core', '../src/order'], function(core, OrderConfig) {
-	core.onrender("user-new-jiadian", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-		
-		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		var u = navigator.userAgent;
-		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-		var Tools = core.Tools;
-
-		if (isAndroid) {
-			var h = Tools.calcSepHeight(0, 3);
-			$('.ruanzhuang-show-comm .content .col', dom).css("height", h + "px");
-			$('.swiper-slide-jiadian-two .item-show', dom)
-			.css(
-				"marginLeft", 
-				$('.swiper-slide-jiadian-two .bg-content').width() - 114 + "px"
-			);
-		}
-		var lazyLoad = function(imgs) {
-			[].forEach.call(imgs, function(img) {
-				var src = $(img).attr("data-src");
-				if (src) {
-					$(img).attr("src", src);
-					$(img).removeAttr("data-src");
-				}
-			});
-		};
-		var sliders = $('.swiper-slide', dom);
-		var mySwiper2 = new Swiper('.swiper-container-v4',{
-			pagination: '.swiper-pagination-h4',
-			direction: 'vertical',
-			onInit: function(swiper){
-		    	var index = swiper.activeIndex;
-		    	var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-		    	lazyLoad(imgs);
-		    },
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				console.log(index);
-				// 延迟加载
-				var imgs = $('img', $(sliders[index])).concat($('img', $(sliders[index + 1])));
-				lazyLoad(imgs);
-			}
-		});
-		// style
-		var productStyle = "艺术学院";
-		var styleLis = $('.user-choose-list ul li', dom);
-		styleLis.off('click').on('click', function() {
-			$(this).addClass("on").siblings().removeClass("on");
-			productStyle = $(this).find('span').html();
-		});
-		// 下单
-		var layout = 1;
-		$('.order', dom).off('click').on('click', function() {
-			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		OrderConfig.addOrderAjax(5, params);
-		});
-		$('.shopcart', dom).off('click').on('click', function() {
-			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		OrderConfig.addToShopChart(5, params);
-		});
-	});
-});
-define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
-	core.onrender("kf-userindex", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		var u = navigator.userAgent;
-		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-		var Tools = core.Tools;
-		if (isAndroid) {
-			var h = Tools.calcSepHeight(68, 4);
-			$('.page-two .style', dom).css("height", h + "px");
-		}
-		var mySwiper1 = new Swiper('.swiper-container',{
-			direction: 'vertical'
-		});
-	});
-});
-define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
-	core.onrender("kf-style", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-		
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
-		var Tools = core.Tools;
-		var imgs = $('img', $('.swiper-container'));
-		var items = $('.choose-style .items span', dom);
-		var itemsTxt = $('.choose-style .items-intro', dom);
-		var itemsPrice = $('.choose-style .price', dom);
-		var swipcnt = $('.swiper-container', dom);
-		var layout = 1;
-		var nums = null;
-		var mySwiper1 = new Swiper('.swiper-container',{
-			// direction: 'vertical'
-			pagination: '.pagination-style',
-			autoplay: 3000,
-			onInit: function(swiper){
-		    	console.log("init");
-		    	var width = parseInt(Tools.getCurrentStyle(swipcnt[0], "width"));
-		    	var height = width * 0.6875;
-		    	swipcnt.css("height", height + "px");
-		    	Tools.lazyLoad([imgs[0], imgs[1]]);
-		    },
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				// 延迟加载
-				Tools.lazyLoad(imgs[index + 1]);
-			}
-		});
-		$(items).off('click').on('click', function() {
-			var index = $(this).index();
-			$(this).addClass("on").siblings().removeClass("on");
-			var txt = "";
-			var price = 0;
-			switch(index) {
-				case 0: 
-					txt = "一室一厅";
-					price = 3600;
-					layout = 1;
-					nums = null;
-					break;
-				case 1: 
-					txt = "二室一厅";
-					price = 6200;
-					layout = 2;
-					nums = null;
-					break;
-				case 2: 
-					txt = "三室一厅";
-					price = 8500;
-					layout = 3;
-					nums = null;
-					break;
-				case 3: 
-					txt = "一个卧室";
-					price = 1999;
-					layout = null;
-					nums = 1;
-					break;
-			}
-			itemsTxt.html(txt);
-			itemsPrice.html(price);
-		});
-		var imgLists = $('img', '.pic-lists');
-    	Tools.lazyLoad(imgLists);
-
-    	$('.ordernow').off('click').on('click', function() {
-    		var location = window.location.href;
-    		var params = "";
-    		if (!!nums) {
-    			params = '"nums": 1';
-    		} else {
-    			params = '"layout": ' + layout;
-    		}
-    		OrderConfig.addOrderAjax(1, params);
-    		// $.ajax({
-    		// 	url:  baseUrl + "orderCtrl/addOrder.htm",
-    		// 	data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
-    		// 	dataType: "json",
-    		// 	success: function(res) {
-    		// 		var code = res.ret;
-    		// 		// 未登录
-    		// 		if (code == 302) {
-    		// 			checkUsr.doJump();
-    		// 		} else if (code == 1) {
-    		// 			// 已登录 进入购物车
-    		// 			checkUsr.toShopChart();
-    		// 		} else if (code == -1) {
-    		// 			// 登录失败。提示重试
-    		// 			alert("登录失败！");
-    		// 		}
-    		// 	}
-    		// });
-    	});
-    	$('.shopchart').off('click').on('click', function() {
-    		var location = window.location.href;
-    		var params = "";
-    		if (!!nums) {
-    			params = '"nums": 1';
-    		} else {
-    			params = '"layout": ' + layout;
-    		}
-    		OrderConfig.addToShopChart(1, params);
-    	});
-	});
-});
-define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
-	core.onrender("jf-part", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-
-		var Tools = core.Tools;
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
-		var swipcnt = $('.swiper-container', dom);
-		var imgs = $('img', $('.swiper-container'));
-		var chosBtns = $('.price-sec .btn', dom);
-		var orderNow = $('.order', dom);
-		var addChart = $('.shopcart', dom);
-		var initPriceSet = { // 默认平米数set
-			6: 10, // 地板默认平米数
-			7: 10, // 乳胶漆
-			8: 10, // 壁纸
-			9: 10, // 瓷砖
-			10: 10, // 厨卫天花
-			11: 1 // 室内门
-		};
-		var selected = [6];
-
-		Array.prototype.arrayDelItem = function(item) {
-			for (var i = 0, n = this.length; i < n; i++) {
-				if (this[i] === item) {
-					this.splice(i, 1);
-				}
-			}
-			return this;
-		};
-
-		var mySwiper1 = new Swiper('.swiper-container',{
-			// direction: 'vertical'
-			pagination: '.pagination-style',
-			autoplay: 3000,
-			onInit: function(swiper){
-		    	var width = parseInt(Tools.getCurrentStyle(swipcnt[0], "width"));
-		    	var height = width * 0.74375;
-		    	swipcnt.css("height", height + "px");
-		    	Tools.lazyLoad([imgs[0], imgs[1]]);
-		    },
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				// 延迟加载
-				Tools.lazyLoad(imgs[index + 1]);
-			}
-		});
-		chosBtns.off('click').on('click', function() {
-			var proid = parseInt($(this).attr("data-proid"));
-			if ($(this).hasClass("on")) {
-				$(this).removeClass("on");
-				selected = selected.arrayDelItem(proid);
+	core.onrender("ucenter-index", function(dom) {
+		var headBg = $('.headpic-bg', dom)
+			, headPic = $('.head-pic img', dom)
+			, unameEL = $('.user-info .uname', dom);
+		var getUserInfo = function() {
+			if (localStorage.length >= 7) {
+				var unkname = localStorage.getItem("sjz-unkname")
+					, uid = localStorage.getItem("sjz-uid")
+					, upic = localStorage.getItem("sjz-hdpic")
+					, uname = localStorage.getItem("sjz-uname")
+					, uphone = localStorage.getItem("sjz-uphone")
+					, ucountry = localStorage.getItem("sjz-ucountry")
+					, uprovince = localStorage.getItem("sjz-uprovince")
+					, uaddr = localStorage.getItem("sjz-uaddr");
+				headBg.attr("src", upic);
+				headPic.attr("src", upic);
+				unameEL.html(unkname);	
 			} else {
-				$(this).addClass("on");
-				selected.push(proid);
-			}
-		});
-		// data: {"ordersStr": '{"orders": [{"productId":' + productId + ', ' + params + '}]}'},
-		
-		// 下单
-		$('.shopcart, .order').off('click').on('click', function() {
-			var className = $(this).attr("class");
-			var params = "";
-
-			function danwei_params(id) {
-				if (id !== 11) {
-					return "acreage";
-				} else {
-					return "nums";
-				}
-			}
-			[].forEach.call(selected, function(item, index) {
-				if (index == (selected.length - 1)) {
-					params += '{"productId":' + item + ', "' + danwei_params(item) + '":' + initPriceSet[item] + '}';
-				} else {
-					params += '{"productId":' + item + ', "' + danwei_params(item) + '":' + initPriceSet[item] + '},';
-				}
-			});
-			var dataParam = {"ordersStr": '{"orders": [' + params + ']}'};
-			console.dir();
-			$.ajax({
-				url: baseUrl + "orderCtrl/addOrder.htm",
-				data: dataParam,
-				dataType: "json",
-				success: function(res) {
-					// alert(JSON.stringify(res));
-					var code = res.ret;
-					// 未登录
-					if (code == 302) {
-						checkUsr.doJump();
-						// wxAuth();
-					} else if (code == 1) {
-						if (/shopcart/.test(className)) {
-							// 已登录 提示加入购物车成功
-							dialog.add("已成功加入购物车！");
-						} else {
-							// 已登录 跳转到订单列表
-							checkUsr.toShopChart();
-						}
-					} else if (code == -1) {
-						// 登录失败。提示重试
-						alert("登录失败！");
-					}
-				},
-				error: function(res) {
-					alert(JSON.stringify(res));
-				}
-			});
-		});
-	});
-});
-define('entry/js/src/component/slideOptions',['../../core/core'], function(core) {
-	var isfirst = true;
-	var isChoose = false;
-	var allData = [];
-	var slideOption = {
-		TEMPLATE: '<div class="form-mask"></div><div class="form-slide"><header class="sli-title"><span>选项</span><em class="slide-cancel">取消</em></header><ul class="slide-item-ul"><li class="on"><span>200-300</span><i></i></li></ul></div>',
-		// {
-		// 	title: "这是标题这是标题",
-		// 	data: ["选项一","选项二","选项三","选项四","选项五","选项六"],
-		//  choose: false,
-		// 	callback: function() {
-		// 	}
-		// }
-		add: function(elem, options) {
-			console.log("Enter slideOption Component!");
-			var _this = this;
-			isChoose = options.choose || false;
-			if (options.initOption && typeof options.initOption === 'function') {
-				options.initOption(elem, options.data);
-			}
-			$(elem).off("click").on("click", function() {
-				allData = options.data;
-				_this.beforeShow(elem, options);
-			});
-		},
-		beforeShow: function(elem, options, callback) {
-			var _this = this;
-			var title = options.title;
-			var data = options.data;
-			var slide;
-			if (!$('.form-mask').length) {
-				slide = $(_this.TEMPLATE);
-				isfirst = true;
-			} else {
-				slide = $('.form-mask, .form-slide');
-				isfirst = false;
-			}
-			slide.find('.sli-title span').html(title);
-			var content = [];
-			[].forEach.call(data, function(item) {
-				content.push('<li data-id="' + item.id + '"><span>' + item.txt + '</span><i></i></li>');
-			});
-			slide.find('.slide-item-ul').html(content.join(""));
-			if (isfirst) {
-				$('body').append(slide);
-				setTimeout(function() {
-					_this.show($('.form-slide'), _this, elem, options.callback);
-				}, 100);
-			} else {
-				// _this.show($('.form-slide'), _this, elem, options.callback);
-				$('.form-slide, .form-mask').show();
-				_this.show($('.form-slide'), _this, elem, options.callback);
-			}
-		},
-
-		show: function(el, _this, pageElem, callback) {
-			var elH = $(el).height();
-			$(el).attr("style", "-webkit-transform: translate3d(0,0,0) translateY(-" + elH + "px);");
-			_this.hideBind(el);
-			if (isChoose) {
-				_this.itemEvent(el, pageElem, callback);
-			}
-		},
-		hide: function(el) {
-			// $(el).removeClass("anim");
-			$(el).attr("style", "-webkit-transform: translate3d(0,0,0);");
-			$('.form-mask').hide();
-			this.afterHide();
-		},
-		hideBind: function(el) {
-			var _this = this;
-			$('.form-mask, .slide-cancel').off('click').on('click', function() {
-				_this.hide(el);
-			});
-		},
-		afterHide: function() {
-			setTimeout(function() {
-				$('.form-slide').hide();
-			}, 300);
-		},
-		itemEvent: function(el, pageElem, callback) {
-			var _this = this;
-			var lis = $('.form-slide li');
-			var input = $(pageElem).find('input');
-			if($(input).attr('data-id')){
-				[].forEach.call(lis, function(li) {
-					if ($(li).attr("data-id") === $(input).attr('data-id')) {
-						$(li).addClass("on");
-					}	
-				});
-			}
-
-			$('.form-slide li').off('click').on('click', function() {
-				var index = $(this).index();
-				if(callback && typeof callback === "function") {
-					callback(allData[index]);
-				}
-				$(this).addClass("on").siblings().removeClass("on");
-				setTimeout(function() {
-					_this.hide(el);
-				}, 300);
-				
-			});
-		}
-		
-	};
-
-	return slideOption;
-});
-define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', './component/dialog', './jump', './order'], function(core, slideOption, dialog, checkUsr, OrderConfig) {
-	core.onrender("shop-cart", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
-		var Tools = core.Tools
-			, yzOrderDtl = {}
-			// 初始化价格
-			, priceDetail = {}
-			, selectedOrder = ""
-			, payState = 1
-			, productType = 1
-			, kfOrder = $('.kuaifan-order', dom)
-			, yzOrder = $('.yingzhuang-order', dom)
-			, chooseBtns = $('.choose-cbtn', dom)
-			, priceEl = $('#total-price')
-			, topNav = $('.order-type .type-item')
-			, payButton = $('.gopay')
-			, priceTxtEl = $('#price-txt');
-
-		var stepCal = function(num) {
-			if (num == 0) {
-				return {txt: "即将开始", on: ""};
-			} else if (num == 2) {
-				return {txt: "施工中", on: ""};
-			} else if (num == 3) {
-				return {txt: "验收中", on: ""};
-			} else if (num == 4) {
-				return {txt: "失败返工", on: ""};
-			} else if (num == 5) {
-				return {txt: "已完工", on: "on"};
-			} else if (num == 1) {
-				return {txt: "支付完成", on: "on"};
-			}
-		};
-
-		var rmArrayItem = function(item, array) {
-			var resArr = array;
-			for (var i = 0, n = array.length; i < n; i++) {
-				if (item == array[i]) {
-					resArr.splice(i, 1);
-					break;
-				}
-			}
-			return resArr;
-		};
-
-		var shopCart = {
-			EL_orderLis: $('.order-list', dom),
-			init: function() {
-				var This = this;
-				// 请求订单列表
-				this.getOrder(1);
-				// 支付事件绑定
-				payButton.off('click').on('click', function() {
-					// alert(selectedOrder);
-					if (!!selectedOrder.length) {
-						This.wxPay_qianzheng(payState, productType);
-					} else {
-						dialog.add("没有选择可支付的订单");
-					}
-				});
-				// 顶部导航点击
-				topNav.off('click').on('click', function() {
-					var index = $(this).index();
-					$(this).addClass('on').siblings().removeClass('on');
-					This.getOrder(index + 1);
-				});
-			},
-			// get price
-			// _getPrice: function() {
-			// 	var total = 0;
-			// 	console.log("!!!!");
-			// 	console.log(priceDetail);
-			// 	for (var i in priceDetail) {
-			// 		total += priceDetail[i];
-			// 	}
-			// 	priceEl.html("￥" + total);
-			// },
-
-			// 未选中订单不可选逻辑处理
-			_unChooseOrder: function(orders) {
-				if (typeof orders === 'object' && Object.prototype.toString.call(orders) === '[object Array]') {
-					selectedOrder = [];
-				} else {
-					selectedOrder = rmArrayItem(orders, selectedOrder);
-				}
-			},
-			// 硬装下拉卫生间绑定事件 initId 初始化时的数量
-			_eventBindYZToiletSlide: function(el, id, initId) {
-				var This = this;
-				slideOption.add(el, {
-					title: "选择卫生间 - 硬装套餐",
-					data: [
-						{
-							id: 1,
-							txt: "一个卫生间"
-						},
-						{
-							id: 2,
-							txt: "两个卫生间"
-						}
-						// ,
-						// {
-						// 	id: 3,
-						// 	txt: "三个卫生间"
-						// }
-					],
-					choose: true, // 是否是选项列表
-					// 设置初始选项 不设置为null
-					initOption: function(el, datas) {
-						// $(el).find('input').val(datas[0].txt);
-						$(el).find('input').attr("data-id", datas[0].id);
-					},
-					callback: function(data) {
-						$(el).find('input').val(data.txt);
-						$(el).find('input').attr("data-id", data.id);
-						var preSelNum = yzOrderDtl[id].toiletNum; //上一次选择的数量
-						// switch(data.id) {
-						// 	case 1:
-						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] - 3500 : priceDetail[id];
-						// 		break;
-						// 	case 2:
-						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] : priceDetail[id] + 3500;
-						// 		break;
-						// }
-						This._ajaxModifyOrder(id, '"toiletNum":' + data.id);
-						yzOrderDtl[id].toiletNum = data.id;
-						// This._getPrice();//计算新价格并写入
-						console.log(priceDetail);
-					}
-				});
-			},
-			//硬装下拉阳台绑定事件
-			_eventBindYZBalconySlide: function(el, id, initId) {
-				var This = this;
-				slideOption.add(el, {
-					title: "选择阳台 - 快翻套餐",
-					data: [
-						{
-							id: 1,
-							txt: "一个阳台"
-						},
-						{
-							id: 2,
-							txt: "两个阳台"
-						}
-						// ,
-						// {
-						// 	id: 3,
-						// 	txt: "三个阳台"
-						// }
-					],
-					choose: true, // 是否是选项列表
-					// 设置初始选项 不设置为null
-					initOption: function(el, datas) {
-						// $(el).find('input').val(datas[0].txt);
-						$(el).find('input').attr("data-id", datas[0].id);
-					},
-					callback: function(data) {
-						$(el).find('input').val(data.txt);
-						$(el).find('input').attr("data-id", data.id);
-						var preSelNum = yzOrderDtl[id].balconyNum; //上一次选择的数量
-						// switch(data.id) {
-						// 	case 1:
-						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] - 1000 : priceDetail[id];
-						// 		break;
-						// 	case 2:
-						// 		priceDetail[id] = preSelNum > 1 ? priceDetail[id] : priceDetail[id] + 1000;
-						// 		break;
-						// }
-						This._ajaxModifyOrder(id, '"balconyNum":' + data.id);
-						yzOrderDtl[id].balconyNum = data.id;
-						// This._getPrice();//计算新价格并写入
-						console.log(priceDetail);
-					}
-				});
-			},
-			_eventBindKFSlide: function(el, id, initId) {
-				var This = this;
-				slideOption.add(el, {
-					title: "选择居室 - 快翻套餐",
-					data: [
-						{
-							id: 1,
-							txt: "一居室",
-							price: 3600
-						},
-						{
-							id: 2,
-							txt: "两居室",
-							price: 6200
-						},
-						{
-							id: 3,
-							txt: "三居室",
-							price: 8500
-						},
-						{
-							id: 4,
-							txt: "单间",
-							price: 1999
-						}
-					],
-					choose: true, // 是否是选项列表
-					// 设置初始选项 不设置为null
-					initOption: function(el, datas) {
-						// $(el).find('input').val(datas[0].txt);
-						$(el).find('input').attr("data-id", datas[0].id);
-					},
-					callback: function(data) {
-						$(el).find('input').val(data.txt);
-						$(el).find('input').attr("data-id", data.id);
-						console.log(data);
-						if (data.id <= 3) {
-							This._ajaxModifyOrder(id, '"layout":' + data.id);
-						} else {
-							This._ajaxModifyOrder(id, '"nums":1');
-						}
-						// switch(data.id) {
-						// 	case 1:
-						// 		priceDetail[id] = 3600;
-						// 		break;
-						// 	case 2:
-						// 		priceDetail[id] = 6200;
-						// 		break;
-						// 	case 3:
-						// 		priceDetail[id] = 8500;
-						// 		break;
-						// 	case 4:
-						// 		priceDetail[id] = 1999;
-						// 		break;	
-						// }
-						// This._getPrice();//计算新价格并写入
-						console.log(priceDetail);
-					}
-				});
-			},
-			_eventBindRZSlide: function(el, id, initId) {
-				var This = this;
-				slideOption.add(el, {
-					title: "选择居室 - 软装套餐",
-					data: [
-						{
-							id: 1,
-							txt: "一居室",
-							price: 1300
-						},
-						{
-							id: 2,
-							txt: "两居室",
-							price: 2200
-						},
-						{
-							id: 3,
-							txt: "三居室",
-							price: 2900
-						}
-					],
-					choose: true, // 是否是选项列表
-					// 设置初始选项 不设置为null
-					initOption: function(el, datas) {
-						// $(el).find('input').val(datas[0].txt);
-						$(el).find('input').attr("data-id", datas[0].id);
-					},
-					callback: function(data) {
-						$(el).find('input').val(data.txt);
-						$(el).find('input').attr("data-id", data.id);
-						console.log(data);
-						This._ajaxModifyOrder(id, '"layout":' + data.id);
-						// switch(data.id) {
-						// 	case 1:
-						// 		priceDetail[id] = 1300;
-						// 		break;
-						// 	case 2:
-						// 		priceDetail[id] = 2200;
-						// 		break;
-						// 	case 3:
-						// 		priceDetail[id] = 2900;
-						// 		break;
-						// }
-						// This._getPrice();//计算新价格并写入
-						console.log(priceDetail);
-					}
-				});
-			},
-			_eventBindJJSlide: function(el, id, initId) {
-				var This = this;
-				slideOption.add(el, {
-					title: "选择居室 - 家具套餐",
-					data: [
-						{
-							id: 1,
-							txt: "一居室",
-							price: 3000
-						},
-						{
-							id: 2,
-							txt: "两居室",
-							price: 4800
-						},
-						{
-							id: 3,
-							txt: "三居室",
-							price: 6500
-						}
-					],
-					choose: true, // 是否是选项列表
-					// 设置初始选项 不设置为null
-					initOption: function(el, datas) {
-						// $(el).find('input').val(datas[0].txt);
-						$(el).find('input').attr("data-id", datas[0].id);
-					},
-					callback: function(data) {
-						$(el).find('input').val(data.txt);
-						$(el).find('input').attr("data-id", data.id);
-						console.log(data);
-
-						This._ajaxModifyOrder(id, '"layout":' + data.id);
-						// switch(data.id) {
-						// 	case 1:
-						// 		priceDetail[id] = 3000;
-						// 		break;
-						// 	case 2:
-						// 		priceDetail[id] = 4800;
-						// 		break;
-						// 	case 3:
-						// 		priceDetail[id] = 6500;
-						// 		break;
-						// }
-						// This._getPrice();//计算新价格并写入
-						console.log(priceDetail);
-					}
-				});
-			},
-			_eventBindJDSlide: function(el, id, initId) {
-				var This = this;
-				slideOption.add(el, {
-					title: "选择居室 - 家电套餐",
-					data: [
-						{
-							id: 1,
-							txt: "一居室",
-							price: 4000
-						},
-						{
-							id: 2,
-							txt: "两居室",
-							price: 5500
-						},
-						{
-							id: 3,
-							txt: "三居室",
-							price: 7000
-						}
-					],
-					choose: true, // 是否是选项列表
-					// 设置初始选项 不设置为null
-					initOption: function(el, datas) {
-						// $(el).find('input').val(datas[0].txt);
-						$(el).find('input').attr("data-id", datas[0].id);
-					},
-					callback: function(data) {
-						$(el).find('input').val(data.txt);
-						$(el).find('input').attr("data-id", data.id);
-						console.log(data);
-						This._ajaxModifyOrder(id, '"layout":' + data.id);
-
-						// switch(data.id) {
-						// 	case 1:
-						// 		priceDetail[id] = 4000;
-						// 		break;
-						// 	case 2:
-						// 		priceDetail[id] = 5500;
-						// 		break;
-						// 	case 3:
-						// 		priceDetail[id] = 7000;
-						// 		break;
-						// }
-						// This._getPrice();//计算新价格并写入
-						console.log(priceDetail);
-					}
-				});
-			},
-			_ajaxModifyOrder: function(oid, param) {
 				$.ajax({
-					url: baseUrl + "orderCtrl/updateOrders.htm",
-					data: {"ordersStr": '{"orders": [{"orderId":' + parseInt(oid) + ',' + param + '}]}'}, 
-					//{"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
+					url: baseUrl + "user/getUserInfo.htm",
+					dataType: "json",
 					success: function(res) {
-						if (res.ret == 1) {
-							// 修改成功
-							var price = 0;
-							var orders = res.orderInfos;
-							for (var i = 0, n = orders.length; i < n; i++) {
-								if (orders[i].orderId == oid) {
-									price = orders[i].total;
-									break;
-								}
-							}
-							$('#price_' + oid).html(price);
-							priceDetail[oid] = price;
-						}
 						// alert(JSON.stringify(res));
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				});
-			},
-			_ajaxCancelOrder: function(id) {
-				console.log(id);
-				var This = this;
-				$.ajax({
-					url: baseUrl + "orderCtrl/cancelOrder.htm?orderId=" + id,
-					dataType: "json",
-					success: function(res) {
-						console.log(res);
-						(res.ret == 1) && This._animationOrderHide(id);
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				});
-			},
-			_animationOrderHide: function(id) {
-				console.log($('#orderCnt_' + id));
-				var orderCnt = $('#orderCnt_' + id);
-				var height = orderCnt.height();
-				orderCnt.addClass("hide1");
-				setTimeout(function() {
-					// orderCnt.attr("marginTop", "-" + (height + 10) + "px");
-					orderCnt.css("marginTop", -(height + 9) + "px");
-					// orderCnt.css("WebkitTransform", "translateX(-640px) translateY(-" + (height + 9) + "px)");
-					// orderCnt.css("height", 0);
-				}, 400);
-				dialog.add("已删除编号为" + id + "的订单");
-				// orderCnt.css({"BorderBottom": "2px solid #d1d1d1", "opacity": 0});
-			},
-			getOrder: function(type) {
-				var This = this;
-				payState = type;
-				selectedOrder = "";
-				priceEl.html("￥0");
-				if (type > 2) {
-					$('.order-bar').hide();
-				} else {
-					$('.order-bar').show();
-				}
-				topNav.eq(type - 1).addClass('on').siblings().removeClass('on');
-				$.ajax({
-					// 未完成订单
-					url: baseUrl + "orderCtrl/getOrders.htm?type=" + type,
-					dataType: "json",
-					success: function(res) {
-						// alert("ret:" + JSON.stringify(res));
-						var orderId = "";
 						if (res.ret == 1) {
-							// 获取订单信息成功
-							var orderList = res.orderInfos;
-							var str = "";
-							// alert(typeof orderList);
-							try	{
-								if (!!orderList.length) {
-									[].forEach.call(orderList, function(order) {
-										priceDetail[order.orderId] = order.total;
-										if (type != 4) {
-											// ============================
-											if (order.state == 0) {
-												if (order.productType == 1) {
-													var layout = order.layout
-														, nums = order.nums
-														, inputVal = ""
-														, dataid = null;
-													if (layout) {
-														switch(layout) {
-															case 1: 
-																inputVal = "一居室";
-																dataid = 1;
-																break;
-															case 2:
-																inputVal = "两居室";
-																dataid = 2;
-																break;
-															case 3:
-																inputVal = "三居室";
-																dataid = 3;
-														}
-													} else {
-														inputVal = "单间";
-														dataid = 4;
-													}
-													// 快翻订单
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 2) {
-													// 硬装订单
-													yzOrderDtl[order.orderId] = {};
-													yzOrderDtl[order.orderId].balconyNum = order.balconyNum;
-													yzOrderDtl[order.orderId].toiletNum = order.toiletNum;
-													var acreage = order.acreage
-														, balconyNum = order.balconyNum
-														, toiletNum = order.toiletNum
-														, productStyle = order.productStyle
-														, balconyNumTxt = ""
-														, toiletNumTxt = "";
-													switch(balconyNum) {
-														case 1: 
-															balconyNumTxt = "一个阳台";
-															break;
-														case 2:
-															balconyNumTxt = "两个阳台";
-															break;
-													}
-													switch(toiletNum) {
-														case 1: 
-															toiletNumTxt = "一个卫生间";
-															break;
-														case 2:
-															toiletNumTxt = "两个卫生间";
-															break;
-													}
-													
-													str += '\
-														<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose Horizontal">\
-																		<div class="form-set square yz-square">\
-																			<p class="item">\
-																				<input type="tel" class="input-square" data-id="' + order.orderId + '" value="' + order.acreage + '平米">\
-																			</p>\
-																		</div>\
-																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																		<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span>' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 3) {
-													// 软装
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 4) {
-													// 家具套餐
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 5) {
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType >= 6 && order.productType <= 11) {
-													var proType = order.productType
-														editState = order.editState
-														, inputVal = ""
-														, isShow = ""
-														, editInfo = "系统默认"
-														, dataid = null;
-													switch(proType) {
-														case 6: 
-															inputVal = "地板";
-															break;
-														case 7:
-															inputVal = "乳胶漆";
-															break;
-														case 8:
-															inputVal = "壁纸";
-															break;
-														case 9: 
-															inputVal = "瓷砖";
-															break;
-														case 10:
-															inputVal = "厨卫天花";
-															break;
-														case 11:
-															inputVal = "室内门";
-													}
-													if (editState == 0) {
-														editInfo = "系统默认";
-														isShow = "on";
-
-													} else if (editState == 1) {
-														editInfo = "实际面积";
-														isShow = "";
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="step-list">\
-																		<div class="row">\
-																			<span>[' + editInfo + ']-' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
-																			<br/><span class="edit-info ' + isShow + '">注：具体以实际量房数据为准。</span>\
-																			<span class="price">￥' + order.total + '</span>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												}
-											} else if (order.state == 1) {
-												// 已付99 订单进行中
-												if (order.productType == 1) {
-													// 快翻订单
-													var layout = order.layout
-														, nums = order.nums
-														, inputVal = ""
-														, dataid = null;
-													if (layout) {
-														switch(layout) {
-															case 1: 
-																inputVal = "一居室";
-																dataid = 1;
-																break;
-															case 2:
-																inputVal = "两居室";
-																dataid = 2;
-																break;
-															case 3:
-																inputVal = "三居室";
-																dataid = 3;
-														}
-													} else {
-														inputVal = "单间";
-														dataid = 4;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-protype="kuaifan" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">快翻套餐</span>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 2) {
-													var acreage = order.acreage
-														, balconyNum = order.balconyNum
-														, toiletNum = order.toiletNum
-														, productStyle = order.productStyle
-														, balconyNumTxt = ""
-														, toiletNumTxt = "";
-													switch(balconyNum) {
-														case 1: 
-															balconyNumTxt = "一个阳台";
-															break;
-														case 2:
-															balconyNumTxt = "两个阳台";
-															break;
-													}
-													switch(toiletNum) {
-														case 1: 
-															toiletNumTxt = "一个卫生间";
-															break;
-														case 2:
-															toiletNumTxt = "两个卫生间";
-															break;
-													}
-													var stepStr = ""
-														, payStepId = "";//可以支付的stepid
-													[].forEach.call(order.stepInfos, function(step) {
-														(step.state == 5) && (payStepId = step.stepId);
-														stepStr += '\
-															<div class="row">\
-																<i class="iconfont choose-cbtn ' + stepCal(step.state).on + '">&#xe60b;</i>\
-																<span>' + step.stepName + stepCal(step.state).txt + '</span>\
-																<span class="price">￥' + step.stepTotalCost + '</span>\
-															</div>\
-														';
-													});
-													str += '\
-														<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '" data-paystep="' + payStepId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="yingzhuang-order" data-protype="yingzhuang" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">硬装套餐</span>\
-																	</div>\
-																	<div class="choose Horizontal">\
-																		<div class="form-set square yz-square">\
-																			<p class="item">\
-																				<em></em>\
-																				<input type="text" placeholder="' + order.acreage + '平米" readonly="readonly" data-id="1" value="100平米">\
-																			</p>\
-																		</div>\
-																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
-																			</p>\
-																		</div>\
-																		<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																	<div class="step-list">' + stepStr + '\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span>' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 3) {
-													// 软装
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">软装套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 4) {
-													// 家具套餐
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">家具套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 5) {
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">家电套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType >= 6 && order.productType <= 11) {
-													var proType = order.productType
-														editState = order.editState
-														, inputVal = ""
-														, isShow = ""
-														, editInfo = "系统默认"
-														, dataid = null;
-													switch(proType) {
-														case 6: 
-															inputVal = "地板";
-															break;
-														case 7:
-															inputVal = "乳胶漆";
-															break;
-														case 8:
-															inputVal = "壁纸";
-															break;
-														case 9: 
-															inputVal = "瓷砖";
-															break;
-														case 10:
-															inputVal = "厨卫天花";
-															break;
-														case 11:
-															inputVal = "室内门";
-													}
-													if (editState == 0) {
-														editInfo = "系统默认";
-														isShow = "on";
-
-													} else if (editState == 1) {
-														editInfo = "实际面积";
-														isShow = "";
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<i class="iconfont choose-cbtn" data-type="kuaifan-order" data-id="' + order.orderId + '">&#xe60b;</i>\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																	</div>\
-																	<div class="step-list">\
-																		<div class="row">\
-																			<span>[' + editInfo + ']-' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
-																			<br/><span class="edit-info ' + isShow + '">注：具体以实际量房数据为准。</span>\
-																			<span class="price">￥' + order.total + '</span>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">￥<i id="price_' + order.orderId + '">' + order.total + '</i></span>\
-															</div>\
-														</div>\
-													';
-												}
-											} else if (order.state == 2) {
-												// 已完工
-												if (order.productType == 1) {
-													var layout = order.layout
-														, nums = order.nums
-														, inputVal = ""
-														, dataid = null;
-													if (layout) {
-														switch(layout) {
-															case 1: 
-																inputVal = "一居室";
-																dataid = 1;
-																break;
-															case 2:
-																inputVal = "两居室";
-																dataid = 2;
-																break;
-															case 3:
-																inputVal = "三居室";
-																dataid = 3;
-														}
-													} else {
-														inputVal = "单间";
-														dataid = 4;
-													}
-													// 快翻订单
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<span data-id="' + order.orderId + '">快翻套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">已完工</span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 2) {
-													// 硬装订单
-													yzOrderDtl[order.orderId] = {};
-													yzOrderDtl[order.orderId].balconyNum = order.balconyNum;
-													yzOrderDtl[order.orderId].toiletNum = order.toiletNum;
-													var acreage = order.acreage
-														, balconyNum = order.balconyNum
-														, toiletNum = order.toiletNum
-														, productStyle = order.productStyle
-														, balconyNumTxt = ""
-														, toiletNumTxt = "";
-													switch(balconyNum) {
-														case 1: 
-															balconyNumTxt = "一个阳台";
-															break;
-														case 2:
-															balconyNumTxt = "两个阳台";
-															break;
-													}
-													switch(toiletNum) {
-														case 1: 
-															toiletNumTxt = "一个卫生间";
-															break;
-														case 2:
-															toiletNumTxt = "两个卫生间";
-															break;
-													}
-													
-													str += '\
-														<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<span data-id="' + order.orderId + '">硬装套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose Horizontal">\
-																		<div class="form-set square yz-square">\
-																			<p class="item">\
-																				<em></em>\
-																				<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="' + order.acreage + '平米">\
-																			</p>\
-																		</div>\
-																		<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
-																			</p>\
-																		</div>\
-																		<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
-																				<span><i></i></span>\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span>' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">已完工</span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 3) {
-													// 软装
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<span data-id="' + order.orderId + '">软装套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">已完工</span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 4) {
-													// 家具套餐
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<span data-id="' + order.orderId + '">家具套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">已完工</span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType == 5) {
-													var layout = order.layout
-														, inputVal = ""
-														, dataid = null;
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<span data-id="' + order.orderId + '">家电套餐</span>\
-																		<a class="delete" data-id="' + order.orderId + '"><i class="iconfont">&#xe60b;</i>删除</a>\
-																	</div>\
-																	<div class="choose">\
-																		<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																			<p class="droplist item">\
-																				<em></em>\
-																				<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																			</p>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">已完工</span>\
-															</div>\
-														</div>\
-													';
-												} else if (order.productType >= 6 && order.productType <= 11) {
-													var proType = order.productType
-														, inputVal = ""
-														, dataid = null;
-													switch(proType) {
-														case 6: 
-															inputVal = "地板";
-															break;
-														case 7:
-															inputVal = "乳胶漆";
-															break;
-														case 8:
-															inputVal = "壁纸";
-															break;
-														case 9: 
-															inputVal = "瓷砖";
-															break;
-														case 10:
-															inputVal = "厨卫天花";
-															break;
-														case 11:
-															inputVal = "室内门";
-													}
-													str += '\
-														<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-															<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-															<div class="cnt">\
-																<div class="sub-cnt">\
-																	<div class="name">\
-																		<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																	</div>\
-																	<div class="step-list">\
-																		<div class="row">\
-																			<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
-																			<span class="price">￥' + order.total + '</span>\
-																		</div>\
-																	</div>\
-																</div>\
-															</div>\
-															<div class="top-bottom">\
-																<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-																<span class="price">已完工</span>\
-															</div>\
-														</div>\
-													';
-												}
-											}
-										} else if (type == 4) {
-											// 历史订单
-											var orderStep = "";
-											if (order.state == 0) {
-												orderStep = "未支付";
-											} else if (order.state == 1) {
-												orderStep = "开工中";
-											} else if (order.state == 2) {
-												orderStep = "已完工";
-											}
-											if (order.productType == 1) {
-												var layout = order.layout
-													, nums = order.nums
-													, inputVal = ""
-													, dataid = null;
-												if (layout) {
-													switch(layout) {
-														case 1: 
-															inputVal = "一居室";
-															dataid = 1;
-															break;
-														case 2:
-															inputVal = "两居室";
-															dataid = 2;
-															break;
-														case 3:
-															inputVal = "三居室";
-															dataid = 3;
-													}
-												} else {
-													inputVal = "单间";
-													dataid = 4;
-												}
-												// 快翻订单
-												str += '\
-													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-														<div class="cnt">\
-															<div class="sub-cnt">\
-																<div class="name">\
-																	<span data-id="' + order.orderId + '">快翻套餐</span>\
-																</div>\
-																<div class="choose">\
-																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																		</p>\
-																	</div>\
-																</div>\
-															</div>\
-														</div>\
-														<div class="top-bottom">\
-															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">' + orderStep + '</span>\
-														</div>\
-													</div>\
-												';
-											} else if (order.productType == 2) {
-												// 硬装订单
-												yzOrderDtl[order.orderId] = {};
-												yzOrderDtl[order.orderId].balconyNum = order.balconyNum;
-												yzOrderDtl[order.orderId].toiletNum = order.toiletNum;
-												var acreage = order.acreage
-													, balconyNum = order.balconyNum
-													, toiletNum = order.toiletNum
-													, productStyle = order.productStyle
-													, balconyNumTxt = ""
-													, toiletNumTxt = "";
-												switch(balconyNum) {
-													case 1: 
-														balconyNumTxt = "一个阳台";
-														break;
-													case 2:
-														balconyNumTxt = "两个阳台";
-														break;
-												}
-												switch(toiletNum) {
-													case 1: 
-														toiletNumTxt = "一个卫生间";
-														break;
-													case 2:
-														toiletNumTxt = "两个卫生间";
-														break;
-												}
-												
-												str += '\
-													<div class="order yingzhuang-order" id="orderCnt_' + order.orderId + '">\
-														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-														<div class="cnt">\
-															<div class="sub-cnt">\
-																<div class="name">\
-																	<span data-id="' + order.orderId + '">硬装套餐</span>\
-																</div>\
-																<div class="choose Horizontal">\
-																	<div class="form-set square yz-square">\
-																		<p class="item">\
-																			<em></em>\
-																			<input type="text" placeholder="100平米" readonly="readonly" data-id="1" value="100平米">\
-																		</p>\
-																	</div>\
-																	<div class="form-set path-room yz-bathroom" id="toilet_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + toiletNumTxt + '" readonly="readonly" data-id="' + toiletNum + '">\
-																		</p>\
-																	</div>\
-																	<div class="form-set sun-plateform yz-platform" id="balcony_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + balconyNumTxt + '" readonly="readonly" data-id="' + balconyNum + '">\
-																		</p>\
-																	</div>\
-																</div>\
-															</div>\
-														</div>\
-														<div class="top-bottom">\
-															<span>' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">' + orderStep + '</span>\
-														</div>\
-													</div>\
-												';
-											} else if (order.productType == 3) {
-												// 软装
-												var layout = order.layout
-													, inputVal = ""
-													, dataid = null;
-												switch(layout) {
-													case 1: 
-														inputVal = "一居室";
-														dataid = 1;
-														break;
-													case 2:
-														inputVal = "两居室";
-														dataid = 2;
-														break;
-													case 3:
-														inputVal = "三居室";
-														dataid = 3;
-												}
-												str += '\
-													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-														<div class="cnt">\
-															<div class="sub-cnt">\
-																<div class="name">\
-																	<span data-id="' + order.orderId + '">软装套餐</span>\
-																</div>\
-																<div class="choose">\
-																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																		</p>\
-																	</div>\
-																</div>\
-															</div>\
-														</div>\
-														<div class="top-bottom">\
-															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">' + orderStep + '</span>\
-														</div>\
-													</div>\
-												';
-											} else if (order.productType == 4) {
-												// 家具套餐
-												var layout = order.layout
-													, inputVal = ""
-													, dataid = null;
-												switch(layout) {
-													case 1: 
-														inputVal = "一居室";
-														dataid = 1;
-														break;
-													case 2:
-														inputVal = "两居室";
-														dataid = 2;
-														break;
-													case 3:
-														inputVal = "三居室";
-														dataid = 3;
-												}
-												str += '\
-													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-														<div class="cnt">\
-															<div class="sub-cnt">\
-																<div class="name">\
-																	<span data-id="' + order.orderId + '">家具套餐</span>\
-																</div>\
-																<div class="choose">\
-																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																		</p>\
-																	</div>\
-																</div>\
-															</div>\
-														</div>\
-														<div class="top-bottom">\
-															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">' + orderStep + '</span>\
-														</div>\
-													</div>\
-												';
-											} else if (order.productType == 5) {
-												var layout = order.layout
-													, inputVal = ""
-													, dataid = null;
-												switch(layout) {
-													case 1: 
-														inputVal = "一居室";
-														dataid = 1;
-														break;
-													case 2:
-														inputVal = "两居室";
-														dataid = 2;
-														break;
-													case 3:
-														inputVal = "三居室";
-														dataid = 3;
-												}
-												str += '\
-													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-														<div class="cnt">\
-															<div class="sub-cnt">\
-																<div class="name">\
-																	<span data-id="' + order.orderId + '">家电套餐</span>\
-																</div>\
-																<div class="choose">\
-																	<div class="form-set kf-house" id="order_' + order.orderId + '">\
-																		<p class="droplist item">\
-																			<em></em>\
-																			<input type="text" value="' + inputVal + '" readonly="readonly" data-id="' + dataid + '">\
-																		</p>\
-																	</div>\
-																</div>\
-															</div>\
-														</div>\
-														<div class="top-bottom">\
-															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">' + orderStep + '</span>\
-														</div>\
-													</div>\
-												';
-											} else if (order.productType >= 6 && order.productType <= 11) {
-												var proType = order.productType
-													, inputVal = ""
-													, dataid = null;
-												switch(proType) {
-													case 6: 
-														inputVal = "地板";
-														break;
-													case 7:
-														inputVal = "乳胶漆";
-														break;
-													case 8:
-														inputVal = "壁纸";
-														break;
-													case 9: 
-														inputVal = "瓷砖";
-														break;
-													case 10:
-														inputVal = "厨卫天花";
-														break;
-													case 11:
-														inputVal = "室内门";
-												}
-												str += '\
-													<div class="order kuaifan-order" id="orderCnt_' + order.orderId + '">\
-														<div class="top-bottom">订单编号：' + order.orderId + '</div>\
-														<div class="cnt">\
-															<div class="sub-cnt">\
-																<div class="name">\
-																	<span data-id="' + order.orderId + '">' + order.productName + '</span>\
-																</div>\
-																<div class="step-list">\
-																	<div class="row">\
-																		<span>' + inputVal + '-' + ((proType == 11) ? (order.nums + '樘') : (order.acreage + "平方米")) + '</span>\
-																		<span class="price">￥' + order.total + '</span>\
-																	</div>\
-																</div>\
-															</div>\
-														</div>\
-														<div class="top-bottom">\
-															<span class="date-time">' + Tools.timeFormat(order.createTime) + '</span>\
-															<span class="price">' + orderStep + '</span>\
-														</div>\
-													</div>\
-												';
-											}
-										}
-									});	
-								} else {
-									// 订单列表空
-									str = '\
-										<div class="order-empty">\
-											<h3>这里还没有订单，您可以</h3>\
-											<h4>查看其他状态订单，或者</h4>\
-											<a href="' + baseUrl + 'html/user/" class="button-2">去首页看看</a>\
-										</div>\
-									';
-								}
-								console.log(priceDetail);
-								console.log(yzOrderDtl);
-								// This._getPrice();//计算新价格并写入
-								This.EL_orderLis.html(str);
-								if (!!orderList.length) {
-									$(document).off('click').on('focus', '.input-square', function() {
-										$(this).val($(this).val().replace(/[^\d]/g,""));
-									});
-									$(document).off('click').on('blur', '.input-square', function() {
-										var id = $(this).attr("data-id");
-										var acreage = parseInt($(this).val()).toString().replace(/(\d{3})(.+)/, '$1');
-										This._ajaxModifyOrder(id, '"acreage":' + parseInt(acreage));
-										$(this).val(parseInt($(this).val()).toString().replace(/(\d{3})(.+)/, '$1') + "平米");
-									});
-									[].forEach.call(orderList, function(order) {
-										if (order.state == 0) {
-											var orderId = order.orderId
-												, initId = 0
-												, initId_t = 0
-												, initId_b = 0;
-											if (order.productType == 1) {
-												initId = order.layout;
-												This._eventBindKFSlide($('#order_' + orderId), orderId, initId);
-
-											} else if (order.productType == 2) {
-												initId_t = order.toiletNum;
-												initId_b = order.balconyNum;
-												This._eventBindYZToiletSlide($('#toilet_' + orderId), orderId, initId_t);
-												This._eventBindYZBalconySlide($('#balcony_' + orderId), orderId, initId_b);
-											} else if (order.productType == 3) {
-												// 软装
-												initId = order.layout;
-												This._eventBindRZSlide($('#order_' + orderId), orderId, initId);
-											} else if (order.productType == 4) {
-												// 家具
-												initId = order.layout;
-												This._eventBindJJSlide($('#order_' + orderId), orderId, initId);
-											} else if (order.productType == 5) {
-												// 家电
-												initId = order.layout;
-												This._eventBindJDSlide($('#order_' + orderId), orderId, initId);
-											}
-											payButton.html('99元开工');
-											priceTxtEl.html('需支付定金');
-										} else if (order.state == 1) {
-											payButton.html('结算');
-											priceTxtEl.html('已支付定金');
-											$('input').css("textAlign", "center");
-										} else if (order.state == 2) {
-											$('input').css("textAlign", "center");
-										} else {
-											
-											$('input').css("textAlign", "center");
-										}
-									});
-								}
-								// 绑定删除
-								$('.not-pay .delete').off('click').on('click', function() {
-									var orderId = $(this).attr("data-id");
-									This._ajaxCancelOrder(orderId);
-									This._unChooseOrder(orderId); // 删除已选order中的当前order
-								});
-								// 绑定选中取消
-								$('.sub-cnt .name .choose-cbtn').off('click').on('click', function() {
-									var orderId = $(this).attr('data-id');
-									$('.sub-cnt .name .choose-cbtn').removeClass("on");
-									if ($(this).attr('data-protype') && $(this).attr('data-protype') == "yingzhuang") {
-										productType = 2;
-									} else {
-										productType = 1;
-									}
-									if (!$(this).hasClass("on")) {
-										selectedOrder = orderId;
-										$(this).addClass("on");
-										if (payState == 2) {
-											priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
-										} else if (payState == 1) {
-											priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
-										}
-										
-									}
-								});
-								
-							} catch(err) {
-								alert(JSON.stringify(err));
-								console.log(err);
-							}
-							
+							// 获取信息成功
+							// dialog.add("获取信息成功！");
+							var userInfo = res.userInfo;
+							headBg.attr("src", userInfo.head);
+							headPic.attr("src", userInfo.head);
+							unameEL.html(userInfo.nickName);
+							localStorage.setItem("sjz-uid", userInfo.userId);
+							localStorage.setItem("sjz-unkname", userInfo.nickName);
+							localStorage.setItem("sjz-hdpic", userInfo.head);
+							localStorage.setItem("sjz-uname", userInfo.userName);
+							localStorage.setItem("sjz-uphone", userInfo.mobile);
+							localStorage.setItem("sjz-ucountry", userInfo.country);
+							localStorage.setItem("sjz-uprovince", userInfo.province);
+							localStorage.setItem("sjz-uaddr", userInfo.addr);
 						} else if (res.ret == -1) {
-							dialog.add("ret:-1 订单列表返回失败，请重试！");
+							dialog.add("res:-1 获取信息失败，请重试！");
 						} else if (res.ret == 302) {
-							// dialog.add("需登录！");
+							// 未登录
 							checkUsr.doJump();
 						}
 					},
 					error: function(res) {
-						alert("err:" + JSON.stringify(res));
-					}
-				});
-			},
-			// js-jdk签证所需信息
-			wxPay_qianzheng: function(payState, type) {
-				var This = this;
-				$.ajax({
-					url: baseUrl + "wxsingctrl/sigin.htm?url=" + window.location.href,
-					dataType: "json",
-					success: function(res) {
-						// alert(JSON.stringify(res));
-						This.wxPay_getParams(payState, type);
-					},
-					error: function(res) {
 						alert(JSON.stringify(res));
 					}
 				});
-			},
-			// 获取支付方法所需参数 payState 支付阶段（0:99/1:结算） type 产品类型(硬装/翻新)
-			wxPay_getParams: function(payState, type) {
-				// alert(payState);
-				// alert(type);
-				var This = this
-					, params = ""
-					, payState = payState || 1;
-				if (payState == 1) {
-					params = "&isFirst99=true";
-				} else {
-					if (type == 2) {
-						// 硬装
-						var paystep = $('#orderCnt_' + selectedOrder).attr('data-paystep');
-						if (!!!paystep) {
-							dialog.add("当前选中的订单无可支付项！");
-							return;
-						}
-						params = "&stepId=" + paystep + "&isFirst99=false";
-					} else {
-						params = "";
-					}
-				}
-				
-				// alert(params);
+			}
+		};
+		getUserInfo();
+	});
+	// 查看资料
+	core.onrender("ucenter-info", function(dom) {
+		var headBg = $('.headpic-bg', dom)
+			, headPic = $('.head-pic img', dom)
+			, uidEL = $('.user-info .uname em', dom)
+			, unickEL = $('.show-unick', dom)
+			, unameEL = $('.show-name', dom)
+			, umobileEL = $('.show-mobile', dom)
+			, uprovinceEL = $('.show-province', dom)
+			, uaddrEL = $('.show-addr', dom);
+		var getUserInfo = function() {
+			if (localStorage.length >= 7) {
+				var unkname = localStorage.getItem("sjz-unkname")
+					, uid = localStorage.getItem("sjz-uid")
+					, upic = localStorage.getItem("sjz-hdpic")
+					, uname = localStorage.getItem("sjz-uname")
+					, uphone = localStorage.getItem("sjz-uphone")
+					, ucountry = localStorage.getItem("sjz-ucountry")
+					, uprovince = localStorage.getItem("sjz-uprovince")
+					, uaddr = localStorage.getItem("sjz-uaddr");
+				headBg.attr("src", upic);
+				headPic.attr("src", upic);
+				uidEL.html(uid);
+				unickEL.html(unkname);
+				unameEL.html(uname);
+				umobileEL.html(uphone);
+				uprovinceEL.html(uprovince);
+				uaddrEL.html(uaddr);
+			} else {
 				$.ajax({
-					url: baseUrl + "pay/preparePay.htm?orderIds=" 
-						+ selectedOrder 
-						+ params,
+					url: baseUrl + "user/getUserInfo.htm",
 					dataType: "json",
 					success: function(res) {
 						// alert(JSON.stringify(res));
-						try {
-							if (res.ret == 1) {
-								// 成功获取参数
-								function onBridgeReady(){
-									WeixinJSBridge.invoke('getBrandWCPayRequest', {
-											"appId": "wx4d6a2dce4f09dfd0", //公众号名称，由商户传入     
-											"timeStamp": res.timeStamp, //时间戳，自1970年以来的秒数     
-											"nonceStr": res.nonceStr, //随机串     
-											"package": res.package,     
-											"signType": res.signType, //微信签名方式：     
-											"paySign": res.paySign //微信签名 
-										},
-										function(res){     
-											if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-												This.getOrder(2); // 跳到已支付
-											}
-										}
-									); 
-								}
-								if (typeof WeixinJSBridge == "undefined"){
-									if( document.addEventListener ){
-									   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-									}else if (document.attachEvent){
-									   document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-									   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-									}
-								}else{
-									onBridgeReady();
-								}
-							}
-						} catch(e) {
-							alert(JSON.stringify(e));
+						if (res.ret == 1) {
+							// 获取信息成功
+							// dialog.add("获取信息成功！");
+							var userInfo = res.userInfo;
+							headBg.attr("src", userInfo.head);
+							headPic.attr("src", userInfo.head);
+							uidEL.html(userInfo.userId);
+							unickEL.html(userInfo.nickName);
+							unameEL.html(userInfo.userName);
+							umobileEL.html(userInfo.mobile);
+							uprovince.html(userInfo.province);
+							uaddrEL.html(userInfo.addr);
+
+							localStorage.setItem("sjz-uid", userInfo.userId);
+							localStorage.setItem("sjz-unkname", userInfo.nickName);
+							localStorage.setItem("sjz-hdpic", userInfo.head);
+							localStorage.setItem("sjz-uname", userInfo.userName);
+							localStorage.setItem("sjz-uphone", userInfo.mobile);
+							localStorage.setItem("sjz-ucountry", userInfo.country);
+							localStorage.setItem("sjz-uprovince", userInfo.province);
+							localStorage.setItem("sjz-uaddr", userInfo.addr);
+						} else if (res.ret == -1) {
+							dialog.add("res:-1 获取信息失败，请重试！");
+						} else if (res.ret == 302) {
+							// 未登录
+							checkUsr.doJump();
 						}
 					},
 					error: function(res) {
@@ -6408,116 +3986,231 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 				});
 			}
 		};
-		// bbb
-try {
-		shopCart.init();
-} catch (e) {
-	alert(JSON.stringify(e));
-}
+		getUserInfo();
 	});
-});
-define('entry/js/src/userproduct.js',['../core/core'], function(core) {
-	core.onrender("userproduct", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		var Tools = core.Tools;
-		var topNav = $('.topnav', dom);
-		var topNavs = $('.topnav .nav-item', dom);
-		var sliders = $('.swiper-top', dom);
-		console.log(topNav);
-		var mySwiper1 = new Swiper('.swiper-container-h',{
-			// direction: 'vertical'
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				// topNav.addClass("show");
-				$(topNavs[index]).addClass("on").siblings().removeClass("on");
-
-				// 延迟加载
-				var imgs = $('img', $(sliders[index]));
-				[].forEach.call(imgs, function(img) {
-					var src = $(img).attr("data-src");
-					if (src) {
-						$(img).attr("src", src);
-						$(img).removeAttr("data-src");
-					}
-				});
+	core.onrender("ucenter-editinfo", function(dom) {
+		var ruletxt = $('.rule-txt')
+			, close = $('.close-rule')
+			, cover = $('.cover')
+			, ruleLink = $('.user-rule .rule-detail', dom)
+			, EL_uname = $('#uname', dom)
+			, EL_unick = $('#unick', dom)
+			, EL_uphone = $('#uphone', dom)
+			, EL_ulocate = $('#ulocate', dom)
+			, EL_uaddress = $('#uaddress', dom)
+			, EL_checkbox = $('.user-rule .checkbox', dom)
+			, operaType = 1; // 1 绑定 2 编辑
+		EL_checkbox.off('click').on('click', function() {
+			if (!$(this).hasClass('on')) {
+				$(this).addClass('on');
+			} else {
+				$(this).removeClass('on');
 			}
 		});
-		var mySwiper2 = new Swiper('.swiper-container-v1',{
-			pagination: '.swiper-pagination-h1',
-			direction: 'vertical'
+		close.off('click').on('click', function() {
+			ruletxt.addClass("hide");
+			cover.hide();
 		});
-		var mySwiper3 = new Swiper('.swiper-container-v2',{
-			pagination: '.swiper-pagination-h2',
-			direction: 'vertical'
+		ruleLink.off('click').on('click', function() {
+			ruletxt.removeClass("hide");
+			cover.show();
 		});
-		var mySwiper4 = new Swiper('.swiper-container-v3',{
-			pagination: '.swiper-pagination-h3',
-			direction: 'vertical'
-		});
-		var mySwiper5 = new Swiper('.swiper-container-v4',{
-			pagination: '.swiper-pagination-h4',
-			direction: 'vertical'
-		});
-	});
-});
-define('entry/js/src/redirect',['../core/core'], function(core) {
-	core.onrender("redirect", function(dom) {
-		var url = location.search;
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
-		if (url) {
-			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
-			$.ajax({
-				url: baseUrl + "user/callBackGetWxOpenIdUserInfo.htm?code=" + code,
-				dataType: "json",
-				success: function(res) {
-					// alert(JSON.stringify(res));
-					var ret = res.ret;
-					var uinfo = res.userInfo;
-					if (ret == 2) {
-						var nickName = uinfo.nickName
-							, mobile = uinfo.mobile
-							, head = uinfo.head
-							, param = "nickName=" + nickName + "&mobile=" + mobile + "&head=" + head;
-						// window.location.href = "http://www.s-jz.com/html/ucenter/uedit.html?" + param;
-						window.location.href = baseUrl + "html/ucenter/uedit.html?" + param;
-					} else if (ret == 1) {
-						// 登陆成功
-						// window.location.href = "http://www.s-jz.com/";
-						if (localStorage.getItem("_prepage")) {
-							window.location.href = localStorage.getItem("_prepage");
-						} else {
-							window.location.href = baseUrl + "html/user/";
-						}
-					}
-				},
-				error: function(data){
-					alert(JSON.stringify(data));
-				}
+
+		var paramArr = location.search.replace(/\?/, "").split("&");
+		if (paramArr.length > 0 && !!paramArr[0]) {
+			// 绑定
+			operaType = 1;
+			var params = {};
+			[].forEach.call(paramArr, function(param) {
+				var _arr = param.split("=");
+				params[_arr[0]] = _arr[1];
 			});
+			var nickname = decodeURIComponent(params.nickName)
+				, mobile = (params.mobile == "null" ? "" : params.mobile)
+				, headpic = params.head;
+			EL_unick.val(nickname);
+			mobile && EL_uphone.val(mobile);
 		} else {
-			window.location = baseUrl + "html/user/";;
+			if (/\#\!_edit/.test(location.href)) {
+				// 编辑
+				operaType = 2
+				$('.user-rule', dom).hide(); // 隐藏协议
+				if (localStorage.length >= 7) {
+					var unkname = localStorage.getItem("sjz-unkname")
+						, uid = localStorage.getItem("sjz-uid")
+						, upic = localStorage.getItem("sjz-hdpic")
+						, uname = localStorage.getItem("sjz-uname")
+						, uphone = localStorage.getItem("sjz-uphone")
+						, ucountry = localStorage.getItem("sjz-ucountry")
+						, uprovince = localStorage.getItem("sjz-uprovince")
+						, uaddr = localStorage.getItem("sjz-uaddr");
+					EL_uname.val(uname);
+					EL_unick.val(unkname);
+					EL_uphone.val(uphone);
+					EL_ulocate.val(uprovince);
+					EL_uaddress.val(uaddr);
+				} else {
+					$.ajax({
+						url: baseUrl + "user/getUserInfo.htm",
+						dataType: "json",
+						success: function(res) {
+							// alert(JSON.stringify(res));
+							if (res.ret == 1) {
+								// 获取信息成功
+								var userInfo = res.userInfo;
+								EL_uname.val(userInfo.userName);
+								EL_unick.val(userInfo.nickName);
+								EL_uphone.val(userInfo.mobile);
+								EL_ulocate.val(userInfo.province);
+								EL_uaddress.val(userInfo.addr);
+								localStorage.setItem("sjz-uid", userInfo.userId);
+								localStorage.setItem("sjz-unkname", userInfo.nickName);
+								localStorage.setItem("sjz-hdpic", userInfo.head);
+								localStorage.setItem("sjz-uname", userInfo.userName);
+								localStorage.setItem("sjz-uphone", userInfo.mobile);
+								localStorage.setItem("sjz-ucountry", userInfo.country);
+								localStorage.setItem("sjz-uprovince", userInfo.province);
+								localStorage.setItem("sjz-uaddr", userInfo.addr);
+
+							} else if (res.ret == -1) {
+								dialog.add("res:-1 获取信息失败，请重试！");
+							} else if (res.ret == 302) {
+								// 未登录
+								checkUsr.doJump();
+							}
+						},
+						error: function(res) {
+							alert(JSON.stringify(res));
+						}
+					});
+				}
+			}
 		}
-		
+
+		var valid = [
+			["uname", /^[\u4E00-\u9FA5]{2,20}$/, "请输入2-20汉字以内的姓名"],
+			["unick", /^.+$/, "请输入20个字符以内的昵称"],
+			["uphone", /^\d{11}$/, "请输入11位数字的手机号码"],
+			["ulocate", /^.{1,20}$/, "请输入所在省份"],
+			["uaddress", /^.+$/, "请输入详细住址"]
+		];
+		var checkDet = function() {
+			var flag = true;
+			for(var i = 0, n = valid.length; i < n; i++) {
+				var val = $('#' + valid[i][0]).val().trim();
+				if (!valid[i][1].test(val)) {
+					dialog.add(valid[i][2]);
+					flag = false;
+					break;
+				}
+			}
+			return flag;
+		};
+		$('#submit', dom).off("click").on('click', function() {
+			var flag = checkDet();
+			var uname = "";
+			if (flag) {
+				if (operaType == 1) {
+					// 绑定
+					if (EL_checkbox.hasClass('on')) {
+						uname = EL_uname.val().trim()
+							, unick = EL_unick.val().trim()
+							, uphone = EL_uphone.val().trim()
+							, ulocate = EL_ulocate.val().trim()
+							, uaddress = EL_uaddress.val().trim()
+							, params = ""
+							+ "userName=" + uname
+							+ "&nickName=" + unick
+							+ "&mobile=" + uphone
+							+ "&province=" + ulocate
+							+ "&addr=" + uaddress;
+						$.ajax({
+							url: baseUrl + "user/register.htm?" + params,
+							dataType: "json",
+							success: function(res) {
+								// alert("res:" + JSON.stringify(res));
+								// 1 成功
+								// 0 失败 
+								// -1失败
+								// 2 用户名被占用
+								// 3 用户名不能为空
+								// 4 用户名长度不符合4-20
+								// 7 昵称长度不符合4-20
+								// 8 openId已经绑定过用户
+								// 9 未得到微信授权
+								// 10已注册过，返回用信息
+								if (res.ret == 1) {
+									checkUsr.toIndex();
+								} else if (res.ret == -1 || res.ret == 0) {
+									dialog.add("用户绑定失败！请重试！");
+								} else if (res.ret == 8) {
+									dialog.add("当前openID已经绑定过用户！");
+								} else if (res.ret == 9) {
+									dialog.add("未得到微信授权，请重试！");
+								} else if (res.ret == 10) {
+									dialog.add("已经注册过！");
+								}
+							},
+							error: function(err) {
+								alert("err:" + JSON.stringify(res));
+							}
+						});
+					} else {
+						dialog.add("您还没同意《S+互联网家装用户服务协议》");					
+					}
+				} else if (operaType == 2) {
+					// 编辑
+					uname = EL_uname.val().trim()
+						, unick = EL_unick.val().trim()
+						, uphone = EL_uphone.val().trim()
+						, ulocate = EL_ulocate.val().trim()
+						, uaddress = EL_uaddress.val().trim()
+						, params = ""
+						+ "userName=" + uname
+						+ "&nickName=" + unick
+						+ "&mobile=" + uphone
+						+ "&province=" + ulocate
+						+ "&addr=" + uaddress;
+					$.ajax({
+						url: baseUrl + "user/editUserInfo.htm?" + params,
+						dataType: "json",
+						success: function(res) {
+							// alert("res:" + JSON.stringify(res));
+							// 1 成功
+							// -1 失败
+							// 7 昵称长度不符合4-20
+							// 302 未登录
+							if (res.ret == 1) {
+								var userInfo = res.userInfo;
+								// localStorage.clear();
+								localStorage.setItem("sjz-uid", userInfo.userId);
+								localStorage.setItem("sjz-unkname", userInfo.nickName);
+								localStorage.setItem("sjz-hdpic", userInfo.head);
+								localStorage.setItem("sjz-uname", userInfo.userName);
+								localStorage.setItem("sjz-uphone", userInfo.mobile);
+								localStorage.setItem("sjz-ucountry", userInfo.country);
+								localStorage.setItem("sjz-uprovince", userInfo.province);
+								localStorage.setItem("sjz-uaddr", userInfo.addr);
+								checkUsr.toUserInfo();
+							} else if (res.ret == -1) {
+								dialog.add("修改用户信息失败！请重试！");
+							} else if (res.ret == 302) {
+								checkUsr.doJump(); // 未登录
+							}
+						},
+						error: function(err) {
+							alert("err:" + JSON.stringify(res));
+						}
+					});
+				}
+			}
+		});
 	});
 });
+
 // main.js
 require([
-	//'entry/js/src/index',
-	//'entry/js/src/workerapply',
-	//'entry/js/src/quote', 
-	//'entry/js/src/quoteres', 
-	//'entry/js/src/detail199.js', 
-	//'entry/js/src/userindex.js', 
-	'entry/js/src/usernewyingzhuang.js', 
-	'entry/js/src/usernewruanzhuang.js', 
-	'entry/js/src/usernewjiaju.js', 
-	'entry/js/src/usernewjiadian.js', 
-	'entry/js/src/kfuserindex.js', 
-	'entry/js/src/kfstylenav.js', 
-	'entry/js/src/jfpart.js', 
-	'entry/js/src/shopcart.js', 
-	'entry/js/src/userproduct.js',
-	'entry/js/src/redirect',], function() {
+	'entry/js/src/ucenter'], function() {
 });
 define("entry/js/main", function(){});
 

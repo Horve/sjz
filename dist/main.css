@@ -2993,6 +2993,13 @@ input {
 .payment .user-payment .order-list .order .cnt .sub-cnt .step-list .row i.on {
   color: #19ad5e;
 }
+.payment .user-payment .order-list .order .cnt .sub-cnt .step-list .edit-info {
+  color: red;
+  display: none;
+}
+.payment .user-payment .order-list .order .cnt .sub-cnt .step-list .edit-info.on {
+  display: block;
+}
 .payment .user-payment .order-list .order .cnt .sub-cnt .step-list span.price {
   position: absolute;
   right: 0;

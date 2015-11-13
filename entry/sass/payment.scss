@@ -223,6 +223,13 @@ $fontFace: microsoft yahei, simsun;
 									color: $mainColor;
 								}
 							}
+							.edit-info {
+								color: red;
+								display: none;
+								&.on {
+									display: block;
+								}
+							}
 							color: $fontColor;
 							margin-top: 0.15rem;
 							font-size: 0.14rem;

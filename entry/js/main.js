@@ -15,5 +15,7 @@ require([
 	'entry/js/src/jfpart.js', 
 	'entry/js/src/shopcart.js', 
 	'entry/js/src/userproduct.js',
-	'entry/js/src/redirect',], function() {
+	'entry/js/src/redirect',
+	// 2.0
+	'entry/js/src/index2.0'], function() {
 });

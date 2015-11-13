@@ -3904,6 +3904,9 @@ define('entry/js/src/order',['../core/core', './jump', './component/dialog'], fu
 					// 登录失败。提示重试
 					alert("登录失败！");
 				}
+			},
+			error: function(res) {
+				alert(JSON.stringify(res));
 			}
 		});
 	};
@@ -3944,16 +3947,19 @@ define('entry/js/src/usernewyingzhuang.js',['../core/core', '../src/order'], fun
 		var u = navigator.userAgent;
 		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 		var Tools = core.Tools;
+		var s6h = $('.user-index-html .swiper-slide-yingzhuang-sev .pics').width();
+		$('.swiper-slide-yingzhuang-sev .yz-six').css("height", s6h * 0.38 + "px");
+		$('.swiper-slide-yingzhuang-sev .yz-svn').css("height", s6h * 0.55 + "px");
 		if (isAndroid) {
 			var h1 = Tools.calcSepHeight(96, 2);
 			var w1 = Tools.calcSepHeight(6, 2, "h");
-			var h2 = Tools.calcSepHeight(140, 1, "a");
+			var h2 = Tools.calcSepHeight(155, 1, "a");
 			console.log(h1,w1,h2);
 			$('.yingzhuang-li-comm .list .lrow', dom).css("height", h1 + "px");
 			$('.yingzhuang-li-comm .list .lcol', dom).css("width", w1 + "px");
 			$('.swiper-slide-yingzhuang-six .container', dom).css("height", h2 + "px");
 
-			var h3 = Tools.calcSepHeight(0, 8, "a", $('.swiper-slide-yingzhuang-six .container', dom));
+			var h3 = Tools.calcSepHeight(0, 7, "a", $('.swiper-slide-yingzhuang-six .container', dom));
 			$('.swiper-slide-yingzhuang-six .container .row', dom).css("heiht", h3 + "px");
 
 			$('html').removeClass("ios").addClass("android");
@@ -4204,6 +4210,8 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 		localStorage.setItem("_prepage", window.location.href);
 		
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var kftype = location.hash.replace(/#!_/,"") || "art";
+		var productStyle = "";
 		var Tools = core.Tools;
 		var imgs = $('img', $('.swiper-container'));
 		var items = $('.choose-style .items span', dom);
@@ -4229,6 +4237,22 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 				Tools.lazyLoad(imgs[index + 1]);
 			}
 		});
+
+		switch(kftype) {
+			case "art": 
+				productStyle = "艺术学院";
+				break;
+			case "mag": 
+				productStyle = "魔法学院";
+				break;
+			case "nav": 
+				productStyle = "海军学院";
+				break;
+			case "cau": 
+				productStyle = "人文学院";
+				break;
+		}
+
 		$(items).off('click').on('click', function() {
 			var index = $(this).index();
 			$(this).addClass("on").siblings().removeClass("on");
@@ -4243,13 +4267,13 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 					break;
 				case 1: 
 					txt = "二室一厅";
-					price = 6200;
+					price = 5499;
 					layout = 2;
 					nums = null;
 					break;
 				case 2: 
 					txt = "三室一厅";
-					price = 8500;
+					price = 7399;
 					layout = 3;
 					nums = null;
 					break;
@@ -4270,9 +4294,9 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
     		var location = window.location.href;
     		var params = "";
     		if (!!nums) {
-    			params = '"nums": 1';
+    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
     		} else {
-    			params = '"layout": ' + layout;
+    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
     		}
     		OrderConfig.addOrderAjax(1, params);
     		// $.ajax({
@@ -4298,9 +4322,9 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
     		var location = window.location.href;
     		var params = "";
     		if (!!nums) {
-    			params = '"nums": 1';
+    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
     		} else {
-    			params = '"layout": ' + layout;
+    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
     		}
     		OrderConfig.addToShopChart(1, params);
     	});
@@ -4534,6 +4558,9 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 		localStorage.setItem("_prepage", window.location.href);
 
 		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		if (localStorage.getItem("_prepage")) {
+			localStorage.removeItem("_prepage");
+		}
 		var Tools = core.Tools
 			, yzOrderDtl = {}
 			// 初始化价格
@@ -6296,12 +6323,12 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 									if (!$(this).hasClass("on")) {
 										selectedOrder = orderId;
 										$(this).addClass("on");
-										if (payState == 2) {
-											priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
-										} else if (payState == 1) {
-											priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
-										}
-										
+										priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										// if (payState == 2) {
+										// 	priceEl.html("￥" + (parseFloat(priceDetail[selectedOrder]) - 99));
+										// } else if (payState == 1) {
+										// 	priceEl.html("￥" + parseFloat(priceDetail[selectedOrder]));
+										// }
 									}
 								});
 								
@@ -6500,6 +6527,61 @@ define('entry/js/src/redirect',['../core/core'], function(core) {
 		
 	});
 });
+define('entry/js/src/index2.0',['../core/core'], function(core) {
+	core.onrender("index-2-0", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		var Tools = core.Tools
+			, u = navigator.userAgent
+			, isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1 //android终端或者uc浏览器
+			, EL_slide = $('#focus-slide', dom)
+			, EL_compare = $('.compare', dom)
+			, EL_topCmp = $('.compare .top', dom)
+			, EL_topBtm = $('.compare .bottom', dom)
+			, EL_androidCmp = $('#compare-slide', dom)
+			, winWidth = $('body').width()
+			, winHeight = $('body').height();
+		EL_slide.css("height", winWidth * 0.55 + "px");
+		if (isAndroid) {
+			EL_compare.hide();
+			EL_androidCmp.show();
+			EL_androidCmp.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
+		} else {
+			EL_compare.show();
+			EL_androidCmp.hide();
+			EL_compare.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
+		}
+		
+		var focusSlide = new Swiper('#focus-slide',{
+			// direction: 'vertical'
+			pagination: '.swiper-pagination'
+		});
+		var compareSlide = new Swiper('#compare-slide',{});
+
+		var downLeft = [0,0], initWid, initLeft;
+		EL_topCmp.on('touchstart', function(e) {
+			var touchs = e.changedTouches[0];
+			var tx = touchs.pageX;
+			downLeft.shift();
+			downLeft.push(tx);
+			initWid = EL_topCmp.width();
+			initLeft = winWidth - initWid;
+			// console.log(downLeft);
+		});
+		$(dom).on('touchmove', '.compare .top', function(e) {
+			var touchs = e.changedTouches[0];
+			var tx = touchs.pageX;
+			var moveDis = 0;
+			downLeft.shift();
+			downLeft.push(tx);
+			// console.log(downLeft);
+			moveDis = downLeft[1] - downLeft[0];
+			initWid -= moveDis;
+			initLeft += moveDis;
+			console.log(tx,initWid);
+			EL_topCmp.attr("style", "left:auto; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / (initWid / winWidth) * 100 + "% 100%");
+		});
+	});
+});
 // main.js
 require([
 	//'entry/js/src/index',
@@ -6517,7 +6599,9 @@ require([
 	'entry/js/src/jfpart.js', 
 	'entry/js/src/shopcart.js', 
 	'entry/js/src/userproduct.js',
-	'entry/js/src/redirect',], function() {
+	'entry/js/src/redirect',
+	// 2.0
+	'entry/js/src/index2.0'], function() {
 });
 define("entry/js/main", function(){});
 

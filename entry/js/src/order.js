@@ -23,6 +23,9 @@ define(['../core/core', './jump', './component/dialog'], function(core, checkUsr
 					// 登录失败。提示重试
 					alert("登录失败！");
 				}
+			},
+			error: function(res) {
+				alert(JSON.stringify(res));
 			}
 		});
 	};

@@ -276,7 +276,12 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 								// 9 未得到微信授权
 								// 10已注册过，返回用信息
 								if (res.ret == 1) {
-									checkUsr.toIndex();
+									// checkUsr.toIndex();
+									if (localStorage.getItem("_prepage")) {
+										window.location.href = localStorage.getItem("_prepage");
+									} else {
+										window.location.href = baseUrl + "html/user/";
+									}
 								} else if (res.ret == -1 || res.ret == 0) {
 									dialog.add("用户绑定失败！请重试！");
 								} else if (res.ret == 8) {

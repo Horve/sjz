@@ -1,9 +1,11 @@
+/*! variables */
+@import "sass/variables.scss";
+
 /*! components */
 @import "sass/component/form.scss";
 @import "sass/component/button.scss";
 @import "sass/component/slide.scss";
 @import "sass/component/swiper.scss";
-
 @import "sass/component/dialog.scss";
 
 /*! pages */
@@ -20,6 +22,9 @@
 @import "sass/kfstyle.scss";
 @import "sass/jiufang.scss";
 @import "sass/payment.scss";
+
+/*! 2.0 */
+@import "sass/index2.0.scss";
 
 /*! ucenter */
 @import "sass/ucenter.scss";

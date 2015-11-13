@@ -933,7 +933,8 @@ input {
   -webkit-transform: translate3d(0, 0, 0);
 }
 .ucenter .rule-txt.hide {
-  -webkit-transform: translateY(2000px);
+  /*-webkit-transform: translateY(2000px);*/
+  display: none;
 }
 .ucenter .rule-txt .cnt {
   width: 90%;

@@ -33,6 +33,13 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			}
 		});
 
+		var kfvm = avalon.define({
+			$id: "root",
+			price: 1000,
+			txt: "一室一厅"
+		});
+		avalon.scan();
+
 		switch(kftype) {
 			case "art": 
 				productStyle = "艺术学院";
@@ -79,8 +86,10 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 					nums = 1;
 					break;
 			}
-			itemsTxt.html(txt);
-			itemsPrice.html(price);
+			// itemsTxt.html(txt);
+			// itemsPrice.html(price);
+			kfvm.price = price;
+			kfvm.txt = txt;
 		});
 		var imgLists = $('img', '.pic-lists');
     	Tools.lazyLoad(imgLists);

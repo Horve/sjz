@@ -9,9 +9,11 @@ define(['../core/core'], function(core) {
 			, EL_topCmp = $('.compare .top', dom)
 			, EL_topBtm = $('.compare .bottom', dom)
 			, EL_androidCmp = $('#compare-slide', dom)
+			, EL_topBg = $('.compare .all-img', dom)
 			, winWidth = $('body').width()
 			, winHeight = $('body').height();
 		EL_slide.css("height", winWidth * 0.55 + "px");
+		EL_topBg.css("width", winWidth + "px");
 		if (isAndroid) {
 			EL_compare.hide();
 			EL_androidCmp.show();
@@ -24,9 +26,15 @@ define(['../core/core'], function(core) {
 		
 		var focusSlide = new Swiper('#focus-slide',{
 			// direction: 'vertical'
+			autoplay: 5000,
 			pagination: '.swiper-pagination'
 		});
-		var compareSlide = new Swiper('#compare-slide',{});
+		var compareSlide = new Swiper('#compare-slide',{
+			effect : 'fade',
+			fade: {
+			  crossFade: false,
+			}
+		});
 
 		var downLeft = [0,0], initWid, initLeft;
 		EL_topCmp.on('touchstart', function(e) {

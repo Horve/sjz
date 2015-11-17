@@ -1,0 +1,27 @@
+.top-navigator {
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	font-size: 16px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-bottom: 1px solid #d1d1d1;
+	box-sizing: border-box;
+	background: #fff;
+	a {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 10px;
+		padding-left: 25px;
+		em {
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-size: 25px;
+			margin-right: 5px;
+			color: $maincolor;
+		}
+	}
+}

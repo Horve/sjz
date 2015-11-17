@@ -733,6 +733,34 @@ button.swiper-pagination-bullet {
   border-radius: 3px;
 }
 
+.top-navigator {
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  font-size: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid #d1d1d1;
+  box-sizing: border-box;
+  background: #fff;
+}
+.top-navigator a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  padding-left: 25px;
+}
+.top-navigator a em {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 25px;
+  margin-right: 5px;
+  color: #9ab903;
+}
+
 /*! pages */
 @font-face {
   font-family: 'sjz';
@@ -849,6 +877,11 @@ html, body {
   visibility: hidden;
 }
 
+a {
+  color: #333;
+  text-decoration: none;
+}
+
 p {
   margin: 0;
   padding: 0;
@@ -873,6 +906,11 @@ i, em {
 .page .single-page {
   min-height: 100%;
   position: relative;
+}
+.page .view {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -3062,6 +3100,97 @@ input {
     display: none;
   }
 }
+.afterpay {
+  font-size: 100px;
+}
+.afterpay .page {
+  overflow: hiddel;
+}
+.afterpay .view-content {
+  padding-top: 45px;
+  height: 100%;
+  overflow: auto !important;
+}
+.afterpay .view-content .view-content-con {
+  overflow: hidden;
+  padding-bottom: 45px;
+}
+.afterpay .view-content .button-2 {
+  margin: 0.5rem 0.1rem;
+}
+.afterpay .txtinfo {
+  font-size: 0.14rem;
+  line-height: 1.8em;
+  padding: 0.1rem;
+  color: #666;
+}
+.afterpay .pic-area {
+  padding: 0 0.1rem;
+}
+.afterpay .pic-area .title {
+  font-size: 0.18rem;
+  color: #ccc;
+  margin-bottom: 0.1rem;
+}
+.afterpay .pic-area .pic-list {
+  margin-bottom: 0.12rem;
+}
+.afterpay .pic-area .pic-list .row {
+  display: -webkit-box;
+  -webkit-box-pack: justify;
+  margin-bottom: 0.12rem;
+}
+.afterpay .pic-area .pic-list .row .col {
+  width: 32%;
+  height: 0.92rem;
+}
+.afterpay .pic-area .upload {
+  height: 0.68rem;
+  line-height: 0.68rem;
+  position: relative;
+}
+.afterpay .pic-area .upload .up-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 0.68rem;
+  height: 0.68rem;
+  border: 1px dashed #ccc;
+  border-radius: 0.1rem;
+  box-sizing: border-box;
+}
+.afterpay .pic-area .upload .up-box:before {
+  display: block;
+  content: "";
+  width: 0.3rem;
+  height: 0.01rem;
+  background: #ccc;
+  font-size: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -0.15rem;
+}
+.afterpay .pic-area .upload .up-box:after {
+  display: block;
+  content: "";
+  height: 0.3rem;
+  width: 0.01rem;
+  background: #ccc;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.15rem;
+}
+.afterpay .pic-area .upload span {
+  display: block;
+  font-size: 0.16rem;
+  height: 0.68rem;
+  margin-left: 0.75rem;
+  color: #555;
+}
+
 /*! 2.0 */
 .index-2-0 {
   font-size: 100px;

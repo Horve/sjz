@@ -45,6 +45,20 @@ i, em {
 		height: 100%;
 		overflow: hidden;
 	}
+	.view-content {
+		margin-top: 45px;
+		height: 100%;
+		overflow: auto!important;
+		-webkit-overflow-scrolling: touch;
+		.view-content-con {
+			overflow: hidden;
+			padding-bottom: 45px;
+			-webkit-overflow-scrolling: touch;
+		}
+		.button-2 {
+			margin: 0.5rem 0.1rem;
+		}
+	}
 }
 body {
 	margin: 0;

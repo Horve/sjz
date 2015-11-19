@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="../../dist/main.min.css" />
 	<link rel="stylesheet" href="../../dist/normalize.css" />
 </head>
-<body class="kf-style">
+<body class="kf-style ms-controller" ms-controller="root">
 	<div class="page" data-render-id="kf-style">
 		<div class='swiper-container swiper-container-h swiper-container-horizontal'>
 			<div class="swiper-wrapper">
@@ -40,11 +40,11 @@
 			</div>
 			<div class="txt-info">
 				<span>含</span>
-				<span class="items-intro">一室一厅</span>
+				<span class="items-intro">{{txt}}</span>
 			</div>
 			<div class="txt-price">
 				<span>报价</span>
-				<span>共<em class="price">3600</em>元</span>
+				<span>共<em class="price">{{price}}</em>元</span>
 			</div>
 		</div>
 		<div class="style-intro style-intro-cau">

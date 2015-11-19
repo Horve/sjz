@@ -2867,6 +2867,52 @@ input {
   right: 0;
 }
 
+.kf-index-2-0 {
+  font-size: 100px;
+}
+.kf-index-2-0 .top-navigator a em {
+  font-size: 0.16rem;
+}
+.kf-index-2-0 .view-content .view-content-con {
+  padding-bottom: 0.9rem;
+}
+.kf-index-2-0 .body-con {
+  padding: 0.1rem;
+}
+.kf-index-2-0 .body-con .body-list a {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.1rem;
+  border-radius: 0.15rem;
+  overflow: hidden;
+  position: relative;
+}
+.kf-index-2-0 .body-con .body-list a img {
+  display: block;
+}
+.kf-index-2-0 .body-con .body-list a em {
+  display: block;
+  width: 100%;
+  height: 0.5rem;
+  position: absolute;
+  z-index: 10;
+  background: -webkit-linear-gradient(top, transparent, black);
+  left: 0;
+  bottom: 0;
+  font-size: 0.18rem;
+  border-radius: 0 0 0.15rem 0.15rem;
+  color: #fff;
+}
+.kf-index-2-0 .body-con .body-list a em span {
+  display: block;
+  line-height: 0.25rem;
+  text-indent: 0.08rem;
+}
+.kf-index-2-0 .body-con .body-list a em span:last-of-type {
+  font-size: 0.14rem;
+  line-height: 0.2rem;
+}
+
 /*! ucenter */
 .ucenter {
   font-size: 100px;

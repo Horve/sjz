@@ -35,7 +35,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 
 		var kfvm = avalon.define({
 			$id: "root",
-			price: 1000,
+			price: 3600,
 			txt: "一室一厅"
 		});
 		avalon.scan();

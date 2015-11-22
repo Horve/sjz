@@ -17,5 +17,6 @@ require([
 	'entry/js/src/userproduct.js',
 	'entry/js/src/redirect',
 	// 2.0
-	'entry/js/src/index2.0'], function() {
+	'entry/js/src/index2.0',
+	'entry/js/src/kfstyle2.0'], function() {
 });

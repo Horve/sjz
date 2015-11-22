@@ -22,15 +22,28 @@
 		display: block;
 		position: absolute;
 		top: 0;
-		left: 10px;
-		padding-left: 25px;
-		em {
-			position: absolute;
-			top: 0;
-			left: 0;
-			font-size: 25px;
-			margin-right: 5px;
-			color: $maincolor;
+		&.left {
+			left: 15px;
+			padding-left: 25px;
+			em {
+				position: absolute;
+				top: 0;
+				left: 0;
+				font-size: 25px;
+				margin-right: 5px;
+				color: $maincolor;
+			}
+		}
+		&.right {
+			right: 15px;
+			padding-right: 25px;
+			em {
+				position: absolute;
+				top: 0;
+				right: 0;
+				font-size: 25px;
+				margin-left: 5px;
+			}
 		}
 	}
 }

@@ -183,6 +183,7 @@ module.exports = function (grunt) {
 
   // server
   grunt.registerTask('server', 'Run server', ['connect', 'open',  'watch']);
+  // grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'requirejs', 'uglify']);
   grunt.registerTask('sjz', ['sass:sjz', 'cssmin:sjz', 'jshint:sjz', 'copy', 'requirejs', 'uglify']);
   // grunt.registerTask('hotel', ['sass:hotel', 'sass:hotelForSearch', 'requirejs:hotelFromOrder', 'requirejs:hotelBeforeOrder', 'requirejs:hotelForSearch', 'cssmin:hotel', 'cssmin:hotelForSearch']);
 };

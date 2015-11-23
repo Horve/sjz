@@ -36,7 +36,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		var kfvm = avalon.define({
 			$id: "root",
 			price: 3600,
-			txt: "一室一厅"
+			txt: "一室一厅（开间）"
 		});
 		avalon.scan();
 
@@ -62,7 +62,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			var price = 0;
 			switch(index) {
 				case 0: 
-					txt = "一室一厅";
+					txt = "一室一厅（开间）";
 					price = 3600;
 					layout = 1;
 					nums = null;

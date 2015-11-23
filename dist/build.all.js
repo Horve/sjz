@@ -9377,7 +9377,7 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 		var kfvm = avalon.define({
 			$id: "root",
 			price: 3600,
-			txt: "一室一厅"
+			txt: "一室一厅（开间）"
 		});
 		avalon.scan();
 
@@ -9403,7 +9403,7 @@ define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dial
 			var price = 0;
 			switch(index) {
 				case 0: 
-					txt = "一室一厅";
+					txt = "一室一厅（开间）";
 					price = 3600;
 					layout = 1;
 					nums = null;
@@ -11766,7 +11766,6 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 		$(document).on('click', '.area-compare .onhide', function() {
 			$(this).removeClass('onhide').addClass('onshow').siblings().addClass('onhide');
 		});	
-
 	});
 });
 // main.js

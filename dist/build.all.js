@@ -11854,13 +11854,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			}
 		});
 		
-<<<<<<< HEAD
-		$(document).on('click', '.area-compare .onhide', function() {
-			$(this).removeClass('onhide').addClass('onshow').siblings().addClass('onhide');
-		});	
-=======
 
->>>>>>> 11326dd87a8f5a0990fac53a1e6b48f8251e5490
 	});
 });
 // main.js

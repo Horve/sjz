@@ -11772,7 +11772,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 		});
 		switch(kftype) {
 			case "art": 
-				productStyle = "橙子";
+				productStyle = "甜橙";
 				break;
 			case "mag": 
 				productStyle = "斑马";
@@ -11781,9 +11781,14 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 				productStyle = "海风";
 				break;
 			case "cau": 
-				productStyle = "森林";
+				productStyle = "木香";
 				break;
 		}
+		document.title = productStyle + "-快翻-番薯快装";
+		// var VM_hd = avalon.define({
+		// 	$id: "head",
+		// 	title: productStyle + "-快翻-番薯快装"
+		// });
 		var VM_kf = avalon.define({
 			$id: "root",
 			showBox: false,
@@ -11792,9 +11797,57 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			btn: "立即下单",
 			num: 1,
 			layout: 0,
+			styleCode: kftype,
 			style: productStyle,
 			type: kftype,
 			price: 1999,
+			txtInfoShow: {
+				// guahua: VM_kf.txtInfo["art"].guahua,
+				// dengshi: VM_kf.txtInfo["art"].dengshi,
+				// baozhen: VM_kf.txtInfo["art"].baozhen,
+				// shafadian: VM_kf.txtInfo["art"].shafadian,
+				// ditan: VM_kf.txtInfo["art"].ditan,
+				// chuangpin: VM_kf.txtInfo["art"].chuangpin,
+				// chuanglian: VM_kf.txtInfo["art"].chuanglian
+			},
+			txtInfo: {
+				art: {
+					guahua: "现代家居艺术，让每一寸美好都淋漓尽致。",
+					dengshi: "欧式田园蕾丝台灯，寻找梦里那束隐约的温暖。",
+					baozhen: "遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。",
+					shafadian: "简约粉色 保暖法兰绒，爱一种生活，是特别的嗜好。",
+					ditan: "北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。",
+					chuangpin: "北欧简约风素色纯棉环保活性印花，给你一个最温暖的拥抱。",
+					chuanglian: "天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。"
+				},
+				mag: {
+					guahua: "北欧风格，专为简约家居设计，让艺术融入生活。",
+					dengshi: "现代简约黑色诱惑台灯，典雅的宫廷气息，简单却充满欧式立体感。",
+					baozhen: "遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。",
+					shafadian: "绒面细腻丰富，手感舒适，你需要的是我给你一种独具匠心的设计和多一点的用心、精致。",
+					ditan: "北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。",
+					chuangpin: "经典黑白纹水晶绒四件套，保暖无静电，手感如婴儿肌肤版柔软，和好梦来一场贴身的诱惑。",
+					chuanglian: "天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。"
+				},
+				nav: {
+					guahua: "海星恋人无框装饰挂画，演绎家居新风尚。",
+					dengshi: "现代简约黑色诱惑台灯，典雅的宫廷气息，简单却充满欧式立体感。",
+					baozhen: "遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。",
+					shafadian: "经典海军纹，全新防滑设计，全棉斜纹面料，先进染色工艺，环保透气。",
+					ditan: "北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。",
+					chuangpin: "北欧简约风素色纯棉环保活性印花，给你一个最温暖的拥抱。",
+					chuanglian: "天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。"
+				},
+				cau: {
+					guahua: "现代简约温馨实木小台灯，带你进行一场心灵的回归。",
+					dengshi: "欧式田园蕾丝台灯，寻找梦里那束隐约的温暖。",
+					baozhen: "遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。",
+					shafadian: "素雅田园风格，全新防滑设计，全棉斜纹面料，采用最传统的手工织造技术。",
+					ditan: "北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。",
+					chuangpin: "北欧简约风素色纯棉环保活性印花，给你一个最温暖的拥抱。",
+					chuanglian: "天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。"
+				}
+			},
 			changeBoxState: function(n) {
 				(!VM_kf.showBox) && (VM_kf.showBox = true);
 				VM_kf.orderType = n;
@@ -11820,8 +11873,21 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 	    		} else if (VM_kf.orderType == 2) {
 	    			OrderConfig.addToShopChart(1, params);
 	    		}
+	    		VM_kf.showBox = false;
+			},
+			show: function() {
+				VM_kf.txtInfoShow = {
+					guahua: VM_kf.txtInfo[VM_kf.styleCode].guahua,
+					dengshi: VM_kf.txtInfo[VM_kf.styleCode].dengshi,
+					baozhen: VM_kf.txtInfo[VM_kf.styleCode].baozhen,
+					shafadian: VM_kf.txtInfo[VM_kf.styleCode].shafadian,
+					ditan: VM_kf.txtInfo[VM_kf.styleCode].ditan,
+					chuangpin: VM_kf.txtInfo[VM_kf.styleCode].chuangpin,
+					chuanglian: VM_kf.txtInfo[VM_kf.styleCode].chuanglian
+				};
 			}
 		});
+		VM_kf.show();
 		avalon.scan();
 		
 		$('.options .option a.item', dom).off('click').on('click', function() {
@@ -11834,7 +11900,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 					VM_kf.num = 1;
 					break;
 				case 1:
-					VM_kf.txt = "一室一厅（开间）";
+					VM_kf.txt = "一室一厅、开间";
 					VM_kf.price = 3600;
 					VM_kf.layout = 1;
 					VM_kf.num = 0;

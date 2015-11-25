@@ -984,6 +984,9 @@ input {
 .user-index-html {
   font-size: 100px;
 }
+.user-index-html .txt {
+  background-repeat: no-repeat;
+}
 .user-index-html .user-button-comm {
   width: 1.14rem;
   height: 0.35rem;
@@ -3052,6 +3055,20 @@ input {
 .kf-detail .top-navigator .right em.iconfont {
   font-size: 22px;
 }
+.kf-detail .back-info {
+  margin: 0.1rem;
+  color: #666;
+}
+.kf-detail .back-info .tle {
+  font-size: 0.18rem;
+}
+.kf-detail .back-info .end {
+  padding: 0.1rem 0;
+}
+.kf-detail .back-info p {
+  line-height: 1.8em;
+  font-size: 0.14rem;
+}
 .kf-detail .shopchart-sec {
   width: 100%;
   height: 45px;
@@ -3192,6 +3209,7 @@ input {
   border-bottom: 1px dashed #d1d1d1;
   background-position: 0 0.1rem;
   background-repeat: no-repeat;
+  position: relative;
 }
 .kf-detail .view-content-con .detail-item .info .tle span {
   display: block;
@@ -3202,25 +3220,35 @@ input {
   font-size: 0.14rem;
   color: #666;
 }
-.kf-detail .view-content-con .detail-item .info .tle.one {
+.kf-detail .view-content-con .detail-item .info .tle:before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0.05rem;
+  left: 0;
+  width: 0.2rem;
+  height: 0.26rem;
+  background-size: cover;
+}
+.kf-detail .view-content-con .detail-item .info .tle.one:before {
   background-image: url(img/2_0/kf/detail_no1.png);
 }
-.kf-detail .view-content-con .detail-item .info .tle.two {
+.kf-detail .view-content-con .detail-item .info .tle.two:before {
   background-image: url(img/2_0/kf/detail_no2.png);
 }
-.kf-detail .view-content-con .detail-item .info .tle.three {
+.kf-detail .view-content-con .detail-item .info .tle.three:before {
   background-image: url(img/2_0/kf/detail_no3.png);
 }
-.kf-detail .view-content-con .detail-item .info .tle.four {
+.kf-detail .view-content-con .detail-item .info .tle.four:before {
   background-image: url(img/2_0/kf/detail_no4.png);
 }
-.kf-detail .view-content-con .detail-item .info .tle.five {
+.kf-detail .view-content-con .detail-item .info .tle.five:before {
   background-image: url(img/2_0/kf/detail_no5.png);
 }
-.kf-detail .view-content-con .detail-item .info .tle.six {
+.kf-detail .view-content-con .detail-item .info .tle.six:before {
   background-image: url(img/2_0/kf/detail_no6.png);
 }
-.kf-detail .view-content-con .detail-item .info .tle.seven {
+.kf-detail .view-content-con .detail-item .info .tle.seven:before {
   background-image: url(img/2_0/kf/detail_no7.png);
 }
 .kf-detail .view-content-con .detail-item .info p {

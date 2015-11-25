@@ -4,6 +4,9 @@ $fontColor: #424252;
 
 .user-index-html {
 	font-size: 100px;
+    .txt {
+        background-repeat: no-repeat;
+    }
 	.user-button-comm {
 		width: 1.14rem;
 		height: 0.35rem;
@@ -232,6 +235,7 @@ $fontColor: #424252;
 	    	background-repeat: no-repeat;
 	    	.txt {
 	    		background-image: url(img/user/uindex_t3.png);
+
 	    	}
 	    }
 	    .sbottom {

@@ -19,6 +19,15 @@
 			display: block;
 		}
 	}
+	.to-top {
+		width: 0.44rem;
+		height: 0.44rem;
+		position: absolute;
+		right: 0.15rem;
+		bottom: 0.6rem;
+		background-image: url(img/2_0/kf/totop.png);
+		background-size: cover;
+	}
 	.make-order {
 		height: 2.3rem;
 		width: 100%;
@@ -172,6 +181,7 @@
 	}
 	.view-content-con {
 		font-size: 0.16rem;
+		-webkit-transition: all .3s ease-in-out;
 		.area-title {
 			height: 0.28rem;
 			line-height: 0.28rem;
@@ -323,6 +333,7 @@
 					line-height: 1.5em;
 					color: #666;
 					padding-top: 0.05rem;
+					text-align: justify;
 				}
 			}
 		}

@@ -48,6 +48,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			style: productStyle,
 			type: kftype,
 			price: 1999,
+			topShow: false,
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
 				// dengshi: VM_kf.txtInfo["art"].dengshi,
@@ -132,6 +133,10 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 					chuangpin: VM_kf.txtInfo[VM_kf.styleCode].chuangpin,
 					chuanglian: VM_kf.txtInfo[VM_kf.styleCode].chuanglian
 				};
+			},
+			toTop: function() {
+				$('.view-content', dom).scrollTop(0);
+				VM_kf.topShow = false;
 			}
 		});
 		VM_kf.show();

@@ -11811,6 +11811,13 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 				// chuangpin: VM_kf.txtInfo["art"].chuangpin,
 				// chuanglian: VM_kf.txtInfo["art"].chuanglian
 			},
+			fromShow: "",
+			from: {
+				art: "怡然家园 张先生",
+				mag: "富力城  林女士",
+				nav: "香江北岸 王先生",
+				cau: "满庭芳园  齐先生"
+			},
 			txtInfo: {
 				art: {
 					guahua: "现代家居艺术，让每一寸美好都淋漓尽致。",
@@ -11832,7 +11839,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 				},
 				nav: {
 					guahua: "海星恋人无框装饰挂画，演绎家居新风尚。",
-					dengshi: "现代简约黑色诱惑台灯，典雅的宫廷气息，简单却充满欧式立体感。",
+					dengshi: "现代简约白色诱惑台灯，典雅的宫廷气息，简单却充满欧式立体感。",
 					baozhen: "遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。",
 					shafadian: "经典海军纹，全新防滑设计，全棉斜纹面料，先进染色工艺，环保透气。",
 					ditan: "北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。",
@@ -11840,8 +11847,8 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 					chuanglian: "天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。"
 				},
 				cau: {
-					guahua: "现代简约温馨实木小台灯，带你进行一场心灵的回归。",
-					dengshi: "欧式田园蕾丝台灯，寻找梦里那束隐约的温暖。",
+					guahua: "北欧风格动物创意挂画，和自然来一次近距离呼吸。",
+					dengshi: "现代简约温馨实木小台灯，带你进行一场心灵的回归。",
 					baozhen: "遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。",
 					shafadian: "素雅田园风格，全新防滑设计，全棉斜纹面料，采用最传统的手工织造技术。",
 					ditan: "北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。",
@@ -11886,6 +11893,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 					chuangpin: VM_kf.txtInfo[VM_kf.styleCode].chuangpin,
 					chuanglian: VM_kf.txtInfo[VM_kf.styleCode].chuanglian
 				};
+				VM_kf.fromShow = VM_kf.from[VM_kf.styleCode];
 			},
 			toTop: function() {
 				$('.view-content', dom).scrollTop(0);

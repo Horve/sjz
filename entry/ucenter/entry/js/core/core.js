@@ -1,4 +1,4 @@
-define(['../lib/zepto', './tools','../lib/swiper.js'], function(zepto, tools) {
+define(['../lib/zepto', './tools','../lib/avalon.modern.shim','../lib/swiper.js'], function(zepto, tools, avalon) {
 	// return $;
 	var core = {};
 	core.Tools = tools;

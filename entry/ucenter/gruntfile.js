@@ -112,7 +112,7 @@ module.exports = function (grunt) {
     connect: {
         server: {
             options: {
-                port: 3000,
+                port: 3100,
                 base: ''
             }
         }
@@ -120,7 +120,7 @@ module.exports = function (grunt) {
 
     open: {
         kitchen: {
-            path: 'http://localhost:3000/index.html'
+            path: 'http://localhost:3100/index.html'
         }
     },
 

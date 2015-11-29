@@ -1,15 +1,18 @@
+/*! variables */
+@import "sass/variables.scss";
+@import "sass/iconfont.scss";
+
 /*! components */
 @import "sass/component/form.scss";
 @import "sass/component/button.scss";
 @import "sass/component/slide.scss";
 @import "sass/component/swiper.scss";
-
-/*! components */
+@import "sass/component/navigator.scss";
 @import "sass/component/dialog.scss";
 
 /*! pages */
-@import "sass/iconfont.scss";
 @import "sass/comm.scss";
 
 /*! ucenter */
 @import "sass/ucenter.scss";
+@import "sass/help.scss";

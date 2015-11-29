@@ -1,0 +1,98 @@
+.help {
+	font-size: 100px;
+	.page {
+		background: #eff0f4;
+	}
+	.title-comm {
+		line-height: 0.5rem;
+		font-size: 0.16rem;
+		text-indent: 0.1rem;
+		border-bottom: 1px solid #d1d1d1;
+		margin-bottom: 0.1rem;
+		.iconfont {
+			font-size: 0.14rem;
+			margin-right: 0.05rem;
+		}
+	}
+	.qa-type {
+		padding: 0 0.1rem 0.1rem 0.1rem;
+		border-bottom: 1px solid #d1d1d1;
+		background: #fff;
+		color: #808080;
+		
+		.qa-type-item {
+			padding: 0 0.1rem;
+			font-size: 0.16rem;
+			a {
+				height: 0.35rem;
+				line-height: 0.35rem;
+				color: #999;
+				display: inline-block;
+				width: 30%;
+				margin-right: 2%;
+				background: #eee;
+				text-align: center;
+				margin-bottom: 0.05rem;
+				&.on {
+					color: #fff;
+					background: $maincolor;
+				}
+			}
+
+		}
+	}
+	.qa-list {
+		margin-top: 0.1rem;
+		background: #fff;
+		border-top: 1px solid #d1d1d1;
+		border-bottom: 1px solid #d1d1d1;
+		padding: 0 0.1rem 0.1rem 0.1rem;
+		color: #808080;
+		.list-conttent {
+			margin-top: 0.1rem;
+			border: 1px solid #d1d1d1;
+			box-sizing: border-box;
+			font-size: 0.16rem;
+			.qa-box {
+				.tle {
+					color: #666;
+					height: 0.45rem;
+					line-height: 0.45rem;
+					border-bottom: 1px solid #d1d1d1;
+					padding-left: 0.1rem;
+					box-sizing: border-box;
+					position: relative;
+					span {
+						display: block;
+						width: 0.1rem;
+						height: 0.1rem;
+						border-right: 1px solid #999;
+						border-bottom: 1px solid #999;
+						position: absolute;
+						right: 0.12rem;
+						top: 0.16rem;
+						-webkit-transition: all .2s ease-in-out;
+						-webkit-transform: rotate(-45deg);
+					}
+
+				}
+				&.show .tle span {
+					transform: rotate(45deg);
+					border-right: 1px solid $maincolor;
+					border-bottom: 1px solid $maincolor;
+				}
+				.answer {
+					padding: 0.05rem 0.1rem 0.05rem 0.1rem;
+					border-bottom: 1px solid #d1d1d1;
+					background: #eee;
+					line-height: 0.3rem;
+					box-sizing: border-box;
+					display: none;
+				}
+				&.show .answer {
+					display: block;
+				}
+			}
+		}
+	}
+}

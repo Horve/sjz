@@ -889,13 +889,50 @@ input {
   height: 15px;
 }
 
+.navbar-cnt {
+  height: 65px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+.navbar-cnt .circle {
+  width: 56px;
+  height: 56px;
+  background: #e9e9e9;
+  position: absolute;
+  left: 50%;
+  margin-left: -28px;
+  bottom: -5px;
+  border-radius: 50%;
+  z-index: 50;
+}
+.navbar-cnt .cbg, .navbar-cnt .cbdr {
+  width: 76px;
+  height: 76px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  bottom: -15px;
+  margin-left: -38px;
+  z-index: 10;
+}
+.navbar-cnt .cbdr {
+  border: 1px solid #c1c1c1;
+  z-index: 0;
+  margin-left: -39px;
+  bottom: -16px;
+}
+
 .navbar {
   height: 50px;
-  background: #f8f8f8;
+  background: #fff;
   position: absolute;
   width: 100%;
   bottom: 0;
-  z-index: 1000;
   display: -webkit-box;
   box-sizing: border-box;
   -webkit-box-pack: justify;
@@ -914,11 +951,12 @@ input {
   line-height: 40px;
   position: relative;
   margin-top: 5px;
+  z-index: 100;
   /*font-weight: 100;*/
 }
 .navbar .item i {
   display: block;
-  font-size: 22px;
+  font-size: 20px;
   width: 100%;
   height: 24px;
   line-height: 28px;
@@ -2899,13 +2937,19 @@ input {
 .kf-index-2-0 .view-content .view-content-con {
   padding-bottom: 0.9rem;
 }
+.kf-index-2-0 .navbar-cnt .circle {
+  background: #9ab903;
+}
+.kf-index-2-0 .navbar-cnt .navbar .item.on {
+  color: #fff;
+}
 .kf-index-2-0 .body-con {
   padding: 0.1rem;
 }
 .kf-index-2-0 .body-con .body-list a {
   display: block;
   width: 100%;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
   border-radius: 0.15rem;
   overflow: hidden;
   position: relative;
@@ -2930,6 +2974,10 @@ input {
   display: block;
   line-height: 0.25rem;
   text-indent: 0.08rem;
+}
+.kf-index-2-0 .body-con .body-list a em span:first-of-type {
+  font-size: 0.2rem;
+  font-weight: bold;
 }
 .kf-index-2-0 .body-con .body-list a em span:last-of-type {
   font-size: 0.14rem;

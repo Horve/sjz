@@ -8,13 +8,21 @@
 			padding-bottom: 0.9rem;
 		}
 	}
+	.navbar-cnt {
+		.circle {
+			background: $maincolor;
+		}
+		.navbar .item.on {
+			color: #fff;
+		}
+	}
 	.body-con {
 		padding: 0.1rem;
 		.body-list {
 			a {
 				display: block;
 				width: 100%;
-				margin-bottom: 0.1rem;
+				margin-bottom: 0.2rem;
 				border-radius: 0.15rem;
 				overflow: hidden;
 				position: relative;
@@ -37,6 +45,10 @@
 						display: block;
 						line-height: 0.25rem;
 						text-indent: 0.08rem;
+						&:first-of-type {
+							font-size: 0.2rem;
+							font-weight: bold;
+						}
 						&:last-of-type {
 							font-size: 0.14rem;
 							line-height: 0.2rem;

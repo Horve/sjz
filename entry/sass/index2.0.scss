@@ -100,5 +100,26 @@
 				right: 0;
 			}
 		}
+		.hover-hand {
+			width: 0.4rem;
+			height: 0.5rem;
+			background-image: url(img/2_0/click-up.png);
+			background-size: cover;
+			position: absolute;
+			top: 35%;
+			right: 0.9rem;
+			z-index: 10;
+			-webkit-transition: all 1s ease-in-out;
+			-webkit-animation: handle 1s 2;
+		}
+	}
+}
+
+@-webkit-keyframes handle {
+	0% {
+		-webkit-transform: translateX(0);
+	}
+	100% {
+		-webkit-transform: translateX(-100px);
 	}
 }

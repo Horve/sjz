@@ -37,7 +37,7 @@ define(['../core/core'], function(core) {
 		});
 
 		var downLeft = [0,0], initWid, initLeft;
-		EL_topCmp.on('touchstart', function(e) {
+		$(dom).on('touchstart', '.compare', function(e) {
 			var touchs = e.changedTouches[0];
 			var tx = touchs.pageX;
 			downLeft.shift();
@@ -46,7 +46,7 @@ define(['../core/core'], function(core) {
 			initLeft = winWidth - initWid;
 			// console.log(downLeft);
 		});
-		$(dom).on('touchmove', '.compare .top', function(e) {
+		$(dom).on('touchmove', '.compare', function(e) {
 			e.preventDefault();
 			var touchs = e.changedTouches[0];
 			var tx = touchs.pageX;
@@ -70,10 +70,13 @@ define(['../core/core'], function(core) {
 			console.log(tx,initWid);
 			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / (initWid / winWidth) * 100 + "% 100%");
 		});
-		$(dom).on('touchend', '.compare .top', function(e) {
+		$(dom).on('touchend', '.compare', function(e) {
 			e.preventDefault();
 			var touchs = e.changedTouches[0];
 			EL_topCmp.removeAttr("style");
+		});
+		$('.hover-hand', dom).on("webkitAnimationEnd", function() {
+			$(this).hide();
 		});
 	});
 });

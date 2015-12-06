@@ -11805,6 +11805,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			type: kftype,
 			price: 1999,
 			topShow: false,
+			screenWidth: $(window).width(),
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
 				// dengshi: VM_kf.txtInfo["art"].dengshi,
@@ -11897,6 +11898,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 					chuanglian: VM_kf.txtInfo[VM_kf.styleCode].chuanglian
 				};
 				VM_kf.fromShow = VM_kf.from[VM_kf.styleCode];
+				// $('.area-compare', dom).css("height", VM_kf.screenWidth + "px");
 			},
 			toTop: function() {
 				$('.view-content', dom).scrollTop(0);
@@ -11935,10 +11937,27 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 					break;
 			}
 		});
-		
-
+		$(dom).on('click', '.before-hide', function() {
+			var _this = $(this);
+			var _par = $(this).parent();
+			_this.removeClass("oninit");
+			$('.after', _par).addClass('onhide');
+			setTimeout(function() {
+				_par.find('.before-hide').removeClass('before-hide').addClass('before-show');
+			}, 500);
+		});
+		$(dom).on('click', '.before-show', function() {
+			var _this = $(this);
+			var _par = $(this).parent();
+			_this.addClass("oninit");
+			$('.after', _par).removeClass('onhide');
+			setTimeout(function() {
+				_par.find('.before-show').addClass('before-hide').removeClass('before-show');
+			}, 500);
+		});
 	});
 });
+
 // main.js
 require([
 	//'entry/js/src/index',

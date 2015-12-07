@@ -2,6 +2,7 @@
 	font-size: 100px;
 	.page {
 		overflow: hidden;
+		font-size: 0.16rem;
 	}
 	.page .view-content .view-content-con {
 		padding-bottom: 90px;
@@ -158,6 +159,7 @@
 		left: 0;
 		bottom: 0;
 		font-size: 16px;
+		z-index: 50;
 		a {
 			display: block;
 			width: 50%;
@@ -261,14 +263,13 @@
 				bottom: 0.05rem;
 				left: 50%;
 				margin-left: -0.25rem;
-				border: 0.05rem solid rgba(255,255,255,.7);
+				border: 0.03rem solid rgba(255,255,255,.8);
 				/*-webkit-animation: borderLight .5s infinite;*/
 				/*z-index: 10;*/
-				
 			}
 			.onhide {
 				-webkit-transform: scale(1.2);
-				opacity: 0.2;
+				opacity: 0;
 			}
 		}
 		.hourse-from {
@@ -359,6 +360,229 @@
 					color: #666;
 					padding-top: 0.05rem;
 					text-align: justify;
+				}
+			}
+		}
+		.product-nav {
+			margin: 0 0.1rem;
+			height: 0.45rem;
+			line-height: 0.45rem;
+			font-size: 0.16rem;
+			display: -webkit-box;
+			-webkit-box-pack: justify;
+			border-bottom: 1px solid #d1d1d1;
+			.item {
+				display: block;
+				text-align: center;
+				width: 33%;
+				box-sizing: border-box;
+				&.on {
+					border-bottom: 2px solid $maincolor;
+				}
+			}
+		}
+		.product-params {
+			margin: 0 0.1rem;
+			position: relative;
+			.tle {
+				height: 0.45rem;
+				line-height: 0.45rem;
+				margin: 0;
+				padding: 0;
+				font-weight: normal;
+				font-size: 0.16rem;
+				text-indent: 0.5em;
+			}
+			.area-compare {
+				margin: 0;
+				overflow: hidden;
+				border-radius: 10px;
+				height: 2rem;
+				img {
+					border-radius: 10px;
+				}
+				.area-pic {
+					top: 0;
+					right: 0;
+					left: auto;
+					bottom: auto;
+				}
+				.oninit {
+					top: 0.1rem;
+					left: auto;
+					margin-left: auto;
+				}
+				.onshow {
+					border-radius: 10px;
+					overflow: hidden;
+				}
+				.brfore-show {
+					border-radius: 10px;
+					overflow: hidden;
+				}
+				.s1 {
+					right: 0.1rem;
+					&.active {
+						right: 0;
+						z-index: 10;
+					}
+				}
+				.s2 {
+					right: 0.45rem;
+					&.active {
+						right: 0;
+						z-index: 10;
+					}
+				}
+				.s3 {
+					right: 0.8rem;
+					&.active {
+						right: 0;
+						z-index: 10;
+					}
+				}
+			}
+			.txt {
+				position: absolute;
+				z-index: 30;
+				bottom: 0.1rem;
+				left: 0.1rem;
+				line-height: 0.2rem;
+				color: #fff;
+				font-weight: bold;
+				text-shadow: 1px 1px 5px rgba(0,0,0,1);
+			}
+		}
+		.params-item-list {
+			color: #666;
+			line-height: 0.3rem;
+			font-size: 0.14rem;
+			padding: 0.1rem 0;
+			border-bottom: 1px solid #d1d1d1;
+			span {
+				display: inline-block;
+				width: 32%;
+			}
+		}
+		.params-timeline {
+			border-top: 1px solid #d1d1d1;
+			border-bottom: 1px solid #d1d1d1;
+			padding: 0.1rem 0;
+			.line-list {
+				margin-left: 0.05rem;
+				border-left: 2px solid $maincolor;
+				.beizhu {
+					font-size: 0.14rem;
+					color: #666;
+					height: 0.4rem;
+					margin-top: 0.05rem;
+					line-height: 0.2rem;
+					span {
+						float: left;
+					}
+				}
+			}
+			.line-cont {
+				margin: 0 0 0.1rem 0.15rem;
+				.area-compare {
+					height: 1.87rem;
+				}
+				.tle {
+					font-size: 0.14rem;
+					position: relative;
+					span {
+						display: block;
+						line-height: 0.2rem;
+					}
+					em {
+						display: block;
+						position: absolute;
+						width: 0.1rem;
+						height: 0.1rem;
+						background: $maincolor;
+						border-radius: 50%;
+						left: -0.21rem;
+						top: 50%;
+						margin-top: -0.1rem;
+					}
+				}
+			}
+		}
+		.product-comment {
+			margin: 0 0.1rem;
+		}
+		.comment-box {
+			padding: 0.1rem 0;
+			.head {
+				height: 0.4rem;
+				position: relative;
+				.hd-pic {
+					width: 0.4rem;
+					height: 0.4rem;
+					position: absolute;
+					border-radius: 50%;
+					background: #efefef;
+					overflow: hidden;
+					img {
+						width: 0.4rem;
+						height: 0.4rem;
+					}
+				}
+				.hd-info {
+					margin-left: 0.5rem;
+					font-size: 0.16rem;
+					span {
+						display: block;
+						line-height: 0.2rem;
+						&.uname {
+							color: #666;
+						}
+						&.ctime {
+							color: #999;
+							font-size: 0.14rem;
+						}
+					}
+				}
+			}
+			.comment-txt {
+				font-size: 0.14rem;
+				line-height: 1.6rm;
+				padding: 0.1rem 0;
+			}
+			.comment-star {
+				height: 0.5rem;
+				padding-bottom: 0.05rem;
+				font-size: 0.14rem;
+				.star-item {
+					float: left;
+					height: 0.2rem;
+					width: 50%;
+					line-height: 0.2rem;
+					margin-bottom: 0.05rem;
+					.txt {
+						color: #666;
+						float: left;
+					}
+					.stars {
+						width: 0.8rem;
+						height: 0.11rem;
+						margin-left: 0.03rem;
+						background-image: url(img/2_0/star-0.png);
+						background-size: 100% 100%;
+						margin-top: 0.04rem;
+						float: left;
+						.star-1 {
+							width: 60%;
+							height: 100%;
+							overflow: hidden;
+							.star1-bg {
+								width: 0.8rem;
+								height: 0.11rem;
+								background-image: url(img/2_0/star-1.png);
+								background-size: 100% 100%;
+							}
+						}
+					}
 				}
 			}
 		}

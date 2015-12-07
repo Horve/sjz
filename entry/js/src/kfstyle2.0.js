@@ -49,6 +49,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			type: kftype,
 			price: 1999,
 			topShow: false,
+			detailNav: 3,
 			screenWidth: $(window).width(),
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
@@ -103,6 +104,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 					chuangpin: "北欧简约风素色纯棉环保活性印花，给你一个最温暖的拥抱。",
 					chuanglian: "天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。"
 				}
+			},
+			changeDNav: function(i) {
+				VM_kf.detailNav = i;
 			},
 			changeBoxState: function(n) {
 				(!VM_kf.showBox) && (VM_kf.showBox = true);
@@ -184,7 +188,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		$(dom).on('click', '.before-hide', function() {
 			var _this = $(this);
 			var _par = $(this).parent();
-			_this.removeClass("oninit");
+			_this.removeClass("oninit").addClass("active");
 			$('.after', _par).addClass('onhide');
 			setTimeout(function() {
 				_par.find('.before-hide').removeClass('before-hide').addClass('before-show');
@@ -193,7 +197,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		$(dom).on('click', '.before-show', function() {
 			var _this = $(this);
 			var _par = $(this).parent();
-			_this.addClass("oninit");
+			_this.addClass("oninit").removeClass("active");
 			$('.after', _par).removeClass('onhide');
 			setTimeout(function() {
 				_par.find('.before-show').addClass('before-hide').removeClass('before-show');

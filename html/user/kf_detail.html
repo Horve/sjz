@@ -75,116 +75,305 @@
 					<div class="hourse-from">
 						房源来自：{{fromShow}}
 					</div>
-					<div class="detail-pic"></div>
-					<!-- 1 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_chuanglian.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle one">
-								<span>窗帘<br><em>curtain</em></span>
+					<!-- <div class="detail-pic"></div> -->
+					<div class="product-nav">
+						<a class="item" ms-class="on:detailNav==1" ms-click="changeDNav(1)">商品详情</a>
+						<a class="item" ms-class="on:detailNav==2" ms-click="changeDNav(2)">详情参数</a>
+						<a class="item" ms-class="on:detailNav==3" ms-click="changeDNav(3)">用户评价</a>
+					</div>
+					<div class="product-detail" ms-if="detailNav==1">
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_chuanglian.jpg" width="100%" height="100%" alt="">
 							</div>
-							<p>
-								{{txtInfoShow.chuanglian}}
-							</p>
+							<div class="info">
+								<div class="tle one">
+									<span>窗帘<br><em>curtain</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.chuanglian}}
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_dengshi.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="info">
+								<div class="tle two">
+									<span>灯饰<br><em>light-fixture</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.dengshi}}
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_shafadian.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="info">
+								<div class="tle three">
+									<span>沙发垫<br><em>sofa cushion</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.shafadian}}
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_baozhen.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="info">
+								<div class="tle four">
+									<span>抱枕<br><em>bolster</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.baozhen}}
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_ditan.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="info">
+								<div class="tle five">
+									<span>地毯<br><em>footcloth</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.ditan}}
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_guahua.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="info">
+								<div class="tle six">
+									<span>挂画<br><em>paintings</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.guahua}}
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_chuangpin.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="info">
+								<div class="tle seven">
+									<span>床品<br><em>bed in bag</em></span>
+								</div>
+								<p>
+									{{txtInfoShow.chuangpin}}
+								</p>
+							</div>
+						</div>
+						<div class="back-info">
+							<p class="tle">免责声明</p>
+							<p>1、墙面严重受损我方不予接单施工。（如：墙体严重破损，墙皮大面积脱落等。）</p>
+							<p>2、家具翻新限平角或板式家具（不包括：异型、弧面等造型、及严重破损的家具等）。</p>
+							<p>3、窗帘不含窗帘杆（如需要，我方可代买并安装，只收成本费用）。</p>
+							<p>4、为防止壁纸黏贴后开裂或起鼓，建议施工后闭窗2~3天（可短暂开窗通风，通风后请及时关窗）。</p>
+							<p>5、施工材料将于施工前1~3天送至客户家中，届时请注意签收，并请勿拆封。 </p>
+							<p>6、我方施工不包含原有壁纸的拆除，拆除费用每个卧室299元/每个客厅399元人工费，不限单间面积。</p>
+							<p>7、请于施工前一天妥善处理贵重物品。</p>
+							<p>8、法律允许范围内，活动最终解释权 </p>
+							<p class="end">【服务范围限北京市六环内】</p>
 						</div>
 					</div>
-					<!-- 2 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_dengshi.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle two">
-								<span>灯饰<br><em>light-fixture</em></span>
+					<div class="product-params" ms-if="detailNav==2">
+						<h2 class="tle">施工物料清单</h2>
+						<div class="area-compare">
+							<div class="area-pic after onshow">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
 							</div>
-							<p>
-								{{txtInfoShow.dengshi}}
-							</p>
+							<div class="area-pic before-hide oninit s1">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="area-pic before-hide oninit s2">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="area-pic before-hide oninit s3">
+								<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+							</div>
+							<div class="txt">一居/开间</div>
+						</div>
+						<div class="params-item-list">
+							<span>1、壁纸不限</span>
+							<span>2、窗帘x2</span>
+							<span>3、地毯x1</span>
+							<span>4、抱枕x3</span>
+							<span>5、床品x1</span>
+							<span>6、挂画x3</span>
+							<span>7、灯饰x1</span>
+							<span>8、沙发垫x1</span>
+							<span>9、床头罩x1</span>
+						</div>
+						<h2 class="tle">一天快速翻新</h2>
+						<div class="params-timeline">
+							<div class="line-list">
+								<div class="line-cont">
+									<div class="tle">
+										<em></em>
+										<span>09:00</span>
+										<span>房屋检测</span>
+									</div>
+									<div class="area-compare">
+										<div class="area-pic after onshow">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s1">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s2">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s3">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="line-cont">
+									<div class="tle">
+										<em></em>
+										<span>10:00</span>
+										<span>壁纸施工</span>
+									</div>
+									<div class="area-compare">
+										<div class="area-pic after onshow">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s1">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s2">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s3">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="line-cont">
+									<div class="tle">
+										<em></em>
+										<span>13:00</span>
+										<span>家具翻新</span>
+									</div>
+									<div class="area-compare">
+										<div class="area-pic after onshow">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s1">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s2">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s3">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="line-cont">
+									<div class="tle">
+										<em></em>
+										<span>14:00</span>
+										<span>家政服务</span>
+									</div>
+									<div class="area-compare">
+										<div class="area-pic after onshow">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s1">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s2">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s3">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="line-cont">
+									<div class="tle">
+										<em></em>
+										<span>16:00</span>
+										<span>施工完成</span>
+									</div>
+									<div class="area-compare">
+										<div class="area-pic after onshow">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s1">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s2">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" height="100%" alt="">
+										</div>
+										<div class="area-pic before-hide oninit s3">
+											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" height="100%" alt="">
+										</div>
+									</div>
+									<div class="beizhu">
+										<span class="left">备注：</span>
+										<span class="right">
+											<i>以上时间为参考时间</i><br>
+											<i>具体时间以实际完成时间为准</i>
+										</span>
+									</div>
+								</div>
+
+							</div>
 						</div>
 					</div>
-					<!-- 3 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_shafadian.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle three">
-								<span>沙发垫<br><em>sofa cushion</em></span>
+					<div class="product-comment" ms-if="detailNav==3">
+						<div class="comment-box">
+							<div class="head">
+								<a class="hd-pic">
+									<img src="../../dist/img/2_0/kf/{{type}}_after2.jpg">
+								</a>
+								<div class="hd-info">
+									<span class="uname">小番薯</span>
+									<span class="ctime">2015-10-5 12:45:32</span>
+								</div>
 							</div>
-							<p>
-								{{txtInfoShow.shafadian}}
-							</p>
-						</div>
-					</div>
-					<!-- 4 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_baozhen.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle four">
-								<span>抱枕<br><em>bolster</em></span>
+							<div class="comment-txt">
+								简直是太好了，速度快，效率高哦，装修后特别好看！简约粉色 保暖法兰绒，爱一种生活，是特别的嗜好。
 							</div>
-							<p>
-								{{txtInfoShow.baozhen}}
-							</p>
-						</div>
-					</div>
-					<!-- 5 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_ditan.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle five">
-								<span>地毯<br><em>footcloth</em></span>
+							<div class="comment-star">
+								<div class="star-item">
+									<span class="txt">专业技能</span>
+									<div class="stars">
+										<div class="star-1">
+											<div class="star1-bg"></div>
+										</div>
+									</div>
+								</div>
+								<div class="star-item">
+									<span class="txt">施工效率</span>
+									<div class="stars">
+										<div class="star-1">
+											<div class="star1-bg"></div>
+										</div>
+									</div>
+								</div>
+								<div class="star-item">
+									<span class="txt">服务态度</span>
+									<div class="stars">
+										<div class="star-1">
+											<div class="star1-bg"></div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<p>
-								{{txtInfoShow.ditan}}
-							</p>
 						</div>
-					</div>
-					<!-- 6 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_guahua.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle six">
-								<span>挂画<br><em>paintings</em></span>
-							</div>
-							<p>
-								{{txtInfoShow.guahua}}
-							</p>
-						</div>
-					</div>
-					<!-- 7 -->
-					<div class="detail-item">
-						<div class="img">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_chuangpin.jpg" width="100%" height="100%" alt="">
-						</div>
-						<div class="info">
-							<div class="tle seven">
-								<span>床品<br><em>bed in bag</em></span>
-							</div>
-							<p>
-								{{txtInfoShow.chuangpin}}
-							</p>
-						</div>
-					</div>
-					<div class="back-info">
-						<p class="tle">免责声明</p>
-						<p>1、墙面严重受损我方不予接单施工。（如：墙体严重破损，墙皮大面积脱落等。）</p>
-						<p>2、家具翻新限平角或板式家具（不包括：异型、弧面等造型、及严重破损的家具等）。</p>
-						<p>3、窗帘不含窗帘杆（如需要，我方可代买并安装，只收成本费用）。</p>
-						<p>4、为防止壁纸黏贴后开裂或起鼓，建议施工后闭窗2~3天（可短暂开窗通风，通风后请及时关窗）。</p>
-						<p>5、施工材料将于施工前1~3天送至客户家中，届时请注意签收，并请勿拆封。 </p>
-						<p>6、我方施工不包含原有壁纸的拆除，拆除费用每个卧室299元/每个客厅399元人工费，不限单间面积。</p>
-						<p>7、请于施工前一天妥善处理贵重物品。</p>
-						<p>8、法律允许范围内，活动最终解释权 </p>
-						<p class="end">【服务范围限北京市六环内】</p>
 					</div>
 				</div>
 			</div>

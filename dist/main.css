@@ -3255,6 +3255,7 @@ input {
   overflow: hidden;
   border: 0 solid rgba(255, 255, 255, 0.7);
   overflow: hidden;
+  display: -webkit-box;
   /*.cover {
   	width: 100%;
   	height: 100%;
@@ -3275,6 +3276,11 @@ input {
   	}
   }*/
 }
+.kf-detail .view-content-con .area-compare .area-pic img {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+}
 .kf-detail .view-content-con .area-compare .oninit {
   width: 0.4rem;
   height: 0.4rem;
@@ -3286,6 +3292,10 @@ input {
   border: 0.03rem solid rgba(255, 255, 255, 0.8);
   -webkit-animation: borderLight 1s 5;
   /*z-index: 10;*/
+}
+.kf-detail .view-content-con .area-compare .oninit .txt {
+  opacity: 0;
+  -webkit-transition: all .5s ease-in-out;
 }
 .kf-detail .view-content-con .area-compare .onhide {
   -webkit-transform: scale(1.2);
@@ -3436,6 +3446,12 @@ input {
 .kf-detail .view-content-con .product-params .area-compare .onshow {
   border-radius: 10px;
   overflow: hidden;
+  /*img {
+  	margin-top: -1rem;
+  }*/
+}
+.kf-detail .view-content-con .product-params .area-compare .onshow .txt {
+  opacity: 1;
 }
 .kf-detail .view-content-con .product-params .area-compare .brfore-show {
   border-radius: 10px;
@@ -3447,6 +3463,8 @@ input {
 .kf-detail .view-content-con .product-params .area-compare .s1.active {
   right: 0;
   z-index: 10;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .kf-detail .view-content-con .product-params .area-compare .s2 {
   right: 0.45rem;
@@ -3454,6 +3472,8 @@ input {
 .kf-detail .view-content-con .product-params .area-compare .s2.active {
   right: 0;
   z-index: 10;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .kf-detail .view-content-con .product-params .area-compare .s3 {
   right: 0.8rem;
@@ -3461,6 +3481,8 @@ input {
 .kf-detail .view-content-con .product-params .area-compare .s3.active {
   right: 0;
   z-index: 10;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .kf-detail .view-content-con .product-params .txt {
   position: absolute;
@@ -3471,6 +3493,11 @@ input {
   color: #fff;
   font-weight: bold;
   text-shadow: 1px 1px 5px black;
+}
+@media screen and (min-width: 321px) {
+  .kf-detail .view-content-con .product-params .area-compare {
+    height: 2.8rem;
+  }
 }
 .kf-detail .view-content-con .params-item-list {
   color: #666;

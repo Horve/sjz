@@ -11814,6 +11814,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			price: 1999,
 			topShow: false,
 			detailNav: 1,
+			wltype: 1,
 			screenWidth: $(window).width(),
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
@@ -12336,7 +12337,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 						uname: "番薯用户",
 						ctime: "2015/11/05",
 						hpic: "../../dist/img/2_0/kf/headpic/46.jpg",
-						txt: "快翻了一个二居室，感觉把我家整治的大了好几倍似的，太稀饭你们的产品啦 看好你们哟。"
+						txt: "把房子快翻了一下，感觉把我家整治的大了好几倍似的，太稀饭你们的产品啦 看好你们哟。"
 					},
 					{
 						stars1: stars[rd(1,3)-1],
@@ -12396,7 +12397,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 						uname: "番薯用户",
 						ctime: "2015/10/07",
 						hpic: "../../dist/img/2_0/kf/headpic/52.jpg",
-						txt: "整体都是不错，图片的颜色和到货的颜色有些反差。售后及时跟踪解释了解情况，因为效果图是打了暖灯情况下拍，所以整体的效果更偏暖色的.体验很好，没装修前，施工人员会帮我把家具收拾好。以免弄脏弄坏，还是挺贴心的，帮我翻新了床头柜，本来还想着买一个新的，这下帮我省了一笔钱。贴心啊。"
+						txt: "体验很好，没装修前，施工人员会帮我把家具收拾好。以免弄脏弄坏，还是挺贴心的，帮我翻新了床头柜，本来还想着买一个新的，这下帮我省了一笔钱。贴心啊。"
 					},
 					{
 						stars1: stars[rd(1,3)-1],
@@ -12496,6 +12497,9 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			var _par = $(this).parent();
 			_this.removeClass("oninit").addClass("active");
 			$('.after', _par).addClass('onhide');
+			if (!!_this.attr("data-wltype")) {
+				VM_kf.wltype = _this.attr("data-wltype");
+			}
 			setTimeout(function() {
 				_par.find('.before-hide').removeClass('before-hide').addClass('before-show');
 			}, 500);
@@ -12503,6 +12507,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 		$(dom).on('click', '.before-show', function() {
 			var _this = $(this);
 			var _par = $(this).parent();
+			VM_kf.wltype = 1;
 			_this.addClass("oninit").removeClass("active");
 			$('.after', _par).removeClass('onhide');
 			setTimeout(function() {

@@ -76,6 +76,9 @@
 						房源来自：{{fromShow}}
 					</div>
 					<!-- <div class="detail-pic"></div> -->
+					<div class="detail-more">
+						继续滑动，查看图文详情
+					</div>
 					<div class="product-nav">
 						<a class="item" ms-class="on:detailNav==1" ms-click="changeDNav(1)">商品详情</a>
 						<a class="item" ms-class="on:detailNav==2" ms-click="changeDNav(2)">详情参数</a>
@@ -193,29 +196,60 @@
 								<img src="../../dist/img/2_0/kf/show_yiju.jpg" width="100%" alt="">
 								<div class="txt">一居/开间</div>
 							</div>
-							<div class="area-pic before-hide oninit s1">
+							<div class="area-pic before-hide oninit s1" data-wltype="2">
 								<img src="../../dist/img/2_0/kf/show_liangju.jpg" width="100%" alt="">
 								<div class="txt">两居室</div>
 							</div>
-							<div class="area-pic before-hide oninit s2">
+							<div class="area-pic before-hide oninit s2" data-wltype="3">
 								<img src="../../dist/img/2_0/kf/show_sanju.jpg" width="100%" alt="">
 								<div class="txt">三居室</div>
 							</div>
-							<div class="area-pic before-hide oninit s3">
+							<div class="area-pic before-hide oninit s3" data-wltype="4">
 								<img src="../../dist/img/2_0/kf/show_danjian.jpg" width="100%" alt="">
 								<div class="txt">单间</div>
 							</div>
 						</div>
-						<div class="params-item-list">
+						<div class="params-item-list" ms-if="wltype==1">
 							<span>1、壁纸不限</span>
 							<span>2、窗帘x2</span>
 							<span>3、地毯x1</span>
 							<span>4、抱枕x3</span>
 							<span>5、床品x1</span>
-							<span>6、挂画x3</span>
+							<span>6、装饰画x3</span>
 							<span>7、灯饰x1</span>
 							<span>8、沙发垫x1</span>
 							<span>9、床头罩x1</span>
+						</div>
+						<div class="params-item-list" ms-if="wltype==2">
+							<span>1、壁纸不限</span>
+							<span>2、窗帘x3</span>
+							<span>3、地毯x1</span>
+							<span>4、抱枕x3</span>
+							<span>5、床品x2</span>
+							<span>6、装饰画x4</span>
+							<span>7、灯饰x2</span>
+							<span>8、沙发垫x1</span>
+							<span>9、床头罩x2</span>
+						</div>
+						<div class="params-item-list" ms-if="wltype==3">
+							<span>1、壁纸不限</span>
+							<span>2、窗帘x4</span>
+							<span>3、地毯x1</span>
+							<span>4、抱枕x3</span>
+							<span>5、床品x3</span>
+							<span>6、装饰画x5</span>
+							<span>7、灯饰x3</span>
+							<span>8、沙发垫x1</span>
+							<span>9、床头罩x3</span>
+						</div>
+						<div class="params-item-list" ms-if="wltype==4">
+							<span>1、壁纸不限</span>
+							<span>2、窗帘x1</span>
+							<span>3、地毯x1</span>
+							<span>4、床品x1</span>
+							<span>5、装饰画x3</span>
+							<span>6、灯饰x1</span>
+							<span>7、床头罩x1</span>
 						</div>
 						<h2 class="tle">一天快速翻新</h2>
 						<div class="params-timeline">

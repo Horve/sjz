@@ -4,7 +4,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
 		
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		var kftype = location.hash.replace(/#!_/,"") || "art";
 		var productStyle = "";
 		var Tools = core.Tools;

@@ -12,7 +12,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		var roomstyle = ["一居室","两居室","三居室","单间"];
 
 
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		var kftype = location.hash.replace(/#!_/,"") || "art";
 		var productStyle = "";
 		var Tools = core.Tools

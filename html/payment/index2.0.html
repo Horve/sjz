@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html class="payment-2-0">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="full-screen" content="yes"/>
+    <meta name="browsermode" content="application"/>
+    <!-- QQ强制竖屏 QQ强制全屏 -->
+    <meta name="x5-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="x5-page-mode" content="app"/>
+	<title>快翻-番薯快装</title>
+    <!-- 由main.sass 生成    -->
+	<link rel="stylesheet" href="../../dist/main.min.css" />
+	<link rel="stylesheet" href="../../dist/normalize.css" />
+</head>
+<body ms-controller="root">
+	<div class="page" data-render-id="payment-2-0">
+		<div class="view">
+			<div class="top-navigator">
+				<a class="left" href="javascript:window.history.back()"><em class="iconfont">&#xe60f;</em>返回</a>
+				<span class="page-title">订单中心</span>
+				<a class="right" href="tel:01053650957"><em class="iconfont">&#xe634;</em></a>
+			</div>
+			<div class="view-content">
+				<div class="view-content-con">
+					<div class="body-con">
+						<div class="type-nav">
+							<a class="item on">未支付</a>
+							<a class="item">已开工</a>
+							<a class="item">已完工</a>
+							<a class="item">历史订单</a>
+						</div>
+						<div class="txt-tle">选择支付订单</div>
+						<div class="order-list">
+							<div class="order-item" ms-repeat="orderList">
+								<div class="order-info">
+									<div class="icon">
+										<i class="iconfont">&#xe60b;</i>
+									</div>
+									<div class="order-instr">
+										<a class="pic">
+											<img src="../../dist/img/2_0/kf/art_after1.jpg" width="100%">
+										</a>
+										<div class="order-instr-detail">
+											<span>{{el.productName}}</span>
+											<span ms-if="el.layout==1">户型：一居室</span>
+											<span ms-if="el.layout==2">户型：两居室</span>
+											<span ms-if="el.layout==3">户型：三居室</span>
+											<span ms-if="el.nums==1">户型：单间</span>
+											<span>风格：{{el.productStyle}}</span>
+											<span>订单编号：{{el.orderId}}</span>
+										</div>
+										<a class="delete">删除</a>
+									</div>
+								</div>
+								<div class="order-step">
+									<div class="content">
+										<div class="step step1">
+											<a class="circle"></a>
+											<span>在线预约</span>
+										</div>	
+										<div class="step step2">
+											<a class="circle"></a>
+											<span>付款成功</span>
+										</div>	
+										<div class="step step3">
+											<a class="circle"></a>
+											<span>完成订单</span>
+										</div>	
+									</div>
+								</div>
+								<div class="order-comment">
+									<a class="btn">施工评价</a>
+									<span class="txt">您的评价很重要！为了让您体验更优质的施工服务，工人的绩效工资将由您的评价来决定。</span>	
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pay-toolbar">
+				<span class="price-info">需支付<em>￥3899</em></span>
+				<a class="pay-btn">
+					去支付
+				</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../dist/build.js"></script>
+	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->
+</body>
+</html>

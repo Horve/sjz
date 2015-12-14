@@ -5,7 +5,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		localStorage.setItem("_prepage", window.location.href);
 
 		var Tools = core.Tools;
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		var swipcnt = $('.swiper-container', dom);
 		var imgs = $('img', $('.swiper-container'));
 		var chosBtns = $('.price-sec .btn', dom);

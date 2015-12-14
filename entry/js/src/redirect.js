@@ -1,7 +1,7 @@
 define(['../core/core'], function(core) {
 	core.onrender("redirect", function(dom) {
 		var url = location.search;
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		if (url) {
 			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
 			$.ajax({

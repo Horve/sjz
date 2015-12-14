@@ -8937,7 +8937,7 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/avalon.modern.shi
 	return core;
 });
 define('entry/js/src/jump',[],function() {
-	var baseUrl = "http://www.s-jz.com/pub/Sbuild/"
+	var baseUrl = "http://www.s-jz.com/test/Sbuild/"
 		, redirect = encodeURIComponent(baseUrl + "html/redirect.html")
 		, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=" + redirect + "&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
 		, shopChartUrl = baseUrl + "html/payment/"
@@ -9016,7 +9016,7 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 	return dialog;
 });
 define('entry/js/src/order',['../core/core', './jump', './component/dialog'], function(core, checkUsr, dialog) {
-	var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+	var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 	var OrderConfig = {};
 	// 下订单
 	OrderConfig.addOrderAjax = function(productId, params) {
@@ -9323,158 +9323,6 @@ define('entry/js/src/usernewjiadian.js',['../core/core', '../src/order'], functi
 		});
 	});
 });
-define('entry/js/src/kfuserindex.js',['../core/core'], function(core) {
-	core.onrender("kf-userindex", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		var isQQUC = /(ucbrowser)|(mqqbrowser)/.test(navigator.userAgent.toLowerCase());
-		var u = navigator.userAgent;
-		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-		var Tools = core.Tools;
-		if (isAndroid) {
-			var h = Tools.calcSepHeight(68, 4);
-			$('.page-two .style', dom).css("height", h + "px");
-		}
-		var mySwiper1 = new Swiper('.swiper-container',{
-			direction: 'vertical'
-		});
-	});
-});
-define('entry/js/src/kfstylenav.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
-	core.onrender("kf-style", function(dom) {
-		/*-webkit-animation: .5s detail-price-199;*/
-		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
-		
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
-		var kftype = location.hash.replace(/#!_/,"") || "art";
-		var productStyle = "";
-		var Tools = core.Tools;
-		var imgs = $('img', $('.swiper-container'));
-		var items = $('.choose-style .items span', dom);
-		var itemsTxt = $('.choose-style .items-intro', dom);
-		var itemsPrice = $('.choose-style .price', dom);
-		var swipcnt = $('.swiper-container', dom);
-		var layout = 1;
-		var nums = null;
-		var mySwiper1 = new Swiper('.swiper-container',{
-			// direction: 'vertical'
-			pagination: '.pagination-style',
-			autoplay: 3000,
-			onInit: function(swiper){
-		    	console.log("init");
-		    	var width = parseInt(Tools.getCurrentStyle(swipcnt[0], "width"));
-		    	var height = width * 0.6875;
-		    	swipcnt.css("height", height + "px");
-		    	Tools.lazyLoad([imgs[0], imgs[1]]);
-		    },
-			onSlideChangeEnd: function(swiper){
-				var index = swiper.activeIndex;
-				// 延迟加载
-				Tools.lazyLoad(imgs[index + 1]);
-			}
-		});
-
-		var kfvm = avalon.define({
-			$id: "root",
-			price: 3600,
-			txt: "一室一厅（开间）"
-		});
-		avalon.scan();
-
-		switch(kftype) {
-			case "art": 
-				productStyle = "艺术学院";
-				break;
-			case "mag": 
-				productStyle = "魔法学院";
-				break;
-			case "nav": 
-				productStyle = "海军学院";
-				break;
-			case "cau": 
-				productStyle = "人文学院";
-				break;
-		}
-
-		$(items).off('click').on('click', function() {
-			var index = $(this).index();
-			$(this).addClass("on").siblings().removeClass("on");
-			var txt = "";
-			var price = 0;
-			switch(index) {
-				case 0: 
-					txt = "一室一厅（开间）";
-					price = 3600;
-					layout = 1;
-					nums = null;
-					break;
-				case 1: 
-					txt = "二室一厅";
-					price = 5499;
-					layout = 2;
-					nums = null;
-					break;
-				case 2: 
-					txt = "三室一厅";
-					price = 7399;
-					layout = 3;
-					nums = null;
-					break;
-				case 3: 
-					txt = "一个卧室";
-					price = 1999;
-					layout = null;
-					nums = 1;
-					break;
-			}
-			// itemsTxt.html(txt);
-			// itemsPrice.html(price);
-			kfvm.price = price;
-			kfvm.txt = txt;
-		});
-		var imgLists = $('img', '.pic-lists');
-    	Tools.lazyLoad(imgLists);
-
-    	$('.ordernow').off('click').on('click', function() {
-    		var location = window.location.href;
-    		var params = "";
-    		if (!!nums) {
-    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
-    		} else {
-    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		}
-    		OrderConfig.addOrderAjax(1, params);
-    		// $.ajax({
-    		// 	url:  baseUrl + "orderCtrl/addOrder.htm",
-    		// 	data: {"ordersStr": '{"orders": [{"productId": 1, ' + params + '}]}'},
-    		// 	dataType: "json",
-    		// 	success: function(res) {
-    		// 		var code = res.ret;
-    		// 		// 未登录
-    		// 		if (code == 302) {
-    		// 			checkUsr.doJump();
-    		// 		} else if (code == 1) {
-    		// 			// 已登录 进入购物车
-    		// 			checkUsr.toShopChart();
-    		// 		} else if (code == -1) {
-    		// 			// 登录失败。提示重试
-    		// 			alert("登录失败！");
-    		// 		}
-    		// 	}
-    		// });
-    	});
-    	$('.shopchart').off('click').on('click', function() {
-    		var location = window.location.href;
-    		var params = "";
-    		if (!!nums) {
-    			params = '"nums": 1,"productStyle":"' + productStyle + '"';
-    		} else {
-    			params = '"layout": ' + layout + ',"productStyle":"' + productStyle + '"';
-    		}
-    		OrderConfig.addToShopChart(1, params);
-    	});
-	});
-});
 define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog', '../src/order'], function(core, checkUsr, dialog, OrderConfig) {
 	core.onrender("jf-part", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
@@ -9482,7 +9330,7 @@ define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog',
 		localStorage.setItem("_prepage", window.location.href);
 
 		var Tools = core.Tools;
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		var swipcnt = $('.swiper-container', dom);
 		var imgs = $('img', $('.swiper-container'));
 		var chosBtns = $('.price-sec .btn', dom);
@@ -9702,7 +9550,7 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
 
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
@@ -11635,7 +11483,7 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 define('entry/js/src/redirect',['../core/core'], function(core) {
 	core.onrender("redirect", function(dom) {
 		var url = location.search;
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		if (url) {
 			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
 			$.ajax({
@@ -11768,7 +11616,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 		var roomstyle = ["一居室","两居室","三居室","单间"];
 
 
-		var baseUrl = "http://www.s-jz.com/pub/Sbuild/";
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		var kftype = location.hash.replace(/#!_/,"") || "art";
 		var productStyle = "";
 		var Tools = core.Tools
@@ -12517,6 +12365,71 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 	});
 });
 
+define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', './component/dialog', './jump', './order'], function(core, slideOption, dialog, checkUsr, OrderConfig) {
+	core.onrender("payment-2-0", function(dom) {
+		/*-webkit-animation: .5s detail-price-199;*/
+		// 设置跳转返回目标页
+		localStorage.setItem("_prepage", window.location.href);
+
+		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		if (localStorage.getItem("_prepage")) {
+			localStorage.removeItem("_prepage");
+		}
+		var Tools = core.Tools
+			
+		var stepCal = function(num) {
+			if (num == 0) {
+				return {txt: "即将开始", on: ""};
+			} else if (num == 2) {
+				return {txt: "施工中", on: ""};
+			} else if (num == 3) {
+				return {txt: "验收中", on: ""};
+			} else if (num == 4) {
+				return {txt: "失败返工", on: ""};
+			} else if (num == 5) {
+				return {txt: "已完工", on: "on"};
+			} else if (num == 1) {
+				return {txt: "支付完成", on: "on"};
+			}
+		};
+
+		var VM_shopchart = avalon.define({
+			$id: "root",
+			orderStep: 1, // 1 未支付 2 开工中 3 已完工 4 历史订单
+			orderList: [],
+		});
+		avalon.scan();
+
+		var ShopChart = {
+			init: function() {
+				this.getOrder(1);
+			},
+			getOrder: function(orderStep) {
+				$.ajax({
+					// 未完成订单
+					url: baseUrl + "orderCtrl/getOrders.htm?type=" + orderStep,
+					dataType: "json",
+					success: function(res) {
+						if (res.ret == 1) {
+							VM_shopchart.orderList = res.orderInfos;
+							alert(JSON.stringify(res));
+						} else if (res.ret == -1) {
+							dialog.add("ret:-1 订单列表返回失败，请重试！");
+						} else if (res.ret == 302) {
+							// dialog.add("需登录！");
+							checkUsr.doJump();
+						}
+					},
+					error: function(res) {
+						dialog.add(JSON.stringify(res));
+					}
+				});
+			}
+		};
+
+		ShopChart.init();
+	});
+});
 // main.js
 require([
 	//'entry/js/src/index',
@@ -12529,15 +12442,16 @@ require([
 	'entry/js/src/usernewruanzhuang.js', 
 	'entry/js/src/usernewjiaju.js', 
 	'entry/js/src/usernewjiadian.js', 
-	'entry/js/src/kfuserindex.js', 
-	'entry/js/src/kfstylenav.js', 
+	//'entry/js/src/kfuserindex.js', 
+	//'entry/js/src/kfstylenav.js', 
 	'entry/js/src/jfpart.js', 
 	'entry/js/src/shopcart.js', 
 	'entry/js/src/userproduct.js',
 	'entry/js/src/redirect',
 	// 2.0
 	'entry/js/src/index2.0',
-	'entry/js/src/kfstyle2.0'], function() {
+	'entry/js/src/kfstyle2.0',
+	'entry/js/src/shopchart2.0'], function() {
 });
 define("entry/js/main", function(){});
 

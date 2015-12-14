@@ -3,13 +3,11 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		/*-webkit-animation: .5s detail-price-199;*/
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
-
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var Tools = core.Tools
+		var baseUrl = Tools.returnBaseUrl();
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
-		var Tools = core.Tools
-			
 		var stepCal = function(num) {
 			if (num == 0) {
 				return {txt: "即将开始", on: ""};

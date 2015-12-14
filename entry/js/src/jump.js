@@ -1,5 +1,6 @@
-define(function() {
-	var baseUrl = "http://www.s-jz.com/test/Sbuild/"
+define(['../core/core'], function(core) {
+	var Tools = core.Tools
+		, baseUrl = Tools.returnBaseUrl()
 		, redirect = encodeURIComponent(baseUrl + "html/redirect.html")
 		, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=" + redirect + "&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
 		, shopChartUrl = baseUrl + "html/payment/"

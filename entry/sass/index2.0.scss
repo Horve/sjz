@@ -4,23 +4,6 @@
 	.page {
 		/*overflow: hidden;*/
 	}
-	.kf-btn {
-		display: block;
-		position: absolute;
-		width: 1.3rem;
-		height: 0.33rem;
-		background: #424252;
-		color: $maincolor;
-		font-size: 16px;
-		line-height: 0.33rem;
-		text-align: center;
-		top: 77%;
-		left: 50%;
-		margin-left: -0.65rem;
-		text-decoration: none;
-		border-radius: 0.03rem;
-		z-index: 1000;
-	}
 	#focus-slide {
 		height: 1.76rem;
 		.swiper-slide {
@@ -54,6 +37,95 @@
 		}
 		.swiper-pagination-bullet-active {
 			background-color: $maincolor;
+		}
+	}
+	.compare-txt {
+		width: 40px;
+		height: 70px;
+		font-size: 16px;
+		color: #fff;
+		position: absolute;
+		top: 25px;
+		text-align: center;
+		z-index: 100;
+		line-height: 1em;
+		-webkit-transition: all .2s ease-in-out;
+		.ico {
+			display: block;
+			width: 10px;
+			height: 13px;
+			background-image: url(img/2_0/cmp-icon.png);
+			-webkit-transition: all .3s ease-in-out;
+			background-size: 100%;
+			position: absolute;
+			bottom: 0;
+			left: 15px;
+			background-repeat: no-repeat;
+		}
+	}
+	&.ios .compare-txt-left {
+		left: 0;
+	}
+	&.ios .compare-txt-right {
+		right: 0;
+		color: #000;
+		.ico {
+			-webkit-transform: rotate(180deg);
+			opacity: 0;
+		}
+	}
+	&.android .compare-txt-left {
+		left: 0;
+		opacity: 0;
+	}
+	&.android .compare-txt-right {
+		right: 0;
+		color: #000;
+		.ico {
+			-webkit-transform: rotate(180deg);
+		}
+	}
+	.compare-info {
+		width: 32%;
+		position: absolute;
+		z-index: 100;
+		top: 50%;
+		left: 50%;
+		-webkit-transform: translateX(-50%) translateY(-50%);
+		.c-txt {
+			width: 90%;
+			margin: 0 auto;
+			text-align: center;
+			h2 {
+				margin: 0;
+				padding: 0;
+				font-size: 30px;
+				color: #fff;
+				font-weight: normal;
+				line-height: 40px;
+				border-bottom: 1px solid $maincolor;
+			}
+			h3 {
+				margin: 0;
+				padding: 0;
+				font-size: 14px;
+				color: #fff;
+				font-weight: normal;
+				line-height: 24px;
+			}
+		}
+		.kf-btn {
+			display: block;
+			width: 100%;
+			height: 0.33rem;
+			background: $maincolor;
+			color: #000;
+			font-size: 16px;
+			line-height: 0.33rem;
+			text-align: center;
+			text-decoration: none;
+			border-radius: 0.03rem;
+			margin-top: 5px;
 		}
 	}
 	.compare {

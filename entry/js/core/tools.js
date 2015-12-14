@@ -104,6 +104,9 @@ define(function() {
 				+ check(time.getHours()) + ":"
 				+ check(time.getMinutes()) + ":"
 				+ check(time.getSeconds());
+		},
+		returnBaseUrl: function() {
+			return "http://www.s-jz.com/pub/Sbuild/";
 		}
 	};
 	var Tools = Tools;

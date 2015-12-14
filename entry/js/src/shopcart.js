@@ -4,11 +4,11 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
 
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
 		var Tools = core.Tools
+			, baseUrl = Tools.returnBaseUrl()
 			, yzOrderDtl = {}
 			// 初始化价格
 			, priceDetail = {}

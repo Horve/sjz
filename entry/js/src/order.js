@@ -1,5 +1,6 @@
 define(['../core/core', './jump', './component/dialog'], function(core, checkUsr, dialog) {
-	var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+	var Tools = core.Tools;
+	var baseUrl = Tools.returnBaseUrl();
 	var OrderConfig = {};
 	// 下订单
 	OrderConfig.addOrderAjax = function(productId, params) {

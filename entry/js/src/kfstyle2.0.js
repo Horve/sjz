@@ -11,8 +11,8 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		var stars = [3,4,5];
 		var roomstyle = ["一居室","两居室","三居室","单间"];
 
-
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var Tools = core.Tools;
+		var baseUrl = Tools.returnBaseUrl();
 		var kftype = location.hash.replace(/#!_/,"") || "art";
 		var productStyle = "";
 		var Tools = core.Tools

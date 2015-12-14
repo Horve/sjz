@@ -3765,6 +3765,9 @@ define('entry/js/core/tools',[],function() {
 				+ check(time.getHours()) + ":"
 				+ check(time.getMinutes()) + ":"
 				+ check(time.getSeconds());
+		},
+		returnBaseUrl: function() {
+			return "http://www.s-jz.com/pub/Sbuild/";
 		}
 	};
 	var Tools = Tools;
@@ -8936,8 +8939,9 @@ define('entry/js/core/core',['../lib/zepto', './tools','../lib/avalon.modern.shi
 	};
 	return core;
 });
-define('entry/js/src/jump',[],function() {
-	var baseUrl = "http://www.s-jz.com/test/Sbuild/"
+define('entry/js/src/jump',['../core/core'], function(core) {
+	var Tools = core.Tools
+		, baseUrl = Tools.returnBaseUrl()
 		, redirect = encodeURIComponent(baseUrl + "html/redirect.html")
 		, jumpurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d6a2dce4f09dfd0&redirect_uri=" + redirect + "&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
 		, shopChartUrl = baseUrl + "html/payment/"
@@ -9016,7 +9020,8 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 	return dialog;
 });
 define('entry/js/src/order',['../core/core', './jump', './component/dialog'], function(core, checkUsr, dialog) {
-	var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+	var Tools = core.Tools;
+	var baseUrl = Tools.returnBaseUrl();
 	var OrderConfig = {};
 	// 下订单
 	OrderConfig.addOrderAjax = function(productId, params) {
@@ -9330,7 +9335,7 @@ define('entry/js/src/jfpart.js',['../core/core', './jump', './component/dialog',
 		localStorage.setItem("_prepage", window.location.href);
 
 		var Tools = core.Tools;
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var baseUrl = Tools.returnBaseUrl();
 		var swipcnt = $('.swiper-container', dom);
 		var imgs = $('img', $('.swiper-container'));
 		var chosBtns = $('.price-sec .btn', dom);
@@ -9550,11 +9555,11 @@ define('entry/js/src/shopcart.js',['../core/core', './component/slideOptions', '
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
 
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
 		var Tools = core.Tools
+			, baseUrl = Tools.returnBaseUrl()
 			, yzOrderDtl = {}
 			// 初始化价格
 			, priceDetail = {}
@@ -11482,8 +11487,9 @@ define('entry/js/src/userproduct.js',['../core/core'], function(core) {
 });
 define('entry/js/src/redirect',['../core/core'], function(core) {
 	core.onrender("redirect", function(dom) {
+		var Tools = core.Tools;
 		var url = location.search;
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var baseUrl = Tools.returnBaseUrl();
 		if (url) {
 			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
 			$.ajax({
@@ -11536,13 +11542,17 @@ define('entry/js/src/index2.0',['../core/core'], function(core) {
 			, winHeight = $('body').height();
 		EL_slide.css("height", winWidth * 0.55 + "px");
 		EL_topBg.css("width", winWidth + "px");
+		EL_topCmp.css({"width": winWidth - 40 + "px", "left": "40px"});
+
 		if (isAndroid) {
 			EL_compare.hide();
 			EL_androidCmp.show();
+			$('html').removeClass("ios").addClass("android");
 			EL_androidCmp.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
 		} else {
 			EL_compare.show();
 			EL_androidCmp.hide();
+			$('html').removeClass("android").addClass("ios");
 			EL_compare.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
 		}
 		
@@ -11555,6 +11565,16 @@ define('entry/js/src/index2.0',['../core/core'], function(core) {
 			effect : 'fade',
 			fade: {
 			  crossFade: false,
+			},
+			onSlideChangeEnd: function(swiper){
+				var index = swiper.activeIndex;
+				if (index == 0) {
+					$('.android .compare-txt-left').css("opacity", 0);
+					$('.android .compare-txt-right').css("opacity", 1);
+				} else if (index ==1) {
+					$('.android .compare-txt-left').css("opacity", 1);
+					$('.android .compare-txt-right').css("opacity", 0);
+				}
 			}
 		});
 
@@ -11579,23 +11599,43 @@ define('entry/js/src/index2.0',['../core/core'], function(core) {
 			moveDis = downLeft[1] - downLeft[0];
 			initWid -= moveDis;
 			initLeft += moveDis;
-			if (initLeft < 0) {
-				initLeft = 0;
-			} else if (initLeft > winWidth) {
-				initLeft = winWidth;
+			if (initLeft < 40) {
+				initLeft = 40;
+			} else if (initLeft > winWidth - 40) {
+				initLeft = winWidth - 40;
 			}
-			if (initWid > winWidth) {
-				initWid = winWidth;
-			} else if (initWid < 0) {
-				initWid = 0;
+			if (initWid > winWidth - 40) {
+				initWid = winWidth - 40;
+			} else if (initWid < 40) {
+				initWid = 40;
 			}
-			console.log(tx,initWid);
-			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / (initWid / winWidth) * 100 + "% 100%");
+			console.log(downLeft);
+			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
 		});
 		$(dom).on('touchend', '.compare', function(e) {
 			e.preventDefault();
 			var touchs = e.changedTouches[0];
-			EL_topCmp.removeAttr("style");
+			var tx = touchs.pageX;
+			if (downLeft[0] < downLeft[1]) {
+				// right
+				initWid = 40;
+				initLeft = winWidth - 40;
+				if (!isAndroid) {
+					$('.ios .compare-txt-left .ico').css("opacity", 0);
+					$('.ios .compare-txt-right .ico').css("opacity", 1);
+				}
+				
+			} else if (downLeft[0] > downLeft[1]) {
+				// left
+				initLeft = 40;
+				initWid = winWidth - 40;
+				if (!isAndroid) {
+					$('.ios .compare-txt-left .ico').css("opacity", 1);
+					$('.ios .compare-txt-right .ico').css("opacity", 0);
+				}
+			}
+			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
+			// EL_topCmp.removeAttr("style");
 		});
 		$('.hover-hand', dom).on("webkitAnimationEnd", function() {
 			$(this).hide();
@@ -11615,8 +11655,8 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 		var stars = [3,4,5];
 		var roomstyle = ["一居室","两居室","三居室","单间"];
 
-
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var Tools = core.Tools;
+		var baseUrl = Tools.returnBaseUrl();
 		var kftype = location.hash.replace(/#!_/,"") || "art";
 		var productStyle = "";
 		var Tools = core.Tools
@@ -12370,13 +12410,11 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 		/*-webkit-animation: .5s detail-price-199;*/
 		// 设置跳转返回目标页
 		localStorage.setItem("_prepage", window.location.href);
-
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var Tools = core.Tools
+		var baseUrl = Tools.returnBaseUrl();
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
-		var Tools = core.Tools
-			
 		var stepCal = function(num) {
 			if (num == 0) {
 				return {txt: "即将开始", on: ""};

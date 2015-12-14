@@ -1,7 +1,8 @@
 define(['../core/core'], function(core) {
 	core.onrender("redirect", function(dom) {
+		var Tools = core.Tools;
 		var url = location.search;
-		var baseUrl = "http://www.s-jz.com/test/Sbuild/";
+		var baseUrl = Tools.returnBaseUrl();
 		if (url) {
 			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
 			$.ajax({

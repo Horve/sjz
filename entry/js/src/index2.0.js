@@ -7,6 +7,7 @@ define(['../core/core'], function(core) {
 			, EL_slide = $('#focus-slide', dom)
 			, EL_compare = $('.compare', dom)
 			, EL_topCmp = $('.compare .top', dom)
+			, EL_compareCnt = $('.compare-cnt', dom)
 			, EL_topBtm = $('.compare .bottom', dom)
 			, EL_androidCmp = $('#compare-slide', dom)
 			, EL_topBg = $('.compare .all-img', dom)
@@ -17,15 +18,15 @@ define(['../core/core'], function(core) {
 		EL_topCmp.css({"width": winWidth - 40 + "px", "left": "40px"});
 
 		if (isAndroid) {
-			EL_compare.hide();
+			EL_compareCnt.hide();
 			EL_androidCmp.show();
-			$('html').removeClass("ios").addClass("android");
+			$('html').removeClass("ios").addClass("android-html");
 			EL_androidCmp.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
 		} else {
-			EL_compare.show();
+			EL_compareCnt.show();
 			EL_androidCmp.hide();
-			$('html').removeClass("android").addClass("ios");
-			EL_compare.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
+			$('html').removeClass("android").addClass("ios-html");
+			EL_compareCnt.css("height", (winHeight - winWidth * 0.55 - 50) + "px");
 		}
 		
 		var focusSlide = new Swiper('#focus-slide',{
@@ -41,17 +42,19 @@ define(['../core/core'], function(core) {
 			onSlideChangeEnd: function(swiper){
 				var index = swiper.activeIndex;
 				if (index == 0) {
-					$('.android .compare-txt-left').css("opacity", 0);
-					$('.android .compare-txt-right').css("opacity", 1);
+					$('.android-html .compare-txt-left').css("opacity", 0);
+					$('.android-html .compare-txt-right').css("opacity", 1);
 				} else if (index ==1) {
-					$('.android .compare-txt-left').css("opacity", 1);
-					$('.android .compare-txt-right').css("opacity", 0);
+					$('.android-html .compare-txt-left').css("opacity", 1);
+					$('.android-html .compare-txt-right').css("opacity", 0);
 				}
 			}
 		});
 
-		var downLeft = [0,0], initWid, initLeft;
+		var downLeft = [0,0], initWid, initLeft, isMove = false;
 		$(dom).on('touchstart', '.compare', function(e) {
+			isMove = false;
+			e.preventDefault();
 			var touchs = e.changedTouches[0];
 			var tx = touchs.pageX;
 			downLeft.shift();
@@ -62,6 +65,7 @@ define(['../core/core'], function(core) {
 		});
 		$(dom).on('touchmove', '.compare', function(e) {
 			e.preventDefault();
+			isMove = true;
 			var touchs = e.changedTouches[0];
 			var tx = touchs.pageX;
 			var moveDis = 0;
@@ -85,32 +89,32 @@ define(['../core/core'], function(core) {
 			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
 		});
 		$(dom).on('touchend', '.compare', function(e) {
+			console.log(isMove);
 			e.preventDefault();
 			var touchs = e.changedTouches[0];
 			var tx = touchs.pageX;
-			if (downLeft[0] < downLeft[1]) {
+			if (isMove && (downLeft[0] < downLeft[1])) {
 				// right
 				initWid = 40;
 				initLeft = winWidth - 40;
 				if (!isAndroid) {
-					$('.ios .compare-txt-left .ico').css("opacity", 0);
-					$('.ios .compare-txt-right .ico').css("opacity", 1);
+					$('.ios-html .compare-txt-left .ico').css("opacity", 0);
+					$('.ios-html .compare-txt-right .ico').css("opacity", 1);
 				}
-				
-			} else if (downLeft[0] > downLeft[1]) {
+			} else if (isMove && (downLeft[0] > downLeft[1])) {
 				// left
 				initLeft = 40;
 				initWid = winWidth - 40;
 				if (!isAndroid) {
-					$('.ios .compare-txt-left .ico').css("opacity", 1);
-					$('.ios .compare-txt-right .ico').css("opacity", 0);
+					$('.ios-html .compare-txt-left .ico').css("opacity", 1);
+					$('.ios-html .compare-txt-right .ico').css("opacity", 0);
 				}
 			}
 			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
 			// EL_topCmp.removeAttr("style");
 		});
-		$('.hover-hand', dom).on("webkitAnimationEnd", function() {
-			$(this).hide();
-		});
+		// $('.hover-hand', dom).on("webkitAnimationEnd", function() {
+		// 	$(this).hide();
+		// });
 	});
 });

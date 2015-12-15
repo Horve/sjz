@@ -63,10 +63,10 @@
 			background-repeat: no-repeat;
 		}
 	}
-	&.ios .compare-txt-left {
+	&.ios-html .compare-txt-left {
 		left: 0;
 	}
-	&.ios .compare-txt-right {
+	&.ios-html .compare-txt-right {
 		right: 0;
 		color: #000;
 		.ico {
@@ -74,11 +74,11 @@
 			opacity: 0;
 		}
 	}
-	&.android .compare-txt-left {
+	&.android-html .compare-txt-left {
 		left: 0;
 		opacity: 0;
 	}
-	&.android .compare-txt-right {
+	&.android-html .compare-txt-right {
 		right: 0;
 		color: #000;
 		.ico {
@@ -88,7 +88,7 @@
 	.compare-info {
 		width: 32%;
 		position: absolute;
-		z-index: 100;
+		z-index: 10000;
 		top: 50%;
 		left: 50%;
 		-webkit-transform: translateX(-50%) translateY(-50%);
@@ -126,10 +126,16 @@
 			text-decoration: none;
 			border-radius: 0.03rem;
 			margin-top: 5px;
+			z-index: 10001;
 		}
+	}
+	.compare-cnt {
+		position: relative;
+		width: 100%;
 	}
 	.compare {
 		width: 100%;
+		height: 100%;
 		position: relative;
 		.cmp {
 			width: 100%;

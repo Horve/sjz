@@ -36,7 +36,7 @@
 						</div>
 						<div class="txt-tle">选择支付订单</div>
 						<div class="order-list">
-							<div class="order-item" ms-repeat="orderList">
+							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId">
 								<div class="order-info">
 									<div class="icon">
 										<i class="iconfont">&#xe60b;</i>
@@ -73,7 +73,7 @@
 										</div>	
 									</div>
 								</div>
-								<div class="order-comment">
+								<div class="order-comment" ms-if="el.state==4">
 									<a class="btn">施工评价</a>
 									<span class="txt">您的评价很重要！为了让您体验更优质的施工服务，工人的绩效工资将由您的评价来决定。</span>	
 								</div>
@@ -84,7 +84,7 @@
 				</div>
 			</div>
 			<div class="pay-toolbar">
-				<span class="price-info">需支付<em>￥3899</em></span>
+				<span class="price-info">需支付<em>￥{{totalPrice}}</em></span>
 				<a class="pay-btn">
 					去支付
 				</a>

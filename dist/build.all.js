@@ -3767,7 +3767,7 @@ define('entry/js/core/tools',[],function() {
 				+ check(time.getSeconds());
 		},
 		returnBaseUrl: function() {
-			return "http://www.s-jz.com/pub/Sbuild/";
+			return "http://www.s-jz.com/test/Sbuild/";
 		}
 	};
 	var Tools = Tools;
@@ -12439,6 +12439,7 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 			$id: "root",
 			orderStep: 1, // 1 未支付 2 开工中 3 已完工 4 历史订单
 			orderList: [],
+			totalPrice: 0,
 		});
 		avalon.scan();
 

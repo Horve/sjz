@@ -28,6 +28,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			$id: "root",
 			orderStep: 1, // 1 未支付 2 开工中 3 已完工 4 历史订单
 			orderList: [],
+			totalPrice: 0,
 		});
 		avalon.scan();
 

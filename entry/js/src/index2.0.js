@@ -15,7 +15,7 @@ define(['../core/core'], function(core) {
 			, winHeight = $('body').height();
 		EL_slide.css("height", winWidth * 0.55 + "px");
 		EL_topBg.css("width", winWidth + "px");
-		EL_topCmp.css({"width": winWidth - 40 + "px", "left": "40px"});
+		EL_topCmp.css({"width": winWidth - 40 + "px"});
 
 		if (isAndroid) {
 			EL_compareCnt.hide();
@@ -52,67 +52,81 @@ define(['../core/core'], function(core) {
 		});
 
 		var downLeft = [0,0], initWid, initLeft, isMove = false;
-		$(dom).on('touchstart', '.compare', function(e) {
-			isMove = false;
-			e.preventDefault();
-			var touchs = e.changedTouches[0];
-			var tx = touchs.pageX;
-			downLeft.shift();
-			downLeft.push(tx);
-			initWid = EL_topCmp.width();
-			initLeft = winWidth - initWid;
-			// console.log(downLeft);
+		$(dom).on('click', '.compare .bottom', function(e) {
+			initWid = 40;
+			initLeft = winWidth - 40;
+			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
+			$('.ios-html .compare-txt-left .ico').css("opacity", 0);
+			$('.ios-html .compare-txt-right .ico').css("opacity", 1);
 		});
-		$(dom).on('touchmove', '.compare', function(e) {
-			e.preventDefault();
-			isMove = true;
-			var touchs = e.changedTouches[0];
-			var tx = touchs.pageX;
-			var moveDis = 0;
-			downLeft.shift();
-			downLeft.push(tx);
-			// console.log(downLeft);
-			moveDis = downLeft[1] - downLeft[0];
-			initWid -= moveDis;
-			initLeft += moveDis;
-			if (initLeft < 40) {
-				initLeft = 40;
-			} else if (initLeft > winWidth - 40) {
-				initLeft = winWidth - 40;
-			}
-			if (initWid > winWidth - 40) {
-				initWid = winWidth - 40;
-			} else if (initWid < 40) {
-				initWid = 40;
-			}
-			console.log(downLeft);
-			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
+		$(dom).on('click', '.compare .top', function(e) {
+			initWid = winWidth - 40;
+			initLeft = 40;
+			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
+			$('.ios-html .compare-txt-left .ico').css("opacity", 1);
+			$('.ios-html .compare-txt-right .ico').css("opacity", 0);
 		});
-		$(dom).on('touchend', '.compare', function(e) {
-			console.log(isMove);
-			e.preventDefault();
-			var touchs = e.changedTouches[0];
-			var tx = touchs.pageX;
-			if (isMove && (downLeft[0] < downLeft[1])) {
-				// right
-				initWid = 40;
-				initLeft = winWidth - 40;
-				if (!isAndroid) {
-					$('.ios-html .compare-txt-left .ico').css("opacity", 0);
-					$('.ios-html .compare-txt-right .ico').css("opacity", 1);
-				}
-			} else if (isMove && (downLeft[0] > downLeft[1])) {
-				// left
-				initLeft = 40;
-				initWid = winWidth - 40;
-				if (!isAndroid) {
-					$('.ios-html .compare-txt-left .ico').css("opacity", 1);
-					$('.ios-html .compare-txt-right .ico').css("opacity", 0);
-				}
-			}
-			EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
-			// EL_topCmp.removeAttr("style");
-		});
+		// $(dom).on('touchstart', '.compare', function(e) {
+		// 	isMove = false;
+		// 	e.preventDefault();
+		// 	var touchs = e.changedTouches[0];
+		// 	var tx = touchs.pageX;
+		// 	downLeft.shift();
+		// 	downLeft.push(tx);
+		// 	initWid = EL_topCmp.width();
+		// 	initLeft = winWidth - initWid;
+		// 	// console.log(downLeft);
+		// });
+		// $(dom).on('touchmove', '.compare', function(e) {
+		// 	e.preventDefault();
+		// 	isMove = true;
+		// 	var touchs = e.changedTouches[0];
+		// 	var tx = touchs.pageX;
+		// 	var moveDis = 0;
+		// 	downLeft.shift();
+		// 	downLeft.push(tx);
+		// 	// console.log(downLeft);
+		// 	moveDis = downLeft[1] - downLeft[0];
+		// 	initWid -= moveDis;
+		// 	initLeft += moveDis;
+		// 	if (initLeft < 40) {
+		// 		initLeft = 40;
+		// 	} else if (initLeft > winWidth - 40) {
+		// 		initLeft = winWidth - 40;
+		// 	}
+		// 	if (initWid > winWidth - 40) {
+		// 		initWid = winWidth - 40;
+		// 	} else if (initWid < 40) {
+		// 		initWid = 40;
+		// 	}
+		// 	console.log(downLeft);
+		// 	EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
+		// });
+		// $(dom).on('touchend', '.compare', function(e) {
+		// 	console.log(isMove);
+		// 	e.preventDefault();
+		// 	var touchs = e.changedTouches[0];
+		// 	var tx = touchs.pageX;
+		// 	if (isMove && (downLeft[0] < downLeft[1])) {
+		// 		// right
+		// 		initWid = 40;
+		// 		initLeft = winWidth - 40;
+		// 		if (!isAndroid) {
+		// 			$('.ios-html .compare-txt-left .ico').css("opacity", 0);
+		// 			$('.ios-html .compare-txt-right .ico').css("opacity", 1);
+		// 		}
+		// 	} else if (isMove && (downLeft[0] > downLeft[1])) {
+		// 		// left
+		// 		initLeft = 40;
+		// 		initWid = winWidth - 40;
+		// 		if (!isAndroid) {
+		// 			$('.ios-html .compare-txt-left .ico').css("opacity", 1);
+		// 			$('.ios-html .compare-txt-right .ico').css("opacity", 0);
+		// 		}
+		// 	}
+		// 	EL_topCmp.attr("style", "left:auto; -webkit-transition-duration:0s; -webkit-transform: translate3d(" + initLeft + "px, 0px, 0px); width:" + initWid + "px; background-size:" + 1 / parseFloat(initWid / (winWidth - 40)).toFixed(2) * 100 + "% 100%");
+		// 	// EL_topCmp.removeAttr("style");
+		// });
 		// $('.hover-hand', dom).on("webkitAnimationEnd", function() {
 		// 	$(this).hide();
 		// });

@@ -2992,7 +2992,7 @@ input {
 .index-2-0 .compare .top {
   position: absolute;
   width: 50%;
-  left: 50%;
+  right: 0;
   top: 0;
   overflow: hidden;
 }
@@ -3305,6 +3305,14 @@ input {
   		opacity: 1;
   	}
   }*/
+}
+.kf-detail .view-content-con .area-compare .cmp-txtinfo {
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  left: 10px;
+  color: #fff;
+  text-shadow: 1px 1px 2px black;
 }
 .kf-detail .view-content-con .area-compare img {
   display: block;

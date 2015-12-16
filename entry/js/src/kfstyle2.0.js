@@ -744,6 +744,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			if (!!_this.attr("data-wltype")) {
 				VM_kf.wltype = _this.attr("data-wltype");
 			}
+			if ($(this).hasClass('big-show')) {
+				$(this).parent().find('.cmp-txtinfo').html('翻新前');
+			}
 			setTimeout(function() {
 				_par.find('.before-hide').removeClass('before-hide').addClass('before-show');
 			}, 500);
@@ -754,6 +757,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			VM_kf.wltype = 1;
 			_this.addClass("oninit").removeClass("active");
 			$('.after', _par).removeClass('onhide');
+			if ($(this).hasClass('big-show')) {
+				$(this).parent().find('.cmp-txtinfo').html('翻新后');
+			}
 			setTimeout(function() {
 				_par.find('.before-show').addClass('before-hide').removeClass('before-show');
 			}, 500);

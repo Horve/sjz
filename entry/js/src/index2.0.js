@@ -52,14 +52,16 @@ define(['../core/core'], function(core) {
 		});
 
 		var downLeft = [0,0], initWid, initLeft, isMove = false;
-		$(dom).on('click', '.compare .bottom', function(e) {
+		$(dom).on('click', '.compare .bottom, .compare-txt-left', function(e) {
+			console.log($(this));
 			initWid = 50;
 			initLeft = winWidth - 50;
 			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
 			$('.ios-html .compare-txt-left .ico').css("opacity", 0);
 			$('.ios-html .compare-txt-right .ico').css("opacity", 1);
 		});
-		$(dom).on('click', '.compare .top', function(e) {
+		$(dom).on('click', '.compare .top, .compare-txt-right', function(e) {
+			console.log($(this));
 			initWid = winWidth - 50;
 			initLeft = 50;
 			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");

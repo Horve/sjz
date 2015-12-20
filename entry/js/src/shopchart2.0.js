@@ -29,6 +29,14 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			orderStep: 1, // 1 未支付 2 开工中 3 已完工 4 历史订单
 			orderList: [],
 			totalPrice: 0,
+			orderTopay: "",
+			selectOrder: function(orderId, totalPrice) {
+				VM_shopchart.orderTopay = orderId;
+				VM_shopchart.totalPrice = totalPrice;
+			},
+			payOrder: function() {
+				
+			}
 		});
 		avalon.scan();
 
@@ -44,6 +52,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					success: function(res) {
 						if (res.ret == 1) {
 							VM_shopchart.orderList = res.orderInfos;
+							VM_shopchart.orderTopay = res.orderInfos[0].orderId;
+							VM_shopchart.totalPrice = res.orderInfos[0].total;
 							alert(JSON.stringify(res));
 						} else if (res.ret == -1) {
 							dialog.add("ret:-1 订单列表返回失败，请重试！");

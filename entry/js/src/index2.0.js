@@ -15,7 +15,7 @@ define(['../core/core'], function(core) {
 			, winHeight = $('body').height();
 		EL_slide.css("height", winWidth * 0.55 + "px");
 		EL_topBg.css("width", winWidth + "px");
-		EL_topCmp.css({"width": winWidth - 40 + "px"});
+		EL_topCmp.css({"width": winWidth - 50 + "px"});
 
 		if (isAndroid) {
 			EL_compareCnt.hide();
@@ -53,15 +53,15 @@ define(['../core/core'], function(core) {
 
 		var downLeft = [0,0], initWid, initLeft, isMove = false;
 		$(dom).on('click', '.compare .bottom', function(e) {
-			initWid = 40;
-			initLeft = winWidth - 40;
+			initWid = 50;
+			initLeft = winWidth - 50;
 			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
 			$('.ios-html .compare-txt-left .ico').css("opacity", 0);
 			$('.ios-html .compare-txt-right .ico').css("opacity", 1);
 		});
 		$(dom).on('click', '.compare .top', function(e) {
-			initWid = winWidth - 40;
-			initLeft = 40;
+			initWid = winWidth - 50;
+			initLeft = 50;
 			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
 			$('.ios-html .compare-txt-left .ico').css("opacity", 1);
 			$('.ios-html .compare-txt-right .ico').css("opacity", 0);

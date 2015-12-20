@@ -11543,7 +11543,7 @@ define('entry/js/src/index2.0',['../core/core'], function(core) {
 			, winHeight = $('body').height();
 		EL_slide.css("height", winWidth * 0.55 + "px");
 		EL_topBg.css("width", winWidth + "px");
-		EL_topCmp.css({"width": winWidth - 40 + "px"});
+		EL_topCmp.css({"width": winWidth - 50 + "px"});
 
 		if (isAndroid) {
 			EL_compareCnt.hide();
@@ -11581,15 +11581,15 @@ define('entry/js/src/index2.0',['../core/core'], function(core) {
 
 		var downLeft = [0,0], initWid, initLeft, isMove = false;
 		$(dom).on('click', '.compare .bottom', function(e) {
-			initWid = 40;
-			initLeft = winWidth - 40;
+			initWid = 50;
+			initLeft = winWidth - 50;
 			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
 			$('.ios-html .compare-txt-left .ico').css("opacity", 0);
 			$('.ios-html .compare-txt-right .ico').css("opacity", 1);
 		});
 		$(dom).on('click', '.compare .top', function(e) {
-			initWid = winWidth - 40;
-			initLeft = 40;
+			initWid = winWidth - 50;
+			initLeft = 50;
 			EL_topCmp.attr("style", "-webkit-transition-duration:0.3s; width:" + initWid + "px;");
 			$('.ios-html .compare-txt-left .ico').css("opacity", 1);
 			$('.ios-html .compare-txt-right .ico').css("opacity", 0);
@@ -12460,6 +12460,14 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 			orderStep: 1, // 1 未支付 2 开工中 3 已完工 4 历史订单
 			orderList: [],
 			totalPrice: 0,
+			orderTopay: "",
+			selectOrder: function(orderId, totalPrice) {
+				VM_shopchart.orderTopay = orderId;
+				VM_shopchart.totalPrice = totalPrice;
+			},
+			payOrder: function() {
+				
+			}
 		});
 		avalon.scan();
 
@@ -12475,6 +12483,8 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 					success: function(res) {
 						if (res.ret == 1) {
 							VM_shopchart.orderList = res.orderInfos;
+							VM_shopchart.orderTopay = res.orderInfos[0].orderId;
+							VM_shopchart.totalPrice = res.orderInfos[0].total;
 							alert(JSON.stringify(res));
 						} else if (res.ret == -1) {
 							dialog.add("ret:-1 订单列表返回失败，请重试！");

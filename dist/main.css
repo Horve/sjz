@@ -2866,7 +2866,7 @@ input {
   background-color: #9ab903;
 }
 .index-2-0 .compare-txt {
-  width: 40px;
+  width: 50px;
   height: 70px;
   font-size: 16px;
   color: #fff;
@@ -2886,7 +2886,7 @@ input {
   background-size: 100%;
   position: absolute;
   bottom: 0;
-  left: 15px;
+  left: 20px;
   background-repeat: no-repeat;
 }
 .index-2-0.ios-html .compare-txt-left {
@@ -3780,7 +3780,7 @@ input {
 }
 .payment-2-0 .type-nav .item {
   display: block;
-  width: 25%;
+  width: 50%;
   text-align: center;
   height: 100%;
   font-size: 16px;
@@ -3800,7 +3800,7 @@ input {
   border-bottom: 1px solid #d1d1d1;
 }
 .payment-2-0 .order-item {
-  padding: 0 10px;
+  /*padding: 0 10px;*/
   border-bottom: 1px solid #d1d1d1;
   border-top: 1px solid #d1d1d1;
   background: #fff;
@@ -3810,8 +3810,9 @@ input {
   border-top: none;
 }
 .payment-2-0 .order-item .order-info {
-  padding: 10px 0;
+  padding: 0 12px 10px 30px;
   position: relative;
+  font-size: 16px;
 }
 .payment-2-0 .order-item .order-info .icon {
   color: #ccc;
@@ -3826,16 +3827,51 @@ input {
   font-size: 20px;
   display: block;
 }
+.payment-2-0 .order-item .order-info .order-id {
+  line-height: 34px;
+  height: 34px;
+  position: relative;
+}
+.payment-2-0 .order-item .order-info .order-id .iconfont {
+  display: block;
+  left: -25px;
+  top: -2px;
+  font-size: 20px;
+  position: absolute;
+  color: #ccc;
+}
+.payment-2-0 .order-item .order-info .order-id .iconfont.on {
+  color: #9ab903;
+}
+.payment-2-0 .order-item .order-info .order-id .delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 14px;
+  display: block;
+  height: 20px;
+  color: #999;
+}
+.payment-2-0 .order-item .order-info .order-id .delete:before {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border: 1px solid #999;
+  border-radius: 50%;
+  display: block;
+  content: "";
+  left: -20px;
+  top: 11px;
+}
 .payment-2-0 .order-item .order-info .order-instr {
-  margin-left: 25px;
   position: relative;
   display: -webkit-box;
   font-size: 14px;
-  color: #999;
+  color: #666;
 }
 .payment-2-0 .order-item .order-info .order-instr .pic {
-  width: 60px;
-  height: 60px;
+  width: 73px;
+  height: 73px;
   display: block;
   background: #efefef;
   overflow: hidden;
@@ -3845,79 +3881,104 @@ input {
 }
 .payment-2-0 .order-item .order-info .order-instr .order-instr-detail {
   margin-left: 10px;
-  line-height: 20px;
+  line-height: 18px;
 }
 .payment-2-0 .order-item .order-info .order-instr .order-instr-detail span {
   display: block;
+  font-size: 14px;
 }
 .payment-2-0 .order-item .order-info .order-instr .order-instr-detail span:first-of-type {
-  color: #666;
+  color: #000;
+  font-size: 16px;
+  margin-bottom: 5px;
 }
-.payment-2-0 .order-item .order-info .order-instr .delete {
+.payment-2-0 .order-item .order-info .order-instr .total-price {
   position: absolute;
   right: 0;
-  top: 0;
+  bottom: 0;
   font-size: 14px;
-  display: block;
-  height: 20px;
-  color: #999;
-}
-.payment-2-0 .order-item .order-info .order-instr .delete:before {
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  border: 1px solid #999;
-  border-radius: 50%;
-  display: block;
-  content: "";
-  left: -20px;
-  top: 2px;
+  color: red;
 }
 .payment-2-0 .order-item .order-step {
-  padding: 20px 0;
   width: 100%;
-  height: 45px;
   border-top: 1px solid #d1d1d1;
 }
 .payment-2-0 .order-item .order-step .content {
-  width: 82%;
-  height: 8px;
-  background: #ccc;
-  margin: 0 auto;
+  margin: 0 12px 0 35px;
   position: relative;
   font-size: 14px;
+  position: relative;
 }
 .payment-2-0 .order-item .order-step .step {
-  width: 120px;
-  position: absolute;
-  text-align: center;
+  padding: 15px 0;
+  position: relative;
+  border-bottom: 1px solid #d1d1d1;
 }
-.payment-2-0 .order-item .order-step .step .circle {
-  width: 12px;
-  height: 12px;
-  background: #9aba00;
-  display: block;
-  border-radius: 50%;
-  margin: 0 auto;
-  margin-top: -2px;
+.payment-2-0 .order-item .order-step .step .list-close {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  border-left: 1px solid #9ab903;
+  border-bottom: 1px solid #9ab903;
+  right: 10px;
+  top: 50%;
+  margin-top: -8px;
+  -webkit-transform: rotate(135deg);
+}
+.payment-2-0 .order-item .order-step .step .line-left {
+  width: 2px;
+  height: 72px;
+  position: absolute;
+  left: -18px;
+  top: 25px;
+  background: #ccc;
+}
+.payment-2-0 .order-item .order-step .step .tips-info {
+  line-height: 30px;
+  color: #999;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -15px;
+}
+.payment-2-0 .order-item .order-step .step:last-of-type {
+  border: none;
+}
+.payment-2-0 .order-item .order-step .step:last-of-type .line-left {
+  display: none;
 }
 .payment-2-0 .order-item .order-step .step span {
+  position: relative;
   color: #999;
   display: block;
-  margin-top: 10px;
 }
-.payment-2-0 .order-item .order-step .step1 {
-  left: -60px;
+.payment-2-0 .order-item .order-step .step span .circle {
+  width: 12px;
+  height: 12px;
+  background: #ccc;
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  left: -23px;
+  top: 5px;
+  z-index: 10;
 }
-.payment-2-0 .order-item .order-step .step2 {
-  left: 50%;
-  margin-left: -60px;
+.payment-2-0 .order-item .order-step .step span:first-of-type {
+  font-size: 16px;
+  margin-bottom: 3px;
+  position: relative;
 }
-.payment-2-0 .order-item .order-step .step3 {
-  right: -60px;
+.payment-2-0 .order-item .order-step .step.ok span {
+  color: #000;
+}
+.payment-2-0 .order-item .order-step .step.ok .circle {
+  background: #9ab903;
+}
+.payment-2-0 .order-item .order-step .step.ok .line-left {
+  background: #9ab903;
 }
 .payment-2-0 .order-item .order-comment {
-  padding: 10px 0;
+  padding: 10px;
   border-top: 1px solid #d1d1d1;
   position: relative;
   font-size: 14px;
@@ -3933,13 +3994,13 @@ input {
   color: #fff;
   position: absolute;
   top: 50%;
-  left: 0;
+  right: 10px;
   -webkit-transform: translateY(-50%);
 }
 .payment-2-0 .order-item .order-comment .txt {
   color: #999;
   display: block;
-  margin-left: 80px;
+  margin-right: 80px;
 }
 .payment-2-0 .pay-toolbar {
   height: 60px;

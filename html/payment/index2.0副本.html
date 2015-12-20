@@ -12,13 +12,13 @@
     <meta name="x5-orientation" content="portrait"/>
     <meta name="x5-fullscreen" content="true"/>
     <meta name="x5-page-mode" content="app"/>
-	<title>订单中心</title>
+	<title>快翻-番薯快装</title>
     <!-- 由main.sass 生成    -->
 	<link rel="stylesheet" href="../../dist/main.min.css" />
 	<link rel="stylesheet" href="../../dist/normalize.css" />
 </head>
 <body ms-controller="root">
-	<div class="page" data-render-id="payment-2-0">
+	<div class="page" data-render-id="payment-2-01">
 		<div class="view">
 			<div class="top-navigator">
 				<a class="left" href="javascript:window.history.back()"><em class="iconfont">&#xe60f;</em>返回</a>
@@ -34,11 +34,11 @@
 						</div>
 						<!-- <div class="txt-tle">选择支付订单</div> -->
 						<div class="order-list">
-							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId" ms-click="selectOrder(el.orderId, el.total)">
+							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId">
 								<div class="order-info">
 									<div class="order-id">
-										<em class="iconfont" ms-class="on:orderTopay==el.orderId">&#xe60b;</em>
-										<span>订单编号：{{el.orderId}}</span>
+										<em class="iconfont">&#xe60b;</em>
+										<span>订单编号：11000000</span>
 										<a class="delete">删除</a>
 									</div>
 									<div class="order-instr">
@@ -51,63 +51,42 @@
 											<span ms-if="el.layout==2">户型：两居室</span>
 											<span ms-if="el.layout==3">户型：三居室</span>
 											<span ms-if="el.nums==1">户型：单间</span>
-											<span ms-if="el.productId==2">面积：{{el.acreage}}㎡</span>
-											<span ms-if="el.productId==2">增项：{{el.toiletNum}}个卫生间，{{el.balconyNum}}个阳台</span>
 											<span>风格：{{el.productStyle}}</span>
+											<span>订单编号：{{el.orderId}}</span>
 										</div>
-										<span class="total-price">￥{{el.total}}</span>
 									</div>
+									<!-- <div class="icon">
+										<i class="iconfont">&#xe60b;</i>
+									</div>
+									<div class="order-instr">
+										<a class="pic">
+											<img src="../../dist/img/2_0/kf/art_after1.jpg" width="100%">
+										</a>
+										<div class="order-instr-detail">
+											<span>{{el.productName}}</span>
+											<span ms-if="el.layout==1">户型：一居室</span>
+											<span ms-if="el.layout==2">户型：两居室</span>
+											<span ms-if="el.layout==3">户型：三居室</span>
+											<span ms-if="el.nums==1">户型：单间</span>
+											<span>风格：{{el.productStyle}}</span>
+											<span>订单编号：{{el.orderId}}</span>
+										</div>
+										<a class="delete">删除</a>
+									</div> -->
 								</div>
 								<div class="order-step">
-									<div class="content" ms-if="el.productId!=2">
-										<div class="step ok">
-											<span>成功预约
-												<i class="circle"></i>
-											</span>
-											<span>2015-11-21 20:12:33</span>
-											<div class="line-left"></div>
-											<div class="list-close"></div>
+									<div class="content">
+										<div class="step step1">
+											<a class="circle"></a>
+											<span>在线预约</span>
 										</div>	
-										<div class="step">
-											<span>付款成功
-												<i class="circle"></i>
-											</span>
-											<span>2015-11-21 20:12:33</span>
-											<div class="line-left"></div>
-											<div class="tips-info">
-												￥3499
-											</div>
+										<div class="step step2">
+											<a class="circle"></a>
+											<span>付款成功</span>
 										</div>	
-										<div class="step">
-											<span>完成订单
-												<i class="circle"></i>
-											</span>
-											<span>2015-11-21 20:12:33</span>
-											<div class="line-left"></div>
-											<div class="tips-info">
-												￥3499
-											</div>
-										</div>
-									</div>
-									<div class="content" ms-if="el.productId==2">
-										<div class="step ok">
-											<span>成功预约
-												<i class="circle"></i>
-											</span>
-											<span>2015-11-21 20:12:33</span>
-											<div class="line-left"></div>
-											<div class="list-close"></div>
-										</div>	
-										<div class="step" ms-repeat="el.stepInfos">
-											<span>{{el.stepName}}
-												<i class="circle"></i>
-											</span>
-											<span ms-if="el.state==1">2015-11-21 20:12:33</span>
-											<span ms-if="el.state==0">尚未支付</span>
-											<div class="line-left"></div>
-											<div class="tips-info">
-												￥{{el.stepTotalCost}}
-											</div>
+										<div class="step step3">
+											<a class="circle"></a>
+											<span>完成订单</span>
 										</div>	
 									</div>
 								</div>

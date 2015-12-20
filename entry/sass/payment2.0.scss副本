@@ -73,9 +73,6 @@
 					font-size: 20px;
 					position: absolute;
 					color: #ccc;
-					&.on {
-						color: $maincolor;
-					}
 				}
 				.delete {
 					position: absolute;
@@ -102,7 +99,7 @@
 				position: relative;
 				display: -webkit-box;
 				font-size: 14px;
-				color: #666;
+				color: #999;
 				.pic {
 					width: 73px;
 					height: 73px;
@@ -126,98 +123,54 @@
 						}
 					}
 				}
-				.total-price {
-					position: absolute;
-					right: 0;
-					bottom: 0;
-					font-size: 14px;
-					color: red;
-				}
+				
 			}
 		}
 		.order-step {
+			padding: 20px 0;
 			width: 100%;
+			height: 45px;
 			border-top: 1px solid #d1d1d1;
 			.content {
-				margin: 0 12px 0 35px;
+				width: 82%;
+				height: 8px;
+				background: #ccc;
+				margin: 0 auto;
 				position: relative;
 				font-size: 14px;
-				position: relative;
-
 			}
 			.step {
-				padding: 15px 0;
-				position: relative;
-				border-bottom: 1px solid #d1d1d1;
-				.list-close {
-					width: 15px;
-					height: 15px;
-					position: absolute;
-					border-left: 1px solid $maincolor;
-					border-bottom: 1px solid $maincolor;
-					right: 10px;
-					top: 50%;
-					margin-top: -8px;
-					-webkit-transform: rotate(135deg);
-				}
-				.line-left {
-					width: 2px;
-					height: 72px;
-					position: absolute;
-					left: -18px;
-					top: 25px;
-					background: #ccc;
-				}
-				.tips-info {
-					line-height: 30px;
-					color: #999;
-					position: absolute;
-					top: 50%;
-					right: 0;
-					margin-top: -15px;
-				}
-				&:last-of-type {
-					border: none;
-					.line-left {
-						display: none;
-					}
+				width: 120px;
+				position: absolute;
+				text-align: center;
+				.circle {
+					width: 12px;
+					height: 12px;
+					background: #9aba00;
+					display: block;
+					border-radius: 50%;
+					margin: 0 auto;
+					margin-top: -2px;
 				}
 				span {
-					position: relative;
-					& .circle {
-						width: 12px;
-						height: 12px;
-						background: #ccc;
-						display: block;
-						position: absolute;
-						border-radius: 50%;
-						left: -23px;
-						top: 5px;
-						z-index: 10;
-					}
-					&:first-of-type {
-						font-size: 16px;
-						margin-bottom: 3px;
-						position: relative;
-					}
 					color: #999;
 					display: block;
+					margin-top: 10px;
 				}
-				&.ok {
-					span {
-						color: #000;
-					}
-					.circle {
-						background: $maincolor;
-					}
-					.line-left {
-						background: $maincolor;
-					}
-				}
+			}
+			.step1 {
+				left: -60px;
+			}
+			.step2 {
+				left: 50%;
+				margin-left: -60px;
+			}
+			.step3 {
+				right: -60px;
 			}
 		}
 		.order-comment {
-			padding: 10px;
+			padding: 10px 0;
 			border-top: 1px solid #d1d1d1;
 			position: relative;
 			font-size: 14px;
@@ -232,13 +185,13 @@
 				color: #fff;
 				position: absolute;
 				top: 50%;
-				right: 10px;
+				left: 0;
 				-webkit-transform: translateY(-50%);
 			}
 			.txt {
 				color: #999;
 				display: block;
-				margin-right: 80px;
+				margin-left: 80px;
 			}
 		}
 	}

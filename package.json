@@ -33,9 +33,11 @@
     "grunt-jekyll": "~0.4.2",
     "grunt-jscs": "~0.8.0",
     "grunt-open": "~0.2.3",
+    "jsx-loader": "^0.13.2",
     "jszip": "^2.4.0",
     "load-grunt-tasks": "~1.0.0",
-    "time-grunt": "~1.0.0"
+    "time-grunt": "~1.0.0",
+    "webpack": "^1.12.9"
   },
   "engines": {
     "node": "~0.12.1"

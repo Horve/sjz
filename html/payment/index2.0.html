@@ -29,8 +29,8 @@
 				<div class="view-content-con">
 					<div class="body-con">
 						<div class="type-nav">
-							<a class="item on">当前订单</a>
-							<a class="item">历史订单</a>
+							<a class="item" ms-class="on:orderStep==1" ms-click="getOrder(1)">当前订单</a>
+							<a class="item" ms-class="on:orderStep==4" ms-click="getOrder(4)">历史订单</a>
 						</div>
 						<!-- <div class="txt-tle">选择支付订单</div> -->
 						<div class="order-list">
@@ -64,49 +64,96 @@
 											<span>成功预约
 												<i class="circle"></i>
 											</span>
-											<span>2015-11-21 20:12:33</span>
+											<span>{{el.createTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
 											<div class="list-close"></div>
 										</div>	
-										<div class="step">
+										<div class="step" ms-class="ok:el.buildState>1" ms-repeat="el.stepInfos">
 											<span>付款成功
 												<i class="circle"></i>
 											</span>
-											<span>2015-11-21 20:12:33</span>
+											<span ms-if="el.buildState==0">尚未支付</span>
+											<span ms-if="el.buildState==1">已支付</span>
+											<span ms-if="el.buildState==2">已支付</span>
+											<span ms-if="el.buildState==3">已支付</span>
+											<span ms-if="el.buildState==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info">
-												￥3499
+											<div class="tips-info" ms-if="el.buildState==0">
+												￥{{el.stepTotalCost}}
+											</div>
+											<div class="tips-info" ms-if="el.buildState==1">
+												开工中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==2">
+												审核中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==3">
+												返工中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==4">
+												已完成
 											</div>
 										</div>	
-										<div class="step">
+										<div class="step" ms-class="ok:el.buildState>1" ms-repeat="el.stepInfos">
 											<span>完成订单
 												<i class="circle"></i>
 											</span>
-											<span>2015-11-21 20:12:33</span>
+											<span ms-if="el.buildState==0">尚未支付</span>
+											<span ms-if="el.buildState==1">已支付</span>
+											<span ms-if="el.buildState==2">已支付</span>
+											<span ms-if="el.buildState==3">已支付</span>
+											<span ms-if="el.buildState==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info">
-												￥3499
+											<div class="tips-info" ms-if="el.buildState==0">
+												￥{{el.stepTotalCost}}
 											</div>
-										</div>
+											<div class="tips-info" ms-if="el.buildState==1">
+												开工中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==2">
+												审核中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==3">
+												返工中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==4">
+												已完成
+											</div>
+										</div>	
 									</div>
 									<div class="content" ms-if="el.productId==2">
 										<div class="step ok">
 											<span>成功预约
 												<i class="circle"></i>
 											</span>
-											<span>2015-11-21 20:12:33</span>
+											<span>{{el.createTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
 											<div class="list-close"></div>
 										</div>	
-										<div class="step" ms-repeat="el.stepInfos">
-											<span>{{el.stepName}}
+										<div class="step" ms-class="ok:el.buildState==4" ms-repeat="el.stepInfos">
+											<span>{{el.stepName}}{{el.buildState}}
 												<i class="circle"></i>
 											</span>
-											<span ms-if="el.state==1">2015-11-21 20:12:33</span>
-											<span ms-if="el.state==0">尚未支付</span>
+											<span ms-if="el.buildState==0">尚未支付</span>
+											<span ms-if="el.buildState==1">已支付</span>
+											<span ms-if="el.buildState==2">已支付</span>
+											<span ms-if="el.buildState==3">已支付</span>
+											<span ms-if="el.buildState==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info">
+											<div class="tips-info" ms-if="el.buildState==0">
 												￥{{el.stepTotalCost}}
+											</div>
+											<div class="tips-info" ms-if="el.buildState==1">
+												开工中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==2">
+												审核中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==3">
+												返工中
+											</div>
+											<div class="tips-info" ms-if="el.buildState==4">
+												已完成
 											</div>
 										</div>	
 									</div>

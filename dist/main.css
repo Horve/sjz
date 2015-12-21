@@ -3977,6 +3977,9 @@ input {
 .payment-2-0 .order-item .order-step .step.ok .line-left {
   background: #9ab903;
 }
+.payment-2-0 .order-item .order-step .step.ok .tips-info {
+  color: #9ab903;
+}
 .payment-2-0 .order-item .order-comment {
   padding: 10px;
   border-top: 1px solid #d1d1d1;

@@ -3767,7 +3767,7 @@ define('entry/js/core/tools',[],function() {
 				+ check(time.getSeconds());
 		},
 		returnBaseUrl: function() {
-			return "http://www.s-jz.com/pub/Sbuild/";
+			return "http://www.s-jz.com/test/Sbuild/";
 		}
 	};
 	var Tools = Tools;
@@ -12467,16 +12467,6 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 				VM_shopchart.orderTopay = orderId;
 				VM_shopchart.totalPrice = totalPrice;
 			},
-			payOrder: function() {
-				
-			}
-		});
-		avalon.scan();
-
-		var ShopChart = {
-			init: function() {
-				this.getOrder(1);
-			},
 			getOrder: function(orderStep) {
 				$.ajax({
 					// 未完成订单
@@ -12487,6 +12477,7 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 							VM_shopchart.orderList = res.orderInfos;
 							VM_shopchart.orderTopay = res.orderInfos[0].orderId;
 							VM_shopchart.totalPrice = res.orderInfos[0].total;
+							VM_shopchart.orderStep = orderStep;
 							alert(JSON.stringify(res));
 						} else if (res.ret == -1) {
 							dialog.add("ret:-1 订单列表返回失败，请重试！");
@@ -12499,10 +12490,14 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 						dialog.add(JSON.stringify(res));
 					}
 				});
+			},
+			payOrder: function() {
+				
 			}
-		};
+		});
+		VM_shopchart.getOrder(1);
+		avalon.scan();
 
-		ShopChart.init();
 	});
 });
 // main.js

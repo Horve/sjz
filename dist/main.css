@@ -783,6 +783,13 @@ button.swiper-pagination-bullet {
   margin-left: 5px;
 }
 
+.alert-masker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
 /*! pages */
 @font-face {
   font-family: 'sjz';

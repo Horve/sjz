@@ -29,10 +29,16 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			orderStep: 1, // 1 未支付 2 开工中 3 已完工 4 历史订单
 			orderList: [],
 			totalPrice: 0,
+			productId: 1,
+			selectedPayState: 0,
+			selectedOrderInfo: {},
 			orderTopay: "",
-			selectOrder: function(orderId, totalPrice) {
+			selectOrder: function(orderId, totalPrice, productId, paystate, index) {
 				VM_shopchart.orderTopay = orderId;
 				VM_shopchart.totalPrice = totalPrice;
+				VM_shopchart.productId = productId;
+				VM_shopchart.selectedPayState = payState;
+				VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[index];
 			},
 			getOrder: function(orderStep) {
 				$.ajax({
@@ -42,9 +48,11 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					success: function(res) {
 						if (res.ret == 1) {
 							VM_shopchart.orderList = res.orderInfos;
+							VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[0];
 							VM_shopchart.orderTopay = res.orderInfos[0].orderId;
 							VM_shopchart.totalPrice = res.orderInfos[0].total;
 							VM_shopchart.orderStep = orderStep;
+							VM_shopchart.productId = res.orderInfos[0].productId;
 							alert(JSON.stringify(res));
 						} else if (res.ret == -1) {
 							dialog.add("ret:-1 订单列表返回失败，请重试！");
@@ -59,16 +67,16 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				});
 			},
 			payOrder: function() {
-				
+				VM_shopchart.wxPay_qianzheng(VM_shopchart.productId);
 			},
 			// js-jdk签证所需信息
-			wxPay_qianzheng: function(payState, type) {
+			wxPay_qianzheng: function(type) {
 				$.ajax({
 					url: baseUrl + "wxsingctrl/sigin.htm?url=" + window.location.href,
 					dataType: "json",
 					success: function(res) {
 						// alert(JSON.stringify(res));
-						VM_shopchart.wxPay_getParams(payState, type);
+						VM_shopchart.wxPay_getParams(type);
 					},
 					error: function(res) {
 						alert(JSON.stringify(res));
@@ -76,31 +84,32 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				});
 			},
 			// 获取支付方法所需参数 payState 支付阶段（0:99/1:结算） type 产品类型(硬装/翻新)
-			wxPay_getParams: function(payState, type) {
-				// alert(payState);
-				// alert(type);
-				var params = ""
-					, payState = payState || 1;
-				if (payState == 1) {
-					params = "&isFirst99=true";
-				} else {
-					if (type == 2) {
-						// 硬装
-						var paystep = $('#orderCnt_' + selectedOrder).attr('data-paystep');
-						if (!!!paystep) {
-							dialog.add("当前选中的订单无可支付项！");
-							return;
+			wxPay_getParams: function(type) {
+				var params = "";
+				// dialog.add("type:" + type);
+				if (type == 2) {
+					// 硬装
+					var paystep, // 可支付进度的id
+						stepInfos = VM_shopchart.selectedOrderInfo.stepInfos;
+					for (var i = 0, n = stepInfos.length; i < n; i++) {
+						if (stepInfos[i].state == 0) {
+							paystep = stepInfos[i].stepId;
+							break;
 						}
-						params = "&stepId=" + paystep + "&isFirst99=false";
-					} else {
-						params = "";
 					}
+					alert("payStep:" + paystep);
+					if (!!!paystep) {
+						dialog.add("当前选中的订单无可支付项！");
+						return;
+					}
+					params = "&stepId=" + paystep + "&isFirst99=false";
+				} else {
+					params = "&isFirst99=false";
 				}
-				
-				// alert(params);
+				alert(params);
 				$.ajax({
 					url: baseUrl + "pay/preparePay.htm?orderIds=" 
-						+ selectedOrder 
+						+ VM_shopchart.orderTopay 
 						+ params,
 					dataType: "json",
 					success: function(res) {
@@ -134,6 +143,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 								}else{
 									onBridgeReady();
 								}
+							} else {
+								dialog.add("Error code:" + res.ret + ",Error msg:" + res.msg);
 							}
 						} catch(e) {
 							alert(JSON.stringify(e));
@@ -147,6 +158,5 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		});
 		VM_shopchart.getOrder(1);
 		avalon.scan();
-
 	});
 });

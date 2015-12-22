@@ -34,7 +34,7 @@
 						</div>
 						<!-- <div class="txt-tle">选择支付订单</div> -->
 						<div class="order-list">
-							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId" ms-click="selectOrder(el.orderId, el.total)">
+							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId" ms-click="selectOrder(el.orderId, el.total, el.productId, el.state, $index)" ms-attr-productid="el.productId">
 								<div class="order-info">
 									<div class="order-id">
 										<em class="iconfont" ms-class="on:orderTopay==el.orderId">&#xe60b;</em>
@@ -72,51 +72,53 @@
 											<span>付款成功
 												<i class="circle"></i>
 											</span>
-											<span ms-if="el.buildState==0">尚未支付</span>
-											<span ms-if="el.buildState==1">已支付</span>
-											<span ms-if="el.buildState==2">已支付</span>
-											<span ms-if="el.buildState==3">已支付</span>
-											<span ms-if="el.buildState==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
+											<span ms-if="el.state==0">尚未支付</span>
+											<span ms-if="el.state>=1">已支付</span>
+											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info" ms-if="el.buildState==0">
+											<div class="tips-info" ms-if="el.state==0">
 												￥{{el.stepTotalCost}}
 											</div>
-											<div class="tips-info" ms-if="el.buildState==1">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
+												未开工
+											</div>
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==1">
 												开工中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==2">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==2">
 												审核中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==3">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==3">
 												返工中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==4">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
 												已完成
 											</div>
 										</div>	
-										<div class="step" ms-class="ok:el.buildState>1" ms-repeat="el.stepInfos">
+										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
 											<span>完成订单
 												<i class="circle"></i>
 											</span>
-											<span ms-if="el.buildState==0">尚未支付</span>
-											<span ms-if="el.buildState==1">已支付</span>
-											<span ms-if="el.buildState==2">已支付</span>
-											<span ms-if="el.buildState==3">已支付</span>
-											<span ms-if="el.buildState==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
+											<span ms-if="el.state==0">尚未支付</span>
+											<span ms-if="el.state>=1">已支付</span>
+											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info" ms-if="el.buildState==0">
+											<div class="tips-info" ms-if="el.state==0">
 												￥{{el.stepTotalCost}}
 											</div>
-											<div class="tips-info" ms-if="el.buildState==1">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
+												未开工
+											</div>
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==1">
 												开工中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==2">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==2">
 												审核中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==3">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==3">
 												返工中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==4">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
 												已完成
 											</div>
 										</div>	
@@ -130,29 +132,30 @@
 											<div class="line-left"></div>
 											<div class="list-close"></div>
 										</div>	
-										<div class="step" ms-class="ok:el.buildState==4" ms-repeat="el.stepInfos">
-											<span>{{el.stepName}}{{el.buildState}}
+										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
+											<span>{{el.stepName}}
 												<i class="circle"></i>
 											</span>
-											<span ms-if="el.buildState==0">尚未支付</span>
-											<span ms-if="el.buildState==1">已支付</span>
-											<span ms-if="el.buildState==2">已支付</span>
-											<span ms-if="el.buildState==3">已支付</span>
-											<span ms-if="el.buildState==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
+											<span ms-if="el.state==0">尚未支付</span>
+											<span ms-if="el.state>=1">已支付</span>
+											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info" ms-if="el.buildState==0">
+											<div class="tips-info" ms-if="el.state==0">
 												￥{{el.stepTotalCost}}
 											</div>
-											<div class="tips-info" ms-if="el.buildState==1">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
+												未开工
+											</div>
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==1">
 												开工中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==2">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==2">
 												审核中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==3">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==3">
 												返工中
 											</div>
-											<div class="tips-info" ms-if="el.buildState==4">
+											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
 												已完成
 											</div>
 										</div>	
@@ -170,7 +173,7 @@
 			</div>
 			<div class="pay-toolbar">
 				<span class="price-info">需支付<em>￥{{totalPrice}}</em></span>
-				<a class="pay-btn">
+				<a class="pay-btn" ms-click="payOrder()">
 					去支付
 				</a>
 			</div>

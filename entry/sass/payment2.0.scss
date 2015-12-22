@@ -15,7 +15,7 @@
 		border-bottom: 1px solid #d1d1d1;
 		.item {
 			display: block;
-			width: 50%;
+			width: 33%;
 			text-align: center;
 			height: 100%;
 			font-size: 16px;
@@ -135,6 +135,25 @@
 				}
 			}
 		}
+		.order-step-tle {
+			height: 45px;
+			font-size: 16px;
+			line-height: 45px;
+			text-indent: 10px;
+			position: relative;
+			border-top: 1px solid #d1d1d1;
+		}
+		.list-ico {
+			width: 15px;
+			height: 15px;
+			position: absolute;
+			border-left: 1px solid $maincolor;
+			border-bottom: 1px solid $maincolor;
+			right: 20px;
+			top: 50%;
+			margin-top: -10px;
+			-webkit-transform: rotate(-45deg);
+		}
 		.order-step {
 			width: 100%;
 			border-top: 1px solid #d1d1d1;
@@ -150,14 +169,7 @@
 				position: relative;
 				border-bottom: 1px solid #d1d1d1;
 				.list-close {
-					width: 15px;
-					height: 15px;
-					position: absolute;
-					border-left: 1px solid $maincolor;
-					border-bottom: 1px solid $maincolor;
 					right: 10px;
-					top: 50%;
-					margin-top: -8px;
 					-webkit-transform: rotate(135deg);
 				}
 				.line-left {

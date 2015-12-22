@@ -32,7 +32,9 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			productId: 1,
 			selectedPayState: 0,
 			selectedOrderInfo: {},
+			showAlert: false,
 			orderTopay: "",
+			orderDelete: "",
 			selectOrder: function(orderId, totalPrice, productId, paystate, index) {
 				VM_shopchart.orderTopay = orderId;
 				VM_shopchart.totalPrice = totalPrice;
@@ -68,6 +70,36 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			},
 			payOrder: function() {
 				VM_shopchart.wxPay_qianzheng(VM_shopchart.productId);
+			},
+			deleteOrder: function(orderId) {
+				VM_shopchart.showAlert = true;
+				VM_shopchart.orderDelete = orderId;
+			},
+			delok: function() {
+				VM_shopchart.ajaxCancelOrder(VM_shopchart.orderDelete);
+			},
+			delcancel: function() {
+				VM_shopchart.showAlert = false;
+			},
+			ajaxCancelOrder: function(id) {
+				console.log(id);
+				var This = this;
+				$.ajax({
+					url: baseUrl + "orderCtrl/cancelOrder.htm?orderId=" + id,
+					dataType: "json",
+					success: function(res) {
+						console.log(res);
+						if (res.ret == 1) {
+							$('#order_' + id).remove();
+						} else {
+							dialog.add("Error code:" + res.ret + ",Error msg:" + res.msg);
+						}
+						VM_shopchart.showAlert = false;
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				});
 			},
 			// js-jdk签证所需信息
 			wxPay_qianzheng: function(type) {
@@ -158,5 +190,12 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		});
 		VM_shopchart.getOrder(1);
 		avalon.scan();
+
+		$(dom).off('click').on('click', '.list-ico', function() {
+			if($(this).hasClass('list-close')) {
+				var id = $(this).attr('id').replace('orderclose_', "");
+				$('#stepcontent_' + id).hide();
+			}
+		});
 	});
 });

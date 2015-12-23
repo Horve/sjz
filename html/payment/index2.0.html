@@ -64,24 +64,27 @@
 											<span ms-if="el.nums==1">户型：单间</span>
 											<span ms-if="el.productId==2">面积：{{el.acreage}}㎡</span>
 											<span ms-if="el.productId==2">增项：{{el.toiletNum}}个卫生间，{{el.balconyNum}}个阳台</span>
-											<span>风格：{{el.productStyle}}</span>
+											<span ms-if="el.productId<6">风格：{{el.productStyle}}</span>
+											<span ms-if="el.productId>5&&el.productId<11">面积：{{el.acreage}}㎡</span>
+											<span ms-if="el.productId==11">数量：{{el.acreage}}樘</span>
+											<span ms-if="el.productId>5" class="tips">注：具体以实际量房数据为准。</span>
 										</div>
 										<span class="total-price">￥{{el.total}}</span>
 									</div>
 								</div>
-								<div class="order-step-tle" ms-attr-id="ordershow_{{el.orderId}}" ms-if="el.state==0">
+								<div class="order-step-tle show-step step-control" ms-attr-id="ordershow_{{el.orderId}}" ms-visible="el.state==0">
 									订单详情
 									<div class="list-ico list-show"></div>
 								</div>
-								<div class="order-step" ms-if="el.state!=0">
-									<div class="content" ms-if="el.productId!=2" id="stepcontent_{{el.orderId}}">
-										<div class="step ok">
+								<div class="order-step" ms-visible="el.state!=0" ms-attr-id="stepcontent_{{el.orderId}}">
+									<div class="content" ms-if="el.productId!=2">
+										<div class="step ok close-step step-control" ms-attr-id="orderclose_{{el.orderId}}">
 											<span>成功预约
 												<i class="circle"></i>
 											</span>
 											<span>{{el.createTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="list-ico list-close" ms-attr-id="orderclose_{{el.orderId}}"></div>
+											<div class="list-ico list-close"></div>
 										</div>	
 										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
 											<span>付款成功
@@ -91,24 +94,6 @@
 											<span ms-if="el.state>=1">已支付</span>
 											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<!-- <div class="tips-info" ms-if="el.state==0">
-												￥{{el.stepTotalCost}}
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
-												未开工
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==1">
-												开工中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==2">
-												审核中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==3">
-												返工中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
-												已完成
-											</div> -->
 										</div>	
 										<div class="step" ms-class="ok:el.state==5" ms-repeat="el.stepInfos">
 											<span>完成订单
@@ -118,34 +103,16 @@
 											<span ms-if="el.state>=1">已支付，未完成</span>
 											<span ms-if="el.state==5">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<!-- <div class="tips-info" ms-if="el.state==0">
-												￥{{el.stepTotalCost}}
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
-												未开工
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==1">
-												开工中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==2">
-												审核中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==3">
-												返工中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
-												已完成
-											</div> -->
 										</div>	
 									</div>
-									<div class="content" ms-if="el.productId==2" id="stepcontent_{{el.orderId}}">
-										<div class="step ok">
+									<div class="content" ms-if="el.productId==2">
+										<div class="step ok close-step step-control" ms-attr-id="orderclose_{{el.orderId}}">
 											<span>成功预约
 												<i class="circle"></i>
 											</span>
 											<span>{{el.createTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="list-ico list-close" ms-attr-id="orderclose_{{el.orderId}}"></div>
+											<div class="list-ico list-close"></div>
 										</div>	
 										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
 											<span>{{el.stepName}}
@@ -188,13 +155,13 @@
 			</div>
 			<div class="pay-toolbar" ms-if="orderStep==1">
 				<span class="price-info">需支付<em>￥{{totalPrice}}</em></span>
-				<a class="pay-btn" ms-click="payOrder()">
+				<a class="pay-btn" ms-class="off:!payBtnState" ms-click="payOrder()">
 					去支付
 				</a>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../dist/build.js"></script>
-	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->
+	<!-- <script type="text/javascript" data-main="/entry/js/main.js" src="../../entry/js/lib/require.js"></script> -->
 </body>
 </html>

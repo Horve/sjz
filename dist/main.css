@@ -3952,6 +3952,11 @@ input {
   font-size: 16px;
   margin-bottom: 5px;
 }
+.payment-2-0 .order-item .order-info .order-instr .order-instr-detail span.tips {
+  color: red;
+  margin-top: 5px;
+  font-size: 12px;
+}
 .payment-2-0 .order-item .order-info .order-instr .total-price {
   position: absolute;
   right: 0;
@@ -4098,6 +4103,9 @@ input {
   text-align: center;
   color: #fff;
   background: #9ab903;
+}
+.payment-2-0 .pay-toolbar .pay-btn.off {
+  background: #999;
 }
 .payment-2-0 .pay-toolbar .price-info {
   display: block;

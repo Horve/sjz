@@ -12464,16 +12464,22 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 			totalPrice: 0,
 			productId: 1,
 			selectedPayState: 0,
-			selectedOrderInfo: {},
+			selectedOrderInfo: null,
 			showAlert: false,
 			orderTopay: "",
+			payBtnState: true,
 			orderDelete: "",
 			selectOrder: function(orderId, totalPrice, productId, paystate, index) {
 				VM_shopchart.orderTopay = orderId;
 				VM_shopchart.totalPrice = totalPrice;
 				VM_shopchart.productId = productId;
-				VM_shopchart.selectedPayState = payState;
+				VM_shopchart.selectedPayState = paystate;
 				VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[index];
+				if (VM_shopchart.totalPrice > 0) {
+					VM_shopchart.payBtnState = true;
+				} else {
+					VM_shopchart.payBtnState = false;
+				}
 			},
 			getOrder: function(orderStep) {
 				$.ajax({
@@ -12482,13 +12488,18 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 					dataType: "json",
 					success: function(res) {
 						if (res.ret == 1) {
+							// alert(JSON.stringify(res));
 							VM_shopchart.orderList = res.orderInfos;
 							VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[0];
 							VM_shopchart.orderTopay = res.orderInfos[0].orderId;
 							VM_shopchart.totalPrice = res.orderInfos[0].total;
 							VM_shopchart.orderStep = orderStep;
 							VM_shopchart.productId = res.orderInfos[0].productId;
-							alert(JSON.stringify(res));
+							if (VM_shopchart.totalPrice > 0) {
+								VM_shopchart.payBtnState = true;
+							} else {
+								VM_shopchart.payBtnState = false;
+							}
 						} else if (res.ret == -1) {
 							dialog.add("ret:-1 订单列表返回失败，请重试！");
 						} else if (res.ret == 302) {
@@ -12502,7 +12513,12 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 				});
 			},
 			payOrder: function() {
-				VM_shopchart.wxPay_qianzheng(VM_shopchart.productId);
+				if (VM_shopchart.totalPrice > 0) {
+					VM_shopchart.wxPay_qianzheng(VM_shopchart.productId);
+					VM_shopchart.payBtnState = true;
+				} else {
+					VM_shopchart.payBtnState = false;
+				}
 			},
 			deleteOrder: function(orderId) {
 				VM_shopchart.showAlert = true;
@@ -12524,6 +12540,9 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 						console.log(res);
 						if (res.ret == 1) {
 							$('#order_' + id).remove();
+							if (id == VM_shopchart.selectedOrderInfo.orderId) {
+								VM_shopchart.selectedOrderInfo = null;
+							}
 						} else {
 							dialog.add("Error code:" + res.ret + ",Error msg:" + res.msg);
 						}
@@ -12550,6 +12569,10 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 			},
 			// 获取支付方法所需参数 payState 支付阶段（0:99/1:结算） type 产品类型(硬装/翻新)
 			wxPay_getParams: function(type) {
+				if (!VM_shopchart.selectedOrderInfo) {
+					dialog.add("还没选择要支付的订单！");
+					return;
+				}
 				var params = "";
 				// dialog.add("type:" + type);
 				if (type == 2) {
@@ -12623,6 +12646,21 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 		});
 		VM_shopchart.getOrder(1);
 		avalon.scan();
+
+		$(dom).off('click').on('click', '.step-control', function(e) {
+			var id;
+			e.stopPropagation();
+			e.preventDefault();
+			if($(this).hasClass('show-step')) {
+				id = $(this).attr('id').replace('ordershow_', "");
+				$('#stepcontent_' + id).show();
+				$('#ordershow_' + id).hide();
+			} else if ($(this).hasClass('close-step')) {
+				id = $(this).attr('id').replace('orderclose_', "")
+				$('#stepcontent_' + id).hide();
+				$('#ordershow_' + id).show();
+			}
+		});
 	});
 });
 // main.js

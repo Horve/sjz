@@ -125,6 +125,11 @@
 							margin-bottom: 5px;
 						}
 					}
+					span.tips {
+						color: red;
+						margin-top: 5px;
+						font-size: 12px;
+					}
 				}
 				.total-price {
 					position: absolute;
@@ -277,6 +282,9 @@
 			text-align: center;
 			color: #fff;
 			background: $maincolor;
+			&.off {
+				background: #999;
+			}
 		}
 		.price-info {
 			display: block;

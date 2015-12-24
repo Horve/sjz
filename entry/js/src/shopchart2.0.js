@@ -152,7 +152,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 							break;
 						}
 					}
-					alert("payStep:" + paystep);
+					// alert("payStep:" + paystep);
 					if (!!!paystep) {
 						dialog.add("当前选中的订单无可支付项！");
 						return;
@@ -161,7 +161,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				} else {
 					params = "&isFirst99=false";
 				}
-				alert(params);
+				// alert(params);
 				$.ajax({
 					url: baseUrl + "pay/preparePay.htm?orderIds=" 
 						+ VM_shopchart.orderTopay 

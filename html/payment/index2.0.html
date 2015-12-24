@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="../../dist/main.min.css" />
 	<link rel="stylesheet" href="../../dist/normalize.css" />
 </head>
-<body ms-controller="root">
+<body ms-controller="root" class="ms-controller">
 	<div class="page" data-render-id="payment-2-0">
 		<div class="alert-masker" ms-if="showAlert"></div>
 		<div class="alert-box" ms-if="showAlert">
@@ -40,8 +40,8 @@
 					<div class="body-con">
 						<div class="type-nav">
 							<a class="item" ms-class="on:orderStep==1" ms-click="getOrder(1)">当前订单</a>
-							<a class="item" ms-class="on:orderStep==3" ms-click="getOrder(3)">完成订单</a>
-							<a class="item" ms-class="on:orderStep==4" ms-click="getOrder(4)">历史订单</a>
+							<a class="item" ms-class="on:orderStep==3" ms-click="getOrder(3)">订单评价</a>
+							<!-- <a class="item" ms-class="on:orderStep==4" ms-click="getOrder(4)">历史订单</a> -->
 						</div>
 						<!-- <div class="txt-tle">选择支付订单</div> -->
 						<div class="order-list">

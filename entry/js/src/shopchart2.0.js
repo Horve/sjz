@@ -49,6 +49,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 				}
 			},
 			getOrder: function(orderStep) {
+				// alert(orderStep);
 				$.ajax({
 					// 未完成订单
 					url: baseUrl + "orderCtrl/getOrders.htm?type=" + orderStep,
@@ -109,6 +110,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 							$('#order_' + id).remove();
 							if (id == VM_shopchart.selectedOrderInfo.orderId) {
 								VM_shopchart.selectedOrderInfo = null;
+								VM_shopchart.totalPrice = 0;
 							}
 						} else {
 							dialog.add("Error code:" + res.ret + ",Error msg:" + res.msg);

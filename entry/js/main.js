@@ -13,7 +13,7 @@ require([
 	//'entry/js/src/kfuserindex.js', 
 	//'entry/js/src/kfstylenav.js', 
 	'entry/js/src/jfpart.js', 
-	'entry/js/src/shopcart.js', 
+	//'entry/js/src/shopcart.js', 
 	'entry/js/src/userproduct.js',
 	'entry/js/src/redirect',
 	// 2.0

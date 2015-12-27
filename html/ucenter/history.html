@@ -38,17 +38,11 @@
 			<div class="view-content">
 				<div class="view-content-con">
 					<div class="body-con">
-						<div class="type-nav">
-							<a class="item" ms-class="on:orderStep==1" ms-click="getOrder(1)">当前订单</a>
-							<a class="item" ms-class="on:orderStep==3" ms-click="getOrder(3)">订单评价</a>
-							<!-- <a class="item" ms-class="on:orderStep==4" ms-click="getOrder(4)">历史订单</a> -->
-						</div>
-						<!-- <div class="txt-tle">选择支付订单</div> -->
 						<div class="order-list">
 							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId" ms-click="selectOrder(el.orderId, el.total, el.productId, el.state, $index)" ms-attr-productid="el.productId" ms-attr-id="order_{{el.orderId}}">
 								<div class="order-info">
 									<div class="order-id">
-										<em class="iconfont" ms-class="on:orderTopay==el.orderId" ms-if="orderStep==1">&#xe60b;</em>
+										<!-- <em class="iconfont" ms-class="on:orderTopay==el.orderId" ms-if="orderStep==1">&#xe60b;</em> -->
 										<span>订单编号：{{el.orderId}}</span>
 										<a class="delete" ms-click="deleteOrder(el.orderId)" ms-if="el.state==0">删除</a>
 									</div>
@@ -74,77 +68,7 @@
 										<span class="total-price">￥{{el.total}}</span>
 									</div>
 								</div>
-								<div class="order-step-tle show-step step-control" ms-attr-id="ordershow_{{el.orderId}}" ms-visible="el.state==0">
-									订单详情
-									<div class="list-ico list-show"></div>
-								</div>
-								<div class="order-step" ms-visible="el.state!=0" ms-attr-id="stepcontent_{{el.orderId}}">
-									<div class="content" ms-if="el.productId!=2">
-										<div class="step ok close-step step-control" ms-attr-id="orderclose_{{el.orderId}}">
-											<span>成功预约
-												<i class="circle"></i>
-											</span>
-											<span>{{el.createTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
-											<div class="line-left"></div>
-											<div class="list-ico list-close"></div>
-										</div>	
-										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
-											<span>付款成功
-												<i class="circle"></i>
-											</span>
-											<span ms-if="el.state==0">尚未支付</span>
-											<span ms-if="el.state>=1">已支付</span>
-											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
-											<div class="line-left"></div>
-										</div>	
-										<div class="step" ms-class="ok:el.state==5" ms-repeat="el.stepInfos">
-											<span>完成订单
-												<i class="circle"></i>
-											</span>
-											<span ms-if="el.state==0">尚未支付</span>
-											<span ms-if="el.state>=1">已支付，未完成</span>
-											<span ms-if="el.state==5">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
-											<div class="line-left"></div>
-										</div>	
-									</div>
-									<div class="content" ms-if="el.productId==2">
-										<div class="step ok close-step step-control" ms-attr-id="orderclose_{{el.orderId}}">
-											<span>成功预约
-												<i class="circle"></i>
-											</span>
-											<span>{{el.createTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
-											<div class="line-left"></div>
-											<div class="list-ico list-close"></div>
-										</div>	
-										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
-											<span>{{el.stepName}}
-												<i class="circle"></i>
-											</span>
-											<span ms-if="el.state==0">尚未支付</span>
-											<span ms-if="el.state>=1">已支付</span>
-											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
-											<div class="line-left"></div>
-											<div class="tips-info" ms-if="el.state==0">
-												￥{{el.stepTotalCost}}
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
-												未开工
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==1">
-												开工中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==2">
-												审核中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==3">
-												返工中
-											</div>
-											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
-												已完成
-											</div>
-										</div>	
-									</div>
-								</div>
+								
 								<div class="order-comment" ms-if="el.state==4">
 									<a class="btn">施工评价</a>
 									<span class="txt">您的评价很重要！为了让您体验更优质的施工服务，工人的绩效工资将由您的评价来决定。</span>	
@@ -154,12 +78,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="pay-toolbar" ms-if="orderStep==1">
-				<span class="price-info">需支付<em>￥{{totalPrice}}</em></span>
-				<a class="pay-btn" ms-class="off:!payBtnState" ms-click="payOrder()">
-					去支付
-				</a>
 			</div>
 		</div>
 	</div>

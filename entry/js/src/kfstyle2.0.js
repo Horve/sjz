@@ -59,6 +59,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			topShow: false,
 			detailNav: 1,
 			wltype: 1,
+			showYYok: false,
 			screenWidth: $(window).width(),
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
@@ -664,7 +665,7 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 				if (n == 1) {
 					VM_kf.btn = "立即下单";
 				} else if (n == 2) {
-					VM_kf.btn = "加入购物车";
+					VM_kf.btn = "极速预约";
 				}
 			},
 			closeBox: function() {
@@ -684,6 +685,10 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 	    			OrderConfig.addToShopChart(1, params);
 	    		}
 	    		VM_kf.showBox = false;
+	    		// VM_kf.showYYok = true;
+	    		// setTimeout(function() {
+	    		// 	VM_kf.showYYok = false;
+	    		// }, 5000);
 			},
 			show: function() {
 				VM_kf.txtInfoShow = {
@@ -702,6 +707,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			toTop: function() {
 				$('.view-content', dom).scrollTop(0);
 				VM_kf.topShow = false;
+			},
+			yyOkhide: function() {
+				VM_kf.showYYok = false;
 			}
 		});
 		VM_kf.show();

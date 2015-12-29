@@ -3767,7 +3767,7 @@ define('entry/js/core/tools',[],function() {
 				+ check(time.getSeconds());
 		},
 		returnBaseUrl: function() {
-			return "http://www.s-jz.com/pub/Sbuild/";
+			return "http://www.s-jz.com/test/Sbuild/";
 		}
 	};
 	var Tools = Tools;
@@ -9066,7 +9066,16 @@ define('entry/js/src/order',['../core/core', './jump', './component/dialog'], fu
 					// wxAuth();
 				} else if (code == 1) {
 					// 已登录 提示加入购物车成功
-					dialog.add("已成功加入购物车！");
+					if ($('.yy-success-msk').length) {
+						$('.yy-success-msk').show();
+						$('.yy-success-box').show();
+						setTimeout(function() {
+							$('.yy-success-msk').hide();
+							$('.yy-success-box').hide();
+						}, 5000);
+					} else {
+						dialog.add("已成功加入购物车！");
+					}
 				} else if (code == -1) {
 					// 登录失败。提示重试
 					alert("登录失败！");
@@ -9722,6 +9731,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			topShow: false,
 			detailNav: 1,
 			wltype: 1,
+			showYYok: false,
 			screenWidth: $(window).width(),
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
@@ -10327,7 +10337,7 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 				if (n == 1) {
 					VM_kf.btn = "立即下单";
 				} else if (n == 2) {
-					VM_kf.btn = "加入购物车";
+					VM_kf.btn = "极速预约";
 				}
 			},
 			closeBox: function() {
@@ -10347,6 +10357,10 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 	    			OrderConfig.addToShopChart(1, params);
 	    		}
 	    		VM_kf.showBox = false;
+	    		// VM_kf.showYYok = true;
+	    		// setTimeout(function() {
+	    		// 	VM_kf.showYYok = false;
+	    		// }, 5000);
 			},
 			show: function() {
 				VM_kf.txtInfoShow = {
@@ -10365,6 +10379,9 @@ define('entry/js/src/kfstyle2.0',['../core/core', './jump', './component/dialog'
 			toTop: function() {
 				$('.view-content', dom).scrollTop(0);
 				VM_kf.topShow = false;
+			},
+			yyOkhide: function() {
+				VM_kf.showYYok = false;
 			}
 		});
 		VM_kf.show();
@@ -10549,6 +10566,9 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
+		Array.prototype.delItem = function(index) {
+			return this.splice(index,1);
+		};
 		var stepCal = function(num) {
 			if (num == 0) {
 				return {txt: "即将开始", on: ""};
@@ -10598,17 +10618,18 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 					success: function(res) {
 						if (res.ret == 1) {
 							// alert(JSON.stringify(res));
-							VM_shopchart.orderList = res.orderInfos;
+							VM_shopchart.orderStep = orderStep;
+							VM_shopchart.orderList = res.orderInfos || [];
 							VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[0];
 							VM_shopchart.orderTopay = res.orderInfos[0].orderId;
 							VM_shopchart.totalPrice = res.orderInfos[0].total;
-							VM_shopchart.orderStep = orderStep;
 							VM_shopchart.productId = res.orderInfos[0].productId;
 							if (VM_shopchart.totalPrice > 0) {
 								VM_shopchart.payBtnState = true;
 							} else {
 								VM_shopchart.payBtnState = false;
 							}
+							// alert(VM_shopchart.orderStep);
 						} else if (res.ret == -1) {
 							dialog.add("ret:-1 订单列表返回失败，请重试！");
 						} else if (res.ret == 302) {
@@ -10652,6 +10673,12 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 							if (id == VM_shopchart.selectedOrderInfo.orderId) {
 								VM_shopchart.selectedOrderInfo = null;
 								VM_shopchart.totalPrice = 0;
+							}
+							for (var i = 0, n = VM_shopchart.orderList.length; i < n; i++) {
+								if (id == VM_shopchart.orderList[i].orderId) {
+									VM_shopchart.orderList.delItem(i);
+									break;
+								}
 							}
 						} else {
 							dialog.add("Error code:" + res.ret + ",Error msg:" + res.msg);
@@ -10726,7 +10753,7 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 										},
 										function(res){     
 											if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-												VM_shopchart.getOrder(2); // 跳到已支付
+												VM_shopchart.getOrder(1); // 跳到已支付
 											}
 										}
 									); 

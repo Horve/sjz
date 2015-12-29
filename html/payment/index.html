@@ -43,6 +43,13 @@
 							<a class="item" ms-class="on:orderStep==3" ms-click="getOrder(3)">订单评价</a>
 							<!-- <a class="item" ms-class="on:orderStep==4" ms-click="getOrder(4)">历史订单</a> -->
 						</div>
+						<div class="empty" ms-if="orderList.length==0">
+							<div class="plain"></div>
+							<h2 ms-if="orderList.length==0&&orderStep==1">您当前还没有订单</h2>
+							<h2 ms-if="orderList.length==0&&orderStep==3">您当前还没有评价订单</h2>
+							<h3>快去逛逛吧~</h3>
+							<a href="../user/index.html">返回首页</a>
+						</div>
 						<!-- <div class="txt-tle">选择支付订单</div> -->
 						<div class="order-list">
 							<div class="order-item" ms-repeat="orderList" ms-attr-orderid="el.orderId" ms-click="selectOrder(el.orderId, el.total, el.productId, el.state, $index)" ms-attr-productid="el.productId" ms-attr-id="order_{{el.orderId}}">
@@ -54,7 +61,11 @@
 									</div>
 									<div class="order-instr">
 										<a class="pic">
-											<img src="../../dist/img/2_0/kf/art_after1.jpg" width="100%">
+											<img ms-if="el.productStyle=='斑马'||el.productStyle=='魔法学院'" src="../../dist/img/2_0/mag_icon.jpg" width="100%">
+											<img ms-if="el.productStyle=='海洋'||el.productStyle=='海军学院'" src="../../dist/img/2_0/nav_icon.jpg" width="100%">
+											<img ms-if="el.productStyle=='木香'||el.productStyle=='人文学院'" src="../../dist/img/2_0/cau_icon.jpg" width="100%">
+											<img ms-if="el.productStyle=='甜橙'||el.productStyle=='艺术学院'" src="../../dist/img/2_0/art_icon.jpg" width="100%">
+											<img ms-if="el.productId>5" src="../../dist/img/2_0/jubu_icon.jpg" width="100%">
 										</a>
 										<div class="order-instr-detail">
 											<span>{{el.productName}}</span>
@@ -62,10 +73,10 @@
 											<span ms-if="el.layout==2">户型：两居室</span>
 											<span ms-if="el.layout==3">户型：三居室</span>
 											<span ms-if="el.nums==1">户型：单间</span>
-											<span ms-if="el.productId==2">面积：{{el.acreage}}㎡</span>
-											<span ms-if="el.productId==2&&el.toiletNum>1&&el.balconyNum>1">增项：{{el.toiletNum-1}}个卫生间，{{el.balconyNum-1}}个阳台</span>
-											<span ms-if="el.productId==2&&el.toiletNum>1&&el.balconyNum==1">增项：{{el.toiletNum-1}}个卫生间</span>
-											<span ms-if="el.productId==2&&el.toiletNum==1&&el.balconyNum>1">增项：{{el.balconyNum-1}}个阳台</span>
+											<span ms-if="el.productId==2">建筑面积：{{el.acreage}}㎡</span>
+											<span ms-if="el.productId==2&&el.toiletNum>1&&el.balconyNum>1">增加：{{el.toiletNum-1}}个卫生间，{{el.balconyNum-1}}个阳台</span>
+											<span ms-if="el.productId==2&&el.toiletNum>1&&el.balconyNum==1">增加：{{el.toiletNum-1}}个卫生间</span>
+											<span ms-if="el.productId==2&&el.toiletNum==1&&el.balconyNum>1">增加：{{el.balconyNum-1}}个阳台</span>
 											<span ms-if="el.productId<6">风格：{{el.productStyle}}</span>
 											<span ms-if="el.productId>5&&el.productId<11">面积：{{el.acreage}}㎡</span>
 											<span ms-if="el.productId==11">数量：{{el.acreage}}樘</span>

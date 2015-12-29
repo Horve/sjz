@@ -26,6 +26,48 @@
 			border-bottom: 2px solid $maincolor;
 		}
 	}
+	.empty {
+		width: 180px;
+		height: 270px;
+		margin: 45px auto 0;
+		position: relative;
+		.plain {
+			width: 100%;
+			height: 123px;
+			background-image: url(img/2_0/empty.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		h2, h3 {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			font-weight: normal;
+		}
+		h2 {
+			font-size: 18px;
+			color: #666;
+			margin: 20px 0 10px;
+		}
+		h3 {
+			font-size: 14px;
+			color: #999;
+		}
+		a {
+			width: 125px;
+			height: 45px;
+			text-align: center;
+			line-height: 45px;
+			font-size: 18px;
+			color: #fff;
+			border-radius: 5px;
+			background: $maincolor;
+			position: absolute;
+			bottom: 0;
+			margin-left: -63px;
+			left: 50%;
+		}
+	}
 	.txt-tle {
 		height: 45px;
 		line-height: 45px;

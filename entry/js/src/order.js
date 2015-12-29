@@ -45,7 +45,16 @@ define(['../core/core', './jump', './component/dialog'], function(core, checkUsr
 					// wxAuth();
 				} else if (code == 1) {
 					// 已登录 提示加入购物车成功
-					dialog.add("已成功加入购物车！");
+					if ($('.yy-success-msk').length) {
+						$('.yy-success-msk').show();
+						$('.yy-success-box').show();
+						setTimeout(function() {
+							$('.yy-success-msk').hide();
+							$('.yy-success-box').hide();
+						}, 5000);
+					} else {
+						dialog.add("已成功加入购物车！");
+					}
 				} else if (code == -1) {
 					// 登录失败。提示重试
 					alert("登录失败！");

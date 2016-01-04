@@ -16,7 +16,9 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		var kftype = location.hash.replace(/#!_/,"") || "art";
 		var productStyle = "";
 		var Tools = core.Tools
-			, EL_comparePic = $('.area-compare .onhide');
+			, EL_comparePic = $('.area-compare .onhide')
+			, tipsTop = $('#tipsPos', dom).offset().top
+			, productTop = $('.product-nav', dom).offset().top;
 
 		// $('.area-compare .onhide').on('click', function() {
 		// 	$(this).removeClass('onhide').addClass('onshow').siblings().removeClass('onshow').addClass('onhide');
@@ -25,6 +27,15 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 		$(dom).on('click', '.onhide', function() {
 			$(this).removeClass('onhide').addClass('onshow').siblings().removeClass('onshow').addClass('onhide');
 		});
+		$('.view-content', dom).on("scroll", function() {
+			var scrolltop = $(this).scrollTop();
+			if(scrolltop >= productTop) {
+				VM_kf.totopShow = true;
+			} else {
+				VM_kf.totopShow = false;
+			}
+		});
+		$('.page-tips', dom).css("top",tipsTop + "px");
 		switch(kftype) {
 			case "art": 
 				productStyle = "甜橙";
@@ -61,6 +72,8 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 			wltype: 1,
 			showYYok: false,
 			screenWidth: $(window).width(),
+			tipsShow: true,
+			totopShow: false,
 			txtInfoShow: {
 				// guahua: VM_kf.txtInfo["art"].guahua,
 				// dengshi: VM_kf.txtInfo["art"].dengshi,
@@ -703,13 +716,22 @@ define(['../core/core', './jump', './component/dialog', '../src/order'], functio
 				VM_kf.fromShow = VM_kf.from[VM_kf.styleCode];
 				VM_kf.commentShow = VM_kf.commentArr[VM_kf.styleCode];
 				// $('.area-compare', dom).css("height", VM_kf.screenWidth + "px");
+				if (localStorage.getItem("showtip")) {
+					VM_kf.tipsShow = false;
+				} else {
+					VM_kf.tipsShow = true;
+					localStorage.setItem("showtip", "ok");
+				}
 			},
 			toTop: function() {
-				$('.view-content', dom).scrollTop(0);
+				$('.view-content', dom).scrollTop(productTop - 45);
 				VM_kf.topShow = false;
 			},
 			yyOkhide: function() {
 				VM_kf.showYYok = false;
+			},
+			tipsHide: function() {
+				VM_kf.tipsShow = false;
 			}
 		});
 		VM_kf.show();

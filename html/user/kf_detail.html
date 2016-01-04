@@ -35,7 +35,7 @@
 						<div class="area-pic after onshow">
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" alt="">
 						</div>
-						<div class="area-pic before-hide oninit big-show"><!--上面的两张展示大图-->
+						<div class="area-pic before-hide oninit big-show" id="tipsPos"><!--上面的两张展示大图-->
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before1.jpg" width="100%" alt="">
 						</div>
 					</div>
@@ -406,7 +406,7 @@
 				<!-- <a class="add" ms-click="changeBoxState(2)"><em class="iconfont">&#xe606;</em>加入购物车</a> -->
 				<a class="add" ms-click="changeBoxState(2)">极速预约</a>
 			</div>
-			<div class="to-top" ms-click="toTop"></div>
+			<div class="to-top" ms-click="toTop" ms-if="totopShow"></div>
 			<div class="page-cover" ms-class="show:showBox" ms-click="closeBox"></div>
 			<div class="make-order" ms-class="show:showBox">
 				<div class="title">
@@ -435,6 +435,10 @@
 				<h2><em></em>预约成功</h2>
 				<h3>请保持您的手机畅通</h3>
 				<h3>客服将在30分钟内与您联系</h3>
+			</div>
+			<div class="page-cover" ms-visible="tipsShow"></div>
+			<div class="page-tips" ms-visible="tipsShow" ms-click="tipsHide">
+				<span>试试“点击”查看对比图</span>
 			</div>
 		</div>
 	</div>

@@ -7,6 +7,26 @@
 	.page .view-content .view-content-con {
 		padding-bottom: 90px;
 	}
+	.page-tips {
+		width: 125px;
+		height: 151px;
+		background-image: url(img/2_0/kf_detail_tips.png);
+		background-size: cover;
+		position: absolute;
+		z-index: 100;
+		left: 50%;
+		margin-left: -63px;
+		span {
+			display: block;
+			width: 120%;
+			position: absolute;
+			top: -25px;
+			left: -10%;
+			font-size: 14px;
+			color: #fff;
+			text-align: center;
+		}
+	}
 	.page-cover {
 		width: 100%;
 		height: 100%;

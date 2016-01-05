@@ -19,5 +19,6 @@ require([
 	// 2.0
 	'entry/js/src/index2.0',
 	'entry/js/src/kfstyle2.0',
+	'entry/js/src/xfstyle2.0',
 	'entry/js/src/shopchart2.0'], function() {
 });

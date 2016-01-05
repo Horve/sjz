@@ -1,0 +1,343 @@
+.xf-detail {
+	font-size: 100px;
+	.page {
+		overflow: hidden;
+		font-size: 0.16rem;
+	}
+	.page .view-content .view-content-con {
+		padding-bottom: 120px;
+		.area-compare {
+			height: 2rem;
+			margin-left: 0.1rem;
+			margin-right: 0.1rem;
+			position: relative;
+			overflow: hidden;
+			background: #efefef;
+			border-radius: 6px;
+			margin-bottom: 10px;
+			&.first {
+				border-radius: 0 0 6px 6px;
+				.area-pic.first {
+					border-radius: 0 0 6px 6px;
+				}
+			}
+			.cmp-txtinfo {
+				position: absolute;
+				z-index: 10;
+				top: 10px;
+				left: 10px;
+				color: #fff;
+				text-shadow: 1px 1px 2px rgba(0,0,0,1);
+			}
+			img {
+				display: block;
+			    /*position: absolute;
+			    top: 50%;
+			    margin-top: -1.65rem;*/
+			}
+			/*.onhide {
+				height: 0.9rem;
+				transform: translate3d(0,0,0);
+				.cover {
+					opacity: 1;
+				}
+			}*/
+			.after {
+				overflow: hidden;
+			}
+			.before {
+				overflow: hidden;
+			}
+			.area-pic {
+				position: relative;
+				-webkit-transition: all .5s ease-in-out;
+				transform: translate3d(0,0,0);
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				border-radius: 6px;
+				bottom: 0;
+				left: 0;
+				margin-left: 0;
+				overflow: hidden;
+				border: 0 solid rgba(255,255,255,.7);
+				overflow: hidden;
+				display: -webkit-box;
+				img {
+					position: absolute;
+					top: 50%;
+					-webkit-transform: translateY(-50%);
+				}
+				/*.cover {
+					width: 100%;
+					height: 100%;
+					background: rgba(0,0,0,.5);
+					position: absolute;
+					top: 0;
+					left: 0;
+					display: -webkit-box;
+					-webkit-box-align: center;
+					-webkit-box-pack: center;
+					-webkit-transition: all .3s ease-in-out;
+					color: $maincolor;
+					font-size: 18px;
+					font-weight: bold;
+					text-align: center;
+					span {
+						display: block;
+					}
+				}*/
+			}
+			.oninit {
+				width: 0.4rem;
+				height: 0.4rem;
+				position: absolute;
+				border-radius: 50%;
+				bottom: 0.05rem;
+				left: 50%;
+				margin-left: -0.25rem;
+				border: 0.03rem solid rgba(255,255,255,.8);
+				-webkit-animation: borderLight 1s 5;
+				/*z-index: 10;*/
+				.txt {
+					opacity: 0;
+					-webkit-transition: all .5s ease-in-out;
+				}
+			}
+			.onhide {
+				-webkit-transform: scale(1.2);
+				opacity: 0;
+			}
+		}
+	}
+	.top-nav, .product-nav {
+		height: 40px;
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+		border-bottom: 1px solid #d1d1d1;
+		a {
+			display: block;
+			width: 33%;
+			height: 100%;
+			text-align: center;
+			line-height: 40px;
+			&.on {
+				border-bottom: 2px solid $maincolor;
+				box-sizing: border-box;
+				color: $maincolor;
+			}
+		}
+	}
+	.shopchart-sec {
+		width: 100%;
+		height: 60px;
+		line-height: 45px;
+		display: -webkit-box;
+		-webkit-box-pack: justify;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		font-size: 16px;
+		z-index: 50;
+		background: #fff;
+		border-top: 1px solid #d1d1d1;
+		a {
+			display: block;
+			width: 95%;
+			text-align: center;
+			line-height: 40px;
+			height: 40px;
+			margin: 10px auto;
+			color: #fff;
+			&.now {
+				background: #88a400;
+			}
+			&.add {
+				background: $maincolor;
+				color: #333;
+				border-radius: 5px;
+				/*text-indent: 25px;
+				em.iconfont {
+					font-size: 25px;
+					position: absolute;
+					margin-left: -50px;
+					margin-top: -1px;
+				}*/
+			}
+		}
+	}
+	.yy-success-msk {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background: rgba(0,0,0,.6);
+		z-index: 100;
+	}
+	.yy-success-box {
+		width: 65%;
+		height: 140px;
+		background: #fff;
+		border-radius: 5px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -70px;
+		margin-left: -33%;
+		z-index: 150;
+		h2, h3 {
+			margin: 0;
+			padding: 0;
+			font-weight: normal;
+			text-align: center;
+		}
+		h2 {
+			font-size: 18px;
+			margin-bottom: 10px;
+			margin-top: 30px;
+		}
+		h3 {
+			font-size: 14px;
+			color: #999;
+		}
+		em {
+			display: inline-block;
+			width: 25px;
+			height: 19px;
+			background-image: url(img/2_0/kf/ok.png);
+			background-repeat: no-repeat;
+			background-size: cover;
+			margin-right: 5px;
+		}
+	}
+	.detail-comm {
+		margin: 10px 0 0 0;
+		.yz-banner {
+			width: 100%;
+			height: 130px;
+			background-image: url(img/2_0/xf/yz_detail_banner_1.jpg);
+			background-size: cover;
+			background-position: center center;
+			&.banner2 {
+				background-image: url(img/2_0/xf/yz_detail_banner_2.jpg);
+			}
+			&.banner3 {
+				background-image: url(img/2_0/xf/yz_detail_banner_3.jpg);
+			}
+			&.banner4 {
+				background-image: url(img/2_0/xf/yz_detail_banner_4.jpg);
+			}
+		}
+		.yz-cnt-pic {
+			background-size: 100% 100%;
+			margin: 10px 0;
+			overflow: hidden;
+			img {
+				width: 100%;
+			}
+		}
+		.sep {
+			height: 4px;
+			background: #d1d1d1;
+			margin-bottom: 10px;
+			overflow: hidden;
+		}
+		.yz-product-info {
+			.pic {
+				display: block;
+				height: 200px;
+				overflow: hidden;
+				position: relative;
+				margin: 10px 0 10px 0;
+				img {
+					display: block;
+					width: 100%;
+					top: 50%;
+					-webkit-transform: translateY(-50%);
+					position: absolute;
+					left: 0;
+				}
+			}
+			.txt {
+				color: #999;
+				line-height: 1.6em;
+				text-align: justify;
+				display: block;
+				font-size: 14px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d1d1d1;
+			}
+		}
+		.yz-shigong-info {
+			min-height: 135px;
+			padding-bottom: 10px;
+			margin-top: 10px;
+			border-bottom: 1px solid #d1d1d1;
+			position: relative;
+			.pic {
+				width: 125px;
+				height: 125px;
+				display: block;
+				background: url(img/2_0/xf/yz_shigong_shuidian.jpg);
+				background-size: cover;
+				position: absolute;
+				top: 0;
+				right: 0;
+				&.fangshui {
+					background: url(img/2_0/xf/yz_shigong_fangshui.jpg);
+				}
+				&.qiangmian {
+					background: url(img/2_0/xf/yz_shigong_qiangmian.jpg);
+				}
+				&.dizhuan {
+					background: url(img/2_0/xf/yz_shigong_dizhuan.jpg);
+				}
+			}
+			.txt {
+				margin-right: 135px;
+				h2 {
+					margin: 0;
+					padding: 0;
+					font-weight: normal;
+					font-size: 16px;
+					text-align: center;
+					line-height: 25px;
+				}
+				span {
+					color: #999;
+					display: block;
+					font-size: 13px;
+					margin-bottom: 3px;
+				}
+			}
+		}
+		.yz-shigong-info.last {
+			margin-bottom: 10px;
+			border-bottom-width: 3px;
+		}
+	}
+	.page-banner {
+		margin: 10px 10px 0 10px;
+		background: #94d600;
+		text-align: center;
+		line-height: 45px;
+		color: #fff;
+		font-size: 25px;
+		font-weight: bold;
+		border-radius: 6px 6px 0 0;
+		em	{
+			font-size: 14px;
+			margin-right: 5px;
+			font-weight: normal;
+		}
+	}
+	.product-nav {
+		border-top: 1px solid #d1d1d1;
+		margin: 0 10px;
+	}
+	.product-detail {
+		margin: 10px 10px 0;
+	}
+	
+}

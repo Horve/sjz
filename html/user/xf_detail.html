@@ -28,16 +28,28 @@
 			<div class="view-content">
 				<div class="view-content-con">
 					<div class="top-nav">
-						<a class="on">硬装</a>
-						<a>家具</a>
-						<a>家电</a>
+						<a ms-class="on:productNav==1" ms-click="changePNav(1)">硬装</a>
+						<a ms-class="on:productNav==2" ms-click="changePNav(2)">家具</a>
+						<a ms-class="on:productNav==3" ms-click="changePNav(3)">家电</a>
 					</div>
-					<div class="page-banner">
+					<div class="xf-swiper" ms-if="productNav==2||productNav==3">
+						<div class="swiper-container">
+						    <div class="swiper-wrapper">
+						        <div class="swiper-slide"><img src="../../dist/img/2_0/xf/xf_jiadian_focus1.jpg" alt=""></div>
+						        <div class="swiper-slide"><img src="../../dist/img/2_0/xf/xf_jiadian_focus2.jpg" alt=""></div>
+						        <div class="swiper-slide"><img src="../../dist/img/2_0/xf/xf_jiadian_focus3.jpg" alt=""></div>
+						    </div>
+						    <!-- 如果需要分页器 -->
+						    <div class="swiper-pagination"></div>
+						    <div class="swiper-title">七大家电，解决您的一站式需求</div>
+						</div>
+					</div>
+					<div class="page-banner" ms-if="productNav==1">
 						<span>458</span>
 						<em>元/㎡</em>
 						<span>从毛坯到精装</span>
 					</div>
-					<div class="area-compare first">
+					<div class="area-compare first" ms-if="productNav==1">
 						<div class="area-pic after onshow first">
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" alt="">
 						</div>
@@ -45,7 +57,7 @@
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before1.jpg" width="100%" alt="">
 						</div>
 					</div>
-					<div class="area-compare">
+					<div class="area-compare" ms-if="productNav==1">
 						<div class="area-pic after onshow">
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" alt="">
 						</div>
@@ -53,7 +65,7 @@
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before2.jpg" width="100%" alt="">
 						</div>
 					</div>
-					<div class="area-compare">
+					<div class="area-compare" ms-if="productNav==1">
 						<div class="area-pic after onshow">
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" alt="">
 						</div>
@@ -61,7 +73,7 @@
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before1.jpg" width="100%" alt="">
 						</div>
 					</div>
-					<div class="area-compare">
+					<div class="area-compare" ms-if="productNav==1">
 						<div class="area-pic after onshow">
 							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" alt="">
 						</div>
@@ -74,7 +86,8 @@
 						<a class="item" ms-class="on:detailNav==2" ms-click="changeDNav(2)">施工工艺</a>
 						<a class="item" ms-class="on:detailNav==3" ms-click="changeDNav(3)">用户评价</a>
 					</div>
-					<div class="product-detail" ms-if="detailNav==1">
+					<!-- 硬装 详情 -->
+					<div class="product-detail" ms-if="productNav==1&&detailNav==1">
 						<div class="detail-comm yz-xiangqing">
 							<div class="yz-banner"></div>
 							<div class="yz-product-info">
@@ -108,6 +121,9 @@
 								<span class="txt">仿真木纹，表层上饰有各种树种的木纹，十分逼真，在视觉上也足以和实木地板想比美；表面采用三氧化二铝，超强耐磨，7型锁扣结合紧密，有效抵抗“热胀冷缩”。</span>
 							</div>
 						</div>
+					</div>
+					<!-- 硬装 参数 -->
+					<div class="product-detail" ms-if="productNav==1&&detailNav==2">
 						<div class="detail-comm yz-canshu">
 							<div class="yz-banner banner2"></div>
 							<div class="yz-cnt-pic">
@@ -165,174 +181,240 @@
 							</div>
 						</div>
 					</div>
-					<div class="product-params" ms-if="detailNav==2">
-						<h2 class="tle">施工物料清单</h2>
-						<div class="area-compare">
-							<div class="area-pic after onshow">
-								<img src="../../dist/img/2_0/kf/show_yiju.jpg" width="100%" alt="">
-								<div class="txt">一居/开间</div>
+					<!-- 家电 商品详情 -->
+					<div class="product-detail" ms-if="productNav==3&&detailNav==1">
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuanglian.jpg">
 							</div>
-							<div class="area-pic before-hide oninit s1" data-wltype="2">
-								<img src="../../dist/img/2_0/kf/show_liangju.jpg" width="100%" alt="">
-								<div class="txt">两居室</div>
-							</div>
-							<div class="area-pic before-hide oninit s2" data-wltype="3">
-								<img src="../../dist/img/2_0/kf/show_sanju.jpg" width="100%" alt="">
-								<div class="txt">三居室</div>
-							</div>
-							<div class="area-pic before-hide oninit s3" data-wltype="4">
-								<img src="../../dist/img/2_0/kf/show_danjian.jpg" width="100%" alt="">
-								<div class="txt">单间</div>
+							<div class="info">
+								<div class="tle one">
+									<span>窗帘<br><em>curtain</em></span>
+								</div>
+								<p>
+									天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。
+								</p>
 							</div>
 						</div>
-						<div class="params-item-list" ms-if="wltype==1">
-							<span>1、壁纸不限</span>
-							<span>2、窗帘x2</span>
-							<span>3、地毯x1</span>
-							<span>4、抱枕x3</span>
-							<span>5、床品x1</span>
-							<span>6、装饰画x3</span>
-							<span>7、灯饰x1</span>
-							<span>8、沙发垫x1</span>
-							<span>9、床头罩x1</span>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_dengshi.jpg">
+							</div>
+							<div class="info">
+								<div class="tle two">
+									<span>灯饰<br><em>light-fixture</em></span>
+								</div>
+								<p>
+									欧式田园蕾丝台灯，寻找梦里那束隐约的温暖。
+								</p>
+							</div>
 						</div>
-						<div class="params-item-list" ms-if="wltype==2">
-							<span>1、壁纸不限</span>
-							<span>2、窗帘x3</span>
-							<span>3、地毯x1</span>
-							<span>4、抱枕x3</span>
-							<span>5、床品x2</span>
-							<span>6、装饰画x4</span>
-							<span>7、灯饰x2</span>
-							<span>8、沙发垫x1</span>
-							<span>9、床头罩x2</span>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_shafadian.jpg">
+							</div>
+							<div class="info">
+								<div class="tle three">
+									<span>沙发垫<br><em>sofa cushion</em></span>
+								</div>
+								<p>
+									简约粉色 保暖法兰绒，爱一种生活，是特别的嗜好。
+								</p>
+							</div>
 						</div>
-						<div class="params-item-list" ms-if="wltype==3">
-							<span>1、壁纸不限</span>
-							<span>2、窗帘x4</span>
-							<span>3、地毯x1</span>
-							<span>4、抱枕x3</span>
-							<span>5、床品x3</span>
-							<span>6、装饰画x5</span>
-							<span>7、灯饰x3</span>
-							<span>8、沙发垫x1</span>
-							<span>9、床头罩x3</span>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_baozhen.jpg">
+							</div>
+							<div class="info">
+								<div class="tle four">
+									<span>抱枕<br><em>bolster</em></span>
+								</div>
+								<p>
+									遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。
+								</p>
+							</div>
 						</div>
-						<div class="params-item-list" ms-if="wltype==4">
-							<span>1、壁纸不限</span>
-							<span>2、窗帘x1</span>
-							<span>3、地毯x1</span>
-							<span>4、床品x1</span>
-							<span>5、装饰画x3</span>
-							<span>6、灯饰x1</span>
-							<span>7、床头罩x1</span>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_ditan.jpg">
+							</div>
+							<div class="info">
+								<div class="tle five">
+									<span>地毯<br><em>footcloth</em></span>
+								</div>
+								<p>
+									北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。
+								</p>
+							</div>
 						</div>
-						<h2 class="tle">一天快速翻新</h2>
-						<div class="params-timeline">
-							<div class="line-list">
-								<div class="line-cont">
-									<div class="tle">
-										<em></em>
-										<span>09:00</span>
-										<span>房屋检测</span>
-									</div>
-									<div class="area-compare">
-										<div class="area-pic after onshow">
-											<img src="../../dist/img/2_0/kf/jiance1.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s1">
-											<img src="../../dist/img/2_0/kf/jiance2.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s2">
-											<img src="../../dist/img/2_0/kf/jiance3.jpg" width="100%" alt="">
-										</div>
-									</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_guahua.jpg">
+							</div>
+							<div class="info">
+								<div class="tle six">
+									<span>挂画<br><em>paintings</em></span>
 								</div>
-								<div class="line-cont">
-									<div class="tle">
-										<em></em>
-										<span>10:00</span>
-										<span>壁纸施工</span>
-									</div>
-									<div class="area-compare">
-										<div class="area-pic after onshow">
-											<img src="../../dist/img/2_0/kf/tiebizhi1.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s1">
-											<img src="../../dist/img/2_0/kf/tiebizhi2.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s2">
-											<img src="../../dist/img/2_0/kf/tiebizhi3.jpg" width="100%" alt="">
-										</div>
-									</div>
+								<p>
+									现代家居艺术，让每一寸美好都淋漓尽致。
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuangpin.jpg">
+							</div>
+							<div class="info">
+								<div class="tle seven">
+									<span>床品<br><em>bed in bag</em></span>
 								</div>
-								<div class="line-cont">
-									<div class="tle">
-										<em></em>
-										<span>13:00</span>
-										<span>家具翻新</span>
-									</div>
-									<div class="area-compare">
-										<div class="area-pic after onshow">
-											<img src="../../dist/img/2_0/kf/jiajufanxin1.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s1">
-											<img src="../../dist/img/2_0/kf/jiajufanxin2.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s2">
-											<img src="../../dist/img/2_0/kf/jiajufanxin3.jpg" width="100%" alt="">
-										</div>
-									</div>
-								</div>
-								<div class="line-cont">
-									<div class="tle">
-										<em></em>
-										<span>14:00</span>
-										<span>家政服务</span>
-									</div>
-									<div class="area-compare">
-										<div class="area-pic after onshow">
-											<img src="../../dist/img/2_0/kf/jiazheng1.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s1">
-											<img src="../../dist/img/2_0/kf/jiazheng2.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s2">
-											<img src="../../dist/img/2_0/kf/jiazheng3.jpg" width="100%" alt="">
-										</div>
-									</div>
-								</div>
-								<div class="line-cont">
-									<div class="tle">
-										<em></em>
-										<span>16:00</span>
-										<span>施工完成</span>
-									</div>
-									<div class="area-compare">
-										<div class="area-pic after onshow">
-											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" alt="">
-										</div>
-										<div class="area-pic before-hide oninit s1">
-											<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" alt="">
-										</div>
-									</div>
-									<div class="beizhu">
-										<span class="left">备注：</span>
-										<span class="right">
-											<i>以上时间为参考时间</i><br>
-											<i>具体时间以实际完成时间为准</i>
-										</span>
-									</div>
-								</div>
-
+								<p>
+									北欧简约风素色纯棉环保活性印花，给你一个最温暖的拥抱。
+								</p>
 							</div>
 						</div>
 					</div>
+					<!-- 家具 商品详情 -->
+					<div class="product-detail" ms-if="productNav==2&&detailNav==1">
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuanglian.jpg">
+							</div>
+							<div class="info">
+								<div class="tle one">
+									<span>衣柜<br><em>Wardrobe</em></span>
+								</div>
+								<p>
+									<span>合理的空间感设计</span>
+									<span>简易整体时尚</span>
+									<span>采用现代切割封边打孔等多道工艺。</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_dengshi.jpg">
+							</div>
+							<div class="info">
+								<div class="tle two">
+									<span>床头柜<br><em>Bed cupboard</em></span>
+								</div>
+								<p>
+									<span>回味木香，感受设计</span>
+									<span>简约的造型，让它在生活中更适用</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_shafadian.jpg">
+							</div>
+							<div class="info">
+								<div class="tle three">
+									<span>床<br><em>Bed</em></span>
+								</div>
+								<p>
+									<span>中式田园设计</span>
+									<span>营造内心舒适的家居环境，享受宁静的森林空间</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_baozhen.jpg">
+							</div>
+							<div class="info">
+								<div class="tle four">
+									<span>办公桌<br><em>Desk</em></span>
+								</div>
+								<p>
+									<span>中式小桌设计，让你的办公地灵活多变</span>
+									<span>硬朗的材质，享有更久的保障</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_ditan.jpg">
+							</div>
+							<div class="info">
+								<div class="tle five">
+									<span>餐桌<br><em>Table</em></span>
+								</div>
+								<p>
+									<span>中式餐桌设计，生活就是如此的不同</span>
+									<span>硬朗的材质，享有更久的保障</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_guahua.jpg">
+							</div>
+							<div class="info">
+								<div class="tle six">
+									<span>椅子<br><em>Chair</em></span>
+								</div>
+								<p>
+									<span>中式木椅设计，生活就是如此的不同</span>
+									<span>硬朗的材质，享有更久的保障</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuangpin.jpg">
+							</div>
+							<div class="info">
+								<div class="tle seven">
+									<span>沙发<br><em>Sofa</em></span>
+								</div>
+								<p>
+									<span>舒适柔软沙发，让你时刻感受家的温暖</span>
+									<span>硬朗的材质，享有更久的保障</span>
+								</p>
+							</div>
+						</div>
+						<div class="detail-item">
+							<div class="img">
+								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuangpin.jpg">
+							</div>
+							<div class="info">
+								<div class="tle eight">
+									<span>茶几<br><em>Tea table</em></span>
+								</div>
+								<p>
+									<span>中式茶几设计，让你的休闲方式可以有很多种</span>
+									<span>硬朗的材质，享有更久的保障</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<!-- 家电 参数 -->
+					<div class="product-detail" ms-if="productNav==3&&detailNav==2">
+						<div class="jiadian-param-banner">
+							<img src="../../dist/img/2_0/xf/jd_param_banner_1.jpg" alt="">
+						</div>
+						<div class="jiadian-param-table">
+							<img src="../../dist/img/2_0/xf/jd_param_banner_2.jpg" alt="">
+						</div>
+					</div>
+					<!-- 家具 参数 -->
+					<div class="product-detail" ms-if="productNav==2&&detailNav==2">
+						<div class="jiadian-param-banner">
+							<img src="../../dist/img/2_0/xf/jj_param_banner_1.jpg" alt="">
+						</div>
+						<div class="jiadian-param-table">
+							<img src="../../dist/img/2_0/xf/jj_param_banner_2.jpg" alt="">
+						</div>
+					</div>
+					<!-- 评价 -->
 					<div class="product-comment" ms-if="detailNav==3">
-						<div class="comment-box" ms-repeat-el="commentShow">
+						<div class="comment-box">
 							<div class="head">
 								<a class="hd-pic">
-									<img ms-attr-src="{{el.hpic}}">
+									<img>
 								</a>
 								<div class="hd-info">
 									<span class="uname">{{el.uname}}</span>
@@ -349,7 +431,7 @@
 								<div class="star-item">
 									<span class="txt">专业技能</span>
 									<div class="stars">
-										<div class="star-1" ms-class="st{{el.stars1}}">
+										<div class="star-1">
 											<div class="star1-bg"></div>
 										</div>
 									</div>
@@ -357,7 +439,7 @@
 								<div class="star-item">
 									<span class="txt">施工效率</span>
 									<div class="stars">
-										<div class="star-1" ms-class="st{{el.stars2}}">
+										<div class="star-1">
 											<div class="star1-bg"></div>
 										</div>
 									</div>
@@ -365,7 +447,7 @@
 								<div class="star-item">
 									<span class="txt">服务态度</span>
 									<div class="stars">
-										<div class="star-1" ms-class="st{{el.stars3}}">
+										<div class="star-1">
 											<div class="star1-bg"></div>
 										</div>
 									</div>
@@ -376,14 +458,14 @@
 				</div>
 			</div>
 			<div class="shopchart-sec">
-				<a class="add" ms-click="changeBoxState(2)">极速预约</a>
+				<a class="add">极速预约</a>
 			</div>
-			<div class="to-top" ms-click="toTop" ms-if="totopShow"></div>
-			<div class="page-cover" ms-class="show:showBox" ms-click="closeBox"></div>
-			<div class="make-order" ms-class="show:showBox">
+			<div class="to-top"></div>
+			<div class="page-cover"></div>
+			<div class="make-order">
 				<div class="title">
 					<span>选择户型</span>
-					<a class="close" ms-click="closeBox"></a>
+					<a class="close"></a>
 				</div>
 				<div class="options">
 					<div class="option">
@@ -400,16 +482,16 @@
 				<div class="price-line">
 					共：<span>￥<em>{{price}}</em></span>
 				</div>
-				<a class="button-2" ms-click="ajaxOrder">{{btn}}</a>
+				<a class="button-2">{{btn}}</a>
 			</div>
-			<div class="yy-success-msk" ms-visible="showYYok" ms-click="yyOkhide"></div>
-			<div class="yy-success-box" ms-visible="showYYok" ms-click="yyOkhide">
+			<div class="yy-success-msk" ms-if="yyOkhide"></div>
+			<div class="yy-success-box" ms-if="yyOkhide">
 				<h2><em></em>预约成功</h2>
 				<h3>请保持您的手机畅通</h3>
 				<h3>客服将在30分钟内与您联系</h3>
 			</div>
-			<div class="page-cover" ms-visible="tipsShow"></div>
-			<div class="page-tips" ms-visible="tipsShow" ms-click="tipsHide">
+			<div class="page-cover"></div>
+			<div class="page-tips">
 				<span>试试“点击”查看对比图</span>
 			</div>
 		</div>

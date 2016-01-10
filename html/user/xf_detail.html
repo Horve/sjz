@@ -82,8 +82,14 @@
 						</div>
 					</div>
 					<div class="product-nav">
-						<a class="item" ms-class="on:detailNav==1" ms-click="changeDNav(1)">品质保障</a>
-						<a class="item" ms-class="on:detailNav==2" ms-click="changeDNav(2)">施工工艺</a>
+						<a class="item" ms-class="on:detailNav==1" ms-click="changeDNav(1)">
+							<i ms-if="productNav==1">品质保障</i>
+							<i ms-if="productNav!=1">商品详情</i>
+						</a>
+						<a class="item" ms-class="on:detailNav==2" ms-click="changeDNav(2)">
+							<i ms-if="productNav==1">施工工艺</i>
+							<i ms-if="productNav!=1">详情参数</i>
+						</a>
 						<a class="item" ms-class="on:detailNav==3" ms-click="changeDNav(3)">用户评价</a>
 					</div>
 					<!-- 硬装 详情 -->
@@ -498,7 +504,7 @@
 						<a class="item" ms-class="on:yangtai==3" ms-click="addProduct('yangtai')" data-num="3">3阳台</a>
 					</div>
 					<div class="tip-info">
-						<a>注：增加一个卫生间只需￥3500，<br>增加一个阳台只需￥1000</a>
+						<a>注：增加一个卫生间￥3500<br><i style="color: #fff;">加：</i>增加一个阳台￥1000</a>
 					</div>
 				</div>
 				<div class="price-line">

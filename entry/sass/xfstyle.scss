@@ -4,6 +4,71 @@
 		overflow: hidden;
 		font-size: 0.16rem;
 	}
+	.to-top {
+		width: 0.44rem;
+		height: 0.44rem;
+		position: absolute;
+		right: 0.15rem;
+		bottom: 0.6rem;
+		background-image: url(img/2_0/kf/totop.png);
+		background-size: cover;
+	}
+	.make-order {
+		.options {
+			.option {
+				-webkit-box-pack: inherit;
+				padding-bottom: 15px;
+			}
+			.item {
+				margin-right: 10px;
+			}
+		}
+	}
+	.make-order.order-jd {
+		height: 2rem;
+		bottom: -2.2rem;
+		&.show {
+			-webkit-transform: translateY(-220px);
+		}
+	}
+	.make-order.order-yz {
+		height: 4rem;
+		bottom: -4.2rem;
+		&.show {
+			-webkit-transform: translateY(-420px);
+		}
+		.title {
+			height: 0.25rem;
+		}
+		.house-square {
+			height: 0.4rem;
+			border-top: 1px solid #d1d1d1;
+			border-bottom: 1px solid #d1d1d1;
+			line-height: 0.4rem;
+			margin: 0 0.1rem 0.1rem 0.1rem;
+			input {
+				border: none;
+				height: 100%;
+				font-size: 14px;
+				margin: 0;
+				padding: 0;
+				margin-left: 15px;
+				width: 60%;
+				height: 30px;
+				line-height: 30px;
+				margin-top: 5px;
+			}
+		}
+		.tip-info {
+			font-size: 14px;
+			color: #666;
+			line-height: 22px;
+			padding-bottom: 10px;
+			a {
+				color: #666;
+			}
+		}
+	}
 	.page .view-content .view-content-con {
 		padding-bottom: 120px;
 		.xf-swiper {
@@ -310,8 +375,14 @@
 				width: 2rem;
 				height: 2.85rem;
 				position: absolute;
-				top: 0rem;
+				top: 0;
 				left: 0rem;
+				img {
+					position: absolute;
+					top: 50%;
+					overflow: hidden;
+					-webkit-transform: translateY(-50%);
+				}
 			}
 			.info {
 				margin-left: 2.1rem;

@@ -27,19 +27,7 @@
 			text-align: center;
 		}
 	}
-	.page-cover {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		background: rgba(0,0,0,.6);
-		top: 0;
-		left: 0;
-		z-index: 90;
-		display: none;
-		&.show {
-			display: block;
-		}
-	}
+	
 	.to-top {
 		width: 0.44rem;
 		height: 0.44rem;
@@ -49,104 +37,7 @@
 		background-image: url(img/2_0/kf/totop.png);
 		background-size: cover;
 	}
-	.make-order {
-		height: 2.3rem;
-		width: 100%;
-		position: absolute;
-		bottom: -2.5rem;
-		left: 0;
-		background: #fff;
-		z-index: 100;
-		padding: 0.1rem 0;
-		font-size: 0.16rem;
-		-webkit-transition: all .3s ease-in-out;
-		transform: translate3d(0,0,0);
-		&.show {
-			-webkit-transform: translateY(-250px);
-		}
-		.title {
-			margin: 0 0.1rem;
-			padding: 0.05rem 0;
-			position: relative;
-			a.close {
-				width: 0.2rem;
-				height: 0.2rem;
-				position: absolute;
-				top: 0;
-				right: 0;
-				-webkit-transform: rotate(45deg);
-				&:before {
-					width: 1px;
-					height: 100%;
-					position: absolute;
-					content: "";
-					background: #999;
-					left: 50%;
-				}
-				&:after {
-					height: 1px;
-					width: 100%;
-					position: absolute;
-					content: "";
-					background: #999;
-					top: 50%;
-				}
-			}
-		}
-		.options {
-			margin: 0.1rem;
-			border-bottom: 1px solid #3acd64;
-			.option {
-				display: -webkit-box;
-				-webkit-box-pack: justify;
-				a.item {
-					display: block;
-					width: 0.7rem;
-					height: 0.44rem;
-					line-height: 0.44rem;
-					text-align: center;
-					color: #999;
-					border: 1px solid #d1d1d1;
-					border-radius: 2px;
-					box-sizing: border-box;
-				}
-				a.item.on {
-					background: $maincolor;
-					border: 0;
-					color: #fff;
-					-webkit-transition: all .3s ease-in-out;
-				}
-			}
-			.option-info {
-				padding: 0.05rem 0;
-				display: -webkit-box;
-				-webkit-box-pack: start;
-				a {
-					display: block;
-					width: 0.7rem;
-					height: 0.44rem;
-					line-height: 0.44rem;
-					text-align: center;
-				}
-				a:last-of-type {
-					width: auto;
-					margin-left: 0.1rem;
-				}
-			}
-		}
-		.price-line {
-			text-align: right;
-			line-height: .25rem;
-			margin: 0.1rem;
-			span {
-				color: #f48080;
-			}
-		}
-		.button-2 {
-			margin: 0.1rem;
-			background: $maincolor;
-		}
-	}
+	
 	.top-navigator {
 		.left em.iconfont {
 			font-size: 16px;

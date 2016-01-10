@@ -22,7 +22,7 @@
 		<div class="view">
 			<div class="top-navigator">
 				<a class="left" href="javascript:window.history.back()"><em class="iconfont">&#xe60f;</em>返回</a>
-				<span class="page-title">{{style}}</span>
+				<span class="page-title">{{styleTxt}}-新房</span>
 				<a class="right" href="tel:01053650957"><em class="iconfont">&#xe634;</em></a>
 			</div>
 			<div class="view-content">
@@ -35,13 +35,13 @@
 					<div class="xf-swiper" ms-if="productNav==2||productNav==3">
 						<div class="swiper-container">
 						    <div class="swiper-wrapper">
-						        <div class="swiper-slide"><img src="../../dist/img/2_0/xf/xf_jiadian_focus1.jpg" alt=""></div>
-						        <div class="swiper-slide"><img src="../../dist/img/2_0/xf/xf_jiadian_focus2.jpg" alt=""></div>
-						        <div class="swiper-slide"><img src="../../dist/img/2_0/xf/xf_jiadian_focus3.jpg" alt=""></div>
+						        <div class="swiper-slide"><img ms-attr-src="../../dist/img/2_0/xf/xf_{{xfproduct}}_focus1.jpg" alt=""></div>
+						        <div class="swiper-slide"><img ms-attr-src="../../dist/img/2_0/xf/xf_{{xfproduct}}_focus2.jpg" alt=""></div>
+						        <div class="swiper-slide"><img ms-attr-src="../../dist/img/2_0/xf/xf_{{xfproduct}}_focus3.jpg" alt=""></div>
 						    </div>
 						    <!-- 如果需要分页器 -->
 						    <div class="swiper-pagination"></div>
-						    <div class="swiper-title">七大家电，解决您的一站式需求</div>
+						    <div class="swiper-title">{{focusInfo}}</div>
 						</div>
 					</div>
 					<div class="page-banner" ms-if="productNav==1">
@@ -51,34 +51,34 @@
 					</div>
 					<div class="area-compare first" ms-if="productNav==1">
 						<div class="area-pic after onshow first">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_1_1.jpg" width="100%" alt="">
 						</div>
 						<div class="area-pic before-hide oninit big-show" id="tipsPos"><!--上面的两张展示大图-->
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before1.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_1_2.jpg" width="100%" alt="">
 						</div>
 					</div>
 					<div class="area-compare" ms-if="productNav==1">
 						<div class="area-pic after onshow">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_2_1.jpg" width="100%" alt="">
 						</div>
 						<div class="area-pic before-hide oninit big-show"><!--上面的两张展示大图-->
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before2.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_2_2.jpg" width="100%" alt="">
 						</div>
 					</div>
 					<div class="area-compare" ms-if="productNav==1">
 						<div class="area-pic after onshow">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after1.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_3_1.jpg" width="100%" alt="">
 						</div>
 						<div class="area-pic before-hide oninit big-show" id="tipsPos"><!--上面的两张展示大图-->
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before1.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_3_2.jpg" width="100%" alt="">
 						</div>
 					</div>
 					<div class="area-compare" ms-if="productNav==1">
 						<div class="area-pic after onshow">
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_after2.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_4_1.jpg" width="100%" alt="">
 						</div>
 						<div class="area-pic before-hide oninit big-show"><!--上面的两张展示大图-->
-							<img ms-attr-src="../../dist/img/2_0/kf/{{type}}_before2.jpg" width="100%" alt="">
+							<img ms-attr-src="../../dist/img/2_0/xf/detail/{{styleName}}_detail_4_2.jpg" width="100%" alt="">
 						</div>
 					</div>
 					<div class="product-nav">
@@ -92,33 +92,33 @@
 							<div class="yz-banner"></div>
 							<div class="yz-product-info">
 								<a class="pic">
-									<img src="../../dist/img/2_0/xf/art_detail_1.jpg" alt="">
+									<img src="../../dist/img/2_0/xf/yz_detail_1.jpg" alt="">
 								</a>
 								<span class="txt">仿真木纹，表层上饰有各种树种的木纹，十分逼真，在视觉上也足以和实木地板想比美；表面采用三氧化二铝，超强耐磨，7型锁扣结合紧密，有效抵抗“热胀冷缩”。</span>
 							</div>
 							<div class="yz-product-info">
 								<a class="pic">
-									<img src="../../dist/img/2_0/xf/art_detail_1.jpg" alt="">
+									<img src="../../dist/img/2_0/xf/yz_detail_2.jpg" alt="">
 								</a>
-								<span class="txt">仿真木纹，表层上饰有各种树种的木纹，十分逼真，在视觉上也足以和实木地板想比美；表面采用三氧化二铝，超强耐磨，7型锁扣结合紧密，有效抵抗“热胀冷缩”。</span>
+								<span class="txt">釉面砖高温烧制，吸水率低，性能稳定，不易变形，款式独特，质量上乘，优质洁亮的砖面，容易打理，抗热耐脏且不宜背刮花，,独特设计的真实纹路,给您更加舒适的视觉享受。</span>
 							</div>
 							<div class="yz-product-info">
 								<a class="pic">
-									<img src="../../dist/img/2_0/xf/art_detail_1.jpg" alt="">
+									<img src="../../dist/img/2_0/xf/yz_detail_3.jpg" alt="">
 								</a>
-								<span class="txt">仿真木纹，表层上饰有各种树种的木纹，十分逼真，在视觉上也足以和实木地板想比美；表面采用三氧化二铝，超强耐磨，7型锁扣结合紧密，有效抵抗“热胀冷缩”。</span>
+								<span class="txt">陶瓷经过1280℃高温烧制，釉面光亮细腻，持久如新，使用行业高标砖水箱配件，精密度高，经久耐用，釉面熔合，陶瓷无放射性，无有害物质，环保抗酸咸性，坚固耐用有光泽。</span>
 							</div>
 							<div class="yz-product-info">
 								<a class="pic">
-									<img src="../../dist/img/2_0/xf/art_detail_1.jpg" alt="">
+									<img src="../../dist/img/2_0/xf/yz_detail_4.jpg" alt="">
 								</a>
-								<span class="txt">仿真木纹，表层上饰有各种树种的木纹，十分逼真，在视觉上也足以和实木地板想比美；表面采用三氧化二铝，超强耐磨，7型锁扣结合紧密，有效抵抗“热胀冷缩”。</span>
+								<span class="txt">色彩多样，图案丰富，看似简单的线条,从柔和到晕染,从细腻到深邃, 精致压纹，立体效果,柔韧耐磨，耐脏，耐擦洗。</span>
 							</div>
 							<div class="yz-product-info">
 								<a class="pic">
-									<img src="../../dist/img/2_0/xf/art_detail_1.jpg" alt="">
+									<img src="../../dist/img/2_0/xf/yz_detail_5.jpg" alt="">
 								</a>
-								<span class="txt">仿真木纹，表层上饰有各种树种的木纹，十分逼真，在视觉上也足以和实木地板想比美；表面采用三氧化二铝，超强耐磨，7型锁扣结合紧密，有效抵抗“热胀冷缩”。</span>
+								<span class="txt">天然活性竹炭因子，强效净化甲醛和苯，无添加净化科技，更环保安全。</span>
 							</div>
 						</div>
 					</div>
@@ -185,92 +185,105 @@
 					<div class="product-detail" ms-if="productNav==3&&detailNav==1">
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuanglian.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_xiyiji.jpg">
 							</div>
 							<div class="info">
 								<div class="tle one">
-									<span>窗帘<br><em>curtain</em></span>
+									<span>洗衣机<br><em>Washing Machine</em></span>
 								</div>
 								<p>
-									天然有机亲肤面料，三层织造物理遮光，夏日遮阳，冬季保暖。
+									<span>智能自测</span>
+									<span>高温洗涤</span>
+									<span>多维立体水流</span>
+									<span>自动节能脱水</span>
 								</p>
 							</div>
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_dengshi.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_bingxiang.jpg">
 							</div>
 							<div class="info">
 								<div class="tle two">
-									<span>灯饰<br><em>light-fixture</em></span>
+									<span>冰箱<br><em>Refrigerator</em></span>
 								</div>
 								<p>
-									欧式田园蕾丝台灯，寻找梦里那束隐约的温暖。
+									<span>拉丝钢板极光银外观</span>
+									<span>高效节能，使用寿命长</span>
+									<span>高效静音运行，制冷动力强劲</span>
 								</p>
 							</div>
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_shafadian.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_dianshi.jpg">
 							</div>
 							<div class="info">
 								<div class="tle three">
-									<span>沙发垫<br><em>sofa cushion</em></span>
+									<span>电视机<br><em>Television</em></span>
 								</div>
 								<p>
-									简约粉色 保暖法兰绒，爱一种生活，是特别的嗜好。
+									<span>A+级液晶屏，令你赞叹的清晰度</span>
+									<span>全方位立体环绕声，还原真实音效</span>
 								</p>
 							</div>
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_baozhen.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_kongtiao.jpg">
 							</div>
 							<div class="info">
 								<div class="tle four">
-									<span>抱枕<br><em>bolster</em></span>
+									<span>空调<br><em>Air conditioner</em></span>
 								</div>
 								<p>
-									遇见北欧阳光，棉麻质地，意大利热压印花技术，柔软舒适易清洗，35度，黄金角完美支撑，人体供需设计，符合脊椎支撑结构。
+									<span>26度环保温度</span>
+									<span>智能睡眠模式</span>
+									<span>动力学送风口</span>
 								</p>
 							</div>
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_ditan.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_youyanji.jpg">
 							</div>
 							<div class="info">
 								<div class="tle five">
-									<span>地毯<br><em>footcloth</em></span>
+									<span>油烟机<br><em>Cooker hood</em></span>
 								</div>
 								<p>
-									北欧简约风格，大气稳重，做工精细 毛质细柔，在家里拥有一个舒适的角落呵护最好的自己。
+									<span>高档典雅造型，新颖别致</span>
+									<span>清洗方便，质感优秀</span>
+									<span>高品质威灵电动机，吸力强劲</span>
 								</p>
 							</div>
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_guahua.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_ranqizhao.jpg">
 							</div>
 							<div class="info">
 								<div class="tle six">
-									<span>挂画<br><em>paintings</em></span>
+									<span>燃气灶<br><em>Gas stove</em></span>
 								</div>
 								<p>
-									现代家居艺术，让每一寸美好都淋漓尽致。
+									<span>超薄拉伸设计</span>
+									<span>加厚面板</span>
+									<span>自动熄火保护</span>
 								</p>
 							</div>
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuangpin.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_reshuiqi.jpg">
 							</div>
 							<div class="info">
 								<div class="tle seven">
-									<span>床品<br><em>bed in bag</em></span>
+									<span>热水器<br><em>Heater</em></span>
 								</div>
 								<p>
-									北欧简约风素色纯棉环保活性印花，给你一个最温暖的拥抱。
+									<span>智能淋浴为你健康保驾护航</span>
+									<span>蓝钻内胆，持久耐用</span>
 								</p>
 							</div>
 						</div>
@@ -279,7 +292,7 @@
 					<div class="product-detail" ms-if="productNav==2&&detailNav==1">
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuanglian.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_yigui.jpg">
 							</div>
 							<div class="info">
 								<div class="tle one">
@@ -294,7 +307,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_dengshi.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_chuangtougui.jpg">
 							</div>
 							<div class="info">
 								<div class="tle two">
@@ -308,7 +321,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_shafadian.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_chuang.jpg">
 							</div>
 							<div class="info">
 								<div class="tle three">
@@ -322,7 +335,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_baozhen.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_bangongzhuo.jpg">
 							</div>
 							<div class="info">
 								<div class="tle four">
@@ -336,7 +349,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_ditan.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_canzhuo.jpg">
 							</div>
 							<div class="info">
 								<div class="tle five">
@@ -350,7 +363,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_guahua.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_yizi.jpg">
 							</div>
 							<div class="info">
 								<div class="tle six">
@@ -364,7 +377,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuangpin.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_shafa.jpg">
 							</div>
 							<div class="info">
 								<div class="tle seven">
@@ -378,7 +391,7 @@
 						</div>
 						<div class="detail-item">
 							<div class="img">
-								<img width="100%" height="100%" alt="" src="../../dist/img/2_0/kf/art_chuangpin.jpg">
+								<img width="100%" alt="" src="../../dist/img/2_0/xf/detail/detail_chaji.jpg">
 							</div>
 							<div class="info">
 								<div class="tle eight">
@@ -411,16 +424,16 @@
 					</div>
 					<!-- 评价 -->
 					<div class="product-comment" ms-if="detailNav==3">
-						<div class="comment-box">
+						<div class="comment-box" ms-repeat-el="commentShow">
 							<div class="head">
 								<a class="hd-pic">
-									<img>
+									<img ms-attr-src="{{el.hpic}}">
 								</a>
 								<div class="hd-info">
 									<span class="uname">{{el.uname}}</span>
 									<span class="ctime">{{el.ctime}}
 										<i>{{el.rooms}}</i>
-										<i>{{style}}</i>
+										<i>{{styleTxt}}</i>
 									</span>
 								</div>
 							</div>
@@ -431,7 +444,7 @@
 								<div class="star-item">
 									<span class="txt">专业技能</span>
 									<div class="stars">
-										<div class="star-1">
+										<div class="star-1" ms-class="st{{el.stars1}}">
 											<div class="star1-bg"></div>
 										</div>
 									</div>
@@ -439,7 +452,7 @@
 								<div class="star-item">
 									<span class="txt">施工效率</span>
 									<div class="stars">
-										<div class="star-1">
+										<div class="star-1" ms-class="st{{el.stars2}}">
 											<div class="star1-bg"></div>
 										</div>
 									</div>
@@ -447,7 +460,7 @@
 								<div class="star-item">
 									<span class="txt">服务态度</span>
 									<div class="stars">
-										<div class="star-1">
+										<div class="star-1" ms-class="st{{el.stars3}}">
 											<div class="star1-bg"></div>
 										</div>
 									</div>
@@ -458,45 +471,71 @@
 				</div>
 			</div>
 			<div class="shopchart-sec">
-				<a class="add">极速预约</a>
+				<a class="add" ms-click="showOrderBox">极速预约</a>
 			</div>
-			<div class="to-top"></div>
-			<div class="page-cover"></div>
-			<div class="make-order">
+			<div class="to-top" ms-click="toTop" ms-if="totopShow"></div>
+			<div class="page-cover" ms-visible="showOrder" ms-click="hideOrderBox"></div>
+			<div class="make-order order-yz" ms-class="show:showOrder&&productNav==1">
 				<div class="title">
-					<span>选择户型</span>
-					<a class="close"></a>
+					<a class="close" ms-click="hideOrderBox"></a>
+				</div>
+				<div class="house-square">
+					<span>房屋面积</span>
+					<input type="tel" placeholder="请输入房屋面积（1-999）㎡" ms-duplex-number-square="square" maxlength="3">
+				</div>
+				<div class="title">
+					<span>选择增项</span>
 				</div>
 				<div class="options">
 					<div class="option">
-						<a class="item on">单间</a>
-						<a class="item">一居室</a>
-						<a class="item">两居室</a>
-						<a class="item">三居室</a>
+						<a class="item" ms-class="on:yushi==1" ms-click="addProduct('yushi')" data-num="1">1卫生间</a>
+						<a class="item" ms-class="on:yushi==2" ms-click="addProduct('yushi')" data-num="2">2卫生间</a>
+						<a class="item" ms-class="on:yushi==3" ms-click="addProduct('yushi')" data-num="3">3卫生间</a>
 					</div>
-					<div class="option-info">
-						<a>含</a>
-						<a>{{txt}}</a>
+					<div class="option">
+						<a class="item" ms-class="on:yangtai==1" ms-click="addProduct('yangtai')" data-num="1">1阳台</a>
+						<a class="item" ms-class="on:yangtai==2" ms-click="addProduct('yangtai')" data-num="2">2阳台</a>
+						<a class="item" ms-class="on:yangtai==3" ms-click="addProduct('yangtai')" data-num="3">3阳台</a>
+					</div>
+					<div class="tip-info">
+						<a>注：增加一个卫生间只需￥3500，<br>增加一个阳台只需￥1000</a>
 					</div>
 				</div>
 				<div class="price-line">
 					共：<span>￥<em>{{price}}</em></span>
 				</div>
-				<a class="button-2">{{btn}}</a>
+				<a class="button-2" ms-click="orderYY">极速预约</a>
 			</div>
-			<div class="yy-success-msk" ms-if="yyOkhide"></div>
-			<div class="yy-success-box" ms-if="yyOkhide">
+			<div class="make-order order-jd" ms-class="show:showOrder&&productNav!=1">
+				<div class="title">
+					<span>选择户型</span>
+					<a class="close" ms-click="hideOrderBox"></a>
+				</div>
+				<div class="options">
+					<div class="option">
+						<a class="item" ms-class="on:roomNum==1" data-num="1" ms-click="roomNumChg">一居室</a>
+						<a class="item" ms-class="on:roomNum==2" data-num="2" ms-click="roomNumChg">两居室</a>
+						<a class="item" ms-class="on:roomNum==3" data-num="3" ms-click="roomNumChg">三居室</a>
+					</div>
+				</div>
+				<div class="price-line">
+					共：<span>￥<em>{{price}}</em></span>
+				</div>
+				<a class="button-2" ms-click="orderYY">极速预约</a>
+			</div>
+			<div class="yy-success-msk" ms-visible="yyOkhide" ms-click="closeyyTips"></div>
+			<div class="yy-success-box" ms-visible="yyOkhide" ms-click="closeyyTips">
 				<h2><em></em>预约成功</h2>
 				<h3>请保持您的手机畅通</h3>
 				<h3>客服将在30分钟内与您联系</h3>
 			</div>
-			<div class="page-cover"></div>
+			<!-- <div class="page-cover"></div>
 			<div class="page-tips">
 				<span>试试“点击”查看对比图</span>
-			</div>
+			</div> -->
 		</div>
 	</div>
-	<script type="text/javascript" src="../../dist/build.all.js"></script>
+	<script type="text/javascript" src="../../dist/build.js"></script>
 	<!-- <script type="text/javascript" data-main="main.js" src="../../lib/require.js"></script> -->
 </body>
 </html>

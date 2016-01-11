@@ -53,6 +53,6 @@ define(['../../core/core'], function(core) {
 			}, 300);
 		}
 	};
-
+	window.dialog = dialog;
 	return dialog;
 });

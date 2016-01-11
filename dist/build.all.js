@@ -9017,7 +9017,7 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 			}, 300);
 		}
 	};
-
+	window.dialog = dialog;
 	return dialog;
 });
 define('entry/js/src/order',['../core/core', './jump', './component/dialog'], function(core, checkUsr, dialog) {
@@ -10552,7 +10552,7 @@ define('entry/js/src/xfstyle2.0',['../core/core', './jump', './component/dialog'
 				} else if (VM_xf.productNav == 3) {
 					VM_xf.price = jiadianPrice[VM_xf.roomNum - 1];
 				} else {
-					VM_xf.price = 0;
+					VM_xf.price = danjia * 100;
 				}
 				VM_xf.yushi = 0;
 				VM_xf.yangtai = 0;
@@ -10572,11 +10572,15 @@ define('entry/js/src/xfstyle2.0',['../core/core', './jump', './component/dialog'
 				VM_xf.totalPrice();
 			},
 			totalPrice: function() {
-				VM_xf.price = danjia * VM_xf.square + VM_xf.yushi * 3500 + VM_xf.yangtai * 1000;
+				VM_xf.price = danjia * VM_xf.square + (VM_xf.yushi > 1 ? VM_xf.yushi - 1 : 0)  * 3500 + (VM_xf.yangtai > 1 ? VM_xf.yangtai - 1 : 0) * 1000;
 			},
 			orderYY: function() {
 				var params;
 				if (VM_xf.productNav == 1) {
+					if (!VM_xf.square) {
+						dialog.add("请输入房屋面积");
+						return;
+					}
 					params = '"acreage":' + (VM_xf.square || 100) 
 						+ ',"balconyNum":' + VM_xf.yangtai
 						+ ',"toiletNum":' + VM_xf.yushi

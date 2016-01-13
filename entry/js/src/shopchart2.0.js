@@ -59,7 +59,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					dataType: "json",
 					success: function(res) {
 						if (res.ret == 1) {
-							// alert(JSON.stringify(res));
+							alert(JSON.stringify(res));
 							VM_shopchart.orderStep = orderStep;
 							VM_shopchart.orderList = res.orderInfos || [];
 							VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[0];

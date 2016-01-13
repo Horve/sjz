@@ -1,0 +1,93 @@
+.refundinfo {
+	.refund-step {
+		width: 80%;
+		margin: 18px auto;
+		label {
+			width: 100%;
+			display: block;
+			display: -webkit-box;
+			-webkit-box-pack: justify;
+			span {
+				font-size: 16px;
+				color: #666;
+				display: block;
+			}
+		}
+		.step-icon {
+			margin: 15px auto;
+			width: 80%;
+			height: 2px;
+			background: #ccc;
+			position: relative;
+			em {
+				display: block;
+				width: 15px;
+				height: 15px;
+				position: absolute;
+				top: -7px;
+				border-radius: 50%;
+				border: 1px solid #ccc;
+				background: #fff;
+				&:before {
+					width: 10px;
+					height: 5px;
+					content: "";
+					display: block;
+					position: absolute;
+					top: 3px;
+					left: 2px;
+					border-left: 1px solid #fff;
+					border-bottom: 1px solid #fff;
+					-webkit-transform: rotate(-45deg);
+				}
+				&.step1 {
+					left: 0;
+				}
+				&.step2 {
+					left: 50%;
+					margin-left: -7px;
+				}
+				&.step3 {
+					right: 0;
+				}
+				&.ok {
+					background: $maincolor;
+				}
+			}
+		}
+	}
+	.refund-tle {
+		margin: 0 15px;
+		line-height: 35px;
+	}
+	.refund-view {
+		background: #eee;
+		margin: 5px 10px;
+		padding: 15px 10px;
+		font-size: 14px;
+		line-height: 1.6em;
+		color: #666;
+		textarea {
+			width: 98%;
+			margin: 0 auto;
+			border: 0;
+			height: 100px;
+			outerline: none;
+			background: transparent;
+		}
+	}
+	.refund-list {
+		margin: 0 10px 30px 10px;
+		box-sizing: border-box;
+		border: 1px solid #d1d1d1;
+		color: #666;
+		span {
+			display: block;
+			padding: 13px 10px;
+			border-bottom: 1px solid #d1d1d1;
+			&:last-of-type {
+				border-bottom: none;
+			}
+		}
+	}
+}

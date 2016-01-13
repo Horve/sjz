@@ -4908,6 +4908,98 @@ input {
   color: red;
 }
 
+.refundinfo .refund-step {
+  width: 80%;
+  margin: 18px auto;
+}
+.refundinfo .refund-step label {
+  width: 100%;
+  display: block;
+  display: -webkit-box;
+  -webkit-box-pack: justify;
+}
+.refundinfo .refund-step label span {
+  font-size: 16px;
+  color: #666;
+  display: block;
+}
+.refundinfo .refund-step .step-icon {
+  margin: 15px auto;
+  width: 80%;
+  height: 2px;
+  background: #ccc;
+  position: relative;
+}
+.refundinfo .refund-step .step-icon em {
+  display: block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: -7px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.refundinfo .refund-step .step-icon em:before {
+  width: 10px;
+  height: 5px;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: rotate(-45deg);
+}
+.refundinfo .refund-step .step-icon em.step1 {
+  left: 0;
+}
+.refundinfo .refund-step .step-icon em.step2 {
+  left: 50%;
+  margin-left: -7px;
+}
+.refundinfo .refund-step .step-icon em.step3 {
+  right: 0;
+}
+.refundinfo .refund-step .step-icon em.ok {
+  background: #94d600;
+}
+.refundinfo .refund-tle {
+  margin: 0 15px;
+  line-height: 35px;
+}
+.refundinfo .refund-view {
+  background: #eee;
+  margin: 5px 10px;
+  padding: 15px 10px;
+  font-size: 14px;
+  line-height: 1.6em;
+  color: #666;
+}
+.refundinfo .refund-view textarea {
+  width: 98%;
+  margin: 0 auto;
+  border: 0;
+  height: 100px;
+  outerline: none;
+  background: transparent;
+}
+.refundinfo .refund-list {
+  margin: 0 10px 30px 10px;
+  box-sizing: border-box;
+  border: 1px solid #d1d1d1;
+  color: #666;
+}
+.refundinfo .refund-list span {
+  display: block;
+  padding: 13px 10px;
+  border-bottom: 1px solid #d1d1d1;
+}
+.refundinfo .refund-list span:last-of-type {
+  border-bottom: none;
+}
+
 /*! ucenter */
 .ucenter {
   font-size: 100px;

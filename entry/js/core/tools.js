@@ -107,7 +107,7 @@ define(function() {
 				+ check(time.getSeconds());
 		},
 		returnBaseUrl: function() {
-			return "http://www.s-jz.com/pub/Sbuild/";
+			return "http://www.s-jz.com/test/Sbuild/";
 		}
 	};
 	var Tools = Tools;

@@ -10832,7 +10832,7 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 					dataType: "json",
 					success: function(res) {
 						if (res.ret == 1) {
-							alert(JSON.stringify(res));
+							// alert(JSON.stringify(res));
 							VM_shopchart.orderStep = orderStep;
 							VM_shopchart.orderList = res.orderInfos || [];
 							VM_shopchart.selectedOrderInfo = VM_shopchart.orderList[0];
@@ -10994,7 +10994,9 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 						alert(JSON.stringify(res));
 					}
 				});
-			}
+			},
+			// 查看支付列表
+			
 		});
 		VM_shopchart.getOrder(1);
 		avalon.scan();

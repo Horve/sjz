@@ -4577,6 +4577,51 @@ input {
 .payment-2-0 .page {
   background: #eff0f4;
 }
+.payment-2-0 .page .pay-list {
+  width: 80%;
+  padding: 20px 0 30px 0;
+  border-radius: 8px;
+  background: #fff;
+  z-index: 1200;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -40%;
+  -webkit-transform: translateY(-50%);
+  font-size: 16px;
+}
+.payment-2-0 .page .pay-list h2 {
+  padding: 0;
+  font-weight: normal;
+  font-size: 16px;
+  margin: 0 15px;
+  border-bottom: 2px solid #d1d1d1;
+  padding-bottom: 10px;
+}
+.payment-2-0 .page .pay-list .pay-item {
+  margin-top: 10px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 15px;
+  border-bottom: 1px solid #d1d1d1;
+  font-size: 14px;
+  color: #666;
+  display: -webkit-box;
+  -webkit-box-pack: justify;
+}
+.payment-2-0 .page .pay-list .pay-item a, .payment-2-0 .page .pay-list .pay-item span {
+  display: block;
+}
+.payment-2-0 .page .pay-list .pay-item a.apply-refund {
+  width: 60px;
+  height: 30px;
+  margin-top: 5px;
+  background: #94d600;
+  border-radius: 6px;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+}
 .payment-2-0 .page .view-content .view-content-con {
   margin-bottom: 60px;
 }

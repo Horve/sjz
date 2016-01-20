@@ -2,12 +2,12 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 	core.onrender("payment-2-0", function(dom) {
 		/*-webkit-animation: .5s detail-price-199;*/
 		// 设置跳转返回目标页
-		localStorage.setItem("_prepage", window.location.href);
 		var Tools = core.Tools
 		var baseUrl = Tools.returnBaseUrl();
 		if (localStorage.getItem("_prepage")) {
 			localStorage.removeItem("_prepage");
 		}
+		localStorage.setItem("_prepage", window.location.href);
 		Array.prototype.delItem = function(index) {
 			return this.splice(index,1);
 		};
@@ -39,6 +39,8 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			orderTopay: "",
 			payBtnState: true,
 			orderDelete: "",
+			showPayList: false,
+			payinfos: [],
 			selectOrder: function(orderId, totalPrice, productId, paystate, index) {
 				VM_shopchart.orderTopay = orderId;
 				VM_shopchart.totalPrice = totalPrice;
@@ -222,8 +224,54 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					}
 				});
 			},
+			payListState: function(state) {
+				if (!state) {
+					VM_shopchart.showPayList = false;
+				} else {
+					VM_shopchart.showPayList = true;
+				}
+			},
 			// 查看支付列表
-			
+			payList: function(oid) {
+				$.ajax({
+					url: baseUrl + "pay/queryPayinfos.htm?orderId=" + oid,
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						if (res.ret == 1) {
+							VM_shopchart.payinfos = res.payinfos;
+							[].forEach.call(VM_shopchart.payinfos, function(item) {
+								item.detail = item.detail.replace(/^.+\)/,"");
+							});
+							alert(JSON.stringify(VM_shopchart.payinfos));
+							VM_shopchart.showPayList = true;
+						} else if (res.ret == -1) {
+							dialog.add("获取支付列表失败，请稍后再试！");
+						}
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+					}
+				});
+			},
+			// 申请退款 oid 订单号 pid 支付号
+			applyRefund: function(oid, pid) {
+				$.ajax({
+					url: baseUrl + "refund/applyRefund.htm?orderId=" + oid + "&payId=" + pid,
+					dataType: "json",
+					success: function(res) {
+						// alert(JSON.stringify(res));
+						if (res.ret == 1) {
+							dialog.add("ret:1");
+						} else if (res.ret == -1) {
+							dialog.add("ret:-1");
+						}
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+					}
+				});
+			}
 		});
 		VM_shopchart.getOrder(1);
 		avalon.scan();

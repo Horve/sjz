@@ -60,6 +60,10 @@
 		margin: 0 15px;
 		line-height: 35px;
 	}
+	.refund-item {
+		font-size: 14px;
+		color: #666;
+	}
 	.refund-view {
 		background: #eee;
 		margin: 5px 10px;
@@ -89,5 +93,9 @@
 				border-bottom: none;
 			}
 		}
+	}
+	.page .view-content .button-2 {
+		background: $maincolor;
+		margin: 30px 10px;
 	}
 }

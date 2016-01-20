@@ -4760,6 +4760,15 @@ input {
   left: -20px;
   top: 11px;
 }
+.payment-2-0 .order-item .order-info .order-id .refund {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 14px;
+  display: block;
+  height: 20px;
+  color: red;
+}
 .payment-2-0 .order-item .order-info .order-instr {
   position: relative;
   display: -webkit-box;
@@ -5014,6 +5023,10 @@ input {
   margin: 0 15px;
   line-height: 35px;
 }
+.refundinfo .refund-item {
+  font-size: 14px;
+  color: #666;
+}
 .refundinfo .refund-view {
   background: #eee;
   margin: 5px 10px;
@@ -5043,6 +5056,10 @@ input {
 }
 .refundinfo .refund-list span:last-of-type {
   border-bottom: none;
+}
+.refundinfo .page .view-content .button-2 {
+  background: #94d600;
+  margin: 30px 10px;
 }
 
 /*! ucenter */

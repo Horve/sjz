@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="../../dist/main.min.css" />
 	<link rel="stylesheet" href="../../dist/normalize.css" />
 </head>
-<body>
+<body ms-controller="root" class="ms-conteoller">
 	<div class="page" data-render-id="refundinfo">
 		<div class="view">
 			<div class="top-navigator">
@@ -27,6 +27,7 @@
 			</div>
 			<div class="view-content">
 				<div class="view-content-con">
+					<!-- <div class="refund-tle refund-item">退款项目：硬装包水电阶段</div> -->
 					<div class="refund-step">
 						<label>
 							<span>提交申请</span>
@@ -39,9 +40,9 @@
 							<em class="step3"></em>
 						</div>
 					</div>
-					<div class="refund-tle">退款原因</div>
-					<div class="refund-view">退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因</div>
-					<div class="refund-view">
+					<div class="refund-tle" ms-if="1==2">退款原因</div>
+					<div class="refund-view" ms-if="1==2">退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因退款原因</div>
+					<div class="refund-view" ms-if="1==2">
 						<textarea></textarea>
 					</div>
 					<div class="refund-tle">退款说明</div>
@@ -50,6 +51,7 @@
 						<span>1.退款原因</span>
 						<span>1.退款原因</span>
 					</div>
+					<a href="uedit.html#!_edit" class="button-2">提交申请</a>
 				</div>
 			</div>
 		</div>

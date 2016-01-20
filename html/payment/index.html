@@ -29,21 +29,22 @@
 				<a class="btn cancel" ms-click="delcancel">取消</a>
 			</div>
 		</div>
-		<div class="alert-masker"></div>
-		<div class="pay-list">
+		<div class="alert-masker" ms-if="showPayList" ms-click="payListState(0)"></div>
+		<div class="pay-list" ms-if="showPayList" ms-click="payListState(0)">
 			<h2>支付列表</h2>
-			<div class="pay-item">
-				<span>水电阶段</span>
-				<a class="apply-refund">申请退款</a>
+			<div class="pay-item" ms-repeat="payinfos">
+				<span>{{el.detail}}</span>
+				<!--  ms-click="applyRefund(el.orderIds, el.payId)" -->
+				<a class="apply-refund" ms-attr-href="refundinfo.html?orderid={{el.orderIds}}&payid={{el.payId}}">退款</a>
 			</div>
-			<div class="pay-item">
+			<!-- <div class="pay-item">
 				<span>水电阶段</span>
 				<span>退款中</span>
 			</div>
 			<div class="pay-item">
 				<span>水电阶段</span>
 				<span>退款完成</span>
-			</div>
+			</div> -->
 		</div>
 		<div class="view">
 			<div class="top-navigator">
@@ -74,6 +75,7 @@
 										<em class="iconfont" ms-class="on:orderTopay==el.orderId" ms-if="orderStep==1">&#xe60b;</em>
 										<span>订单编号：{{el.orderId}}</span>
 										<a class="delete" ms-click="deleteOrder(el.orderId)" ms-if="el.state==0">删除</a>
+										<a class="refund" ms-click="payList(el.orderId)" ms-if="el.state!=0">申请退款</a>
 									</div>
 									<div class="order-instr">
 										<a class="pic">
@@ -115,7 +117,7 @@
 											<div class="line-left"></div>
 											<div class="list-ico list-close"></div>
 										</div>	
-										<div class="step" ms-class="ok:el.state==1" ms-repeat="el.stepInfos">
+										<div class="step" ms-class="ok:el.state>=1" ms-repeat="el.stepInfos">
 											<span>付款成功
 												<i class="circle"></i>
 											</span>

@@ -11085,18 +11085,20 @@ define('entry/js/src/refundinfo',['../core/core', './component/slideOptions', '.
 			console.log(_arr);
 			searchObj[_arr[0]] = _arr[1];
 		});
-		if (!urlsearch.payid || !urlsearch.orderid) {
-			window.history.back();
-		}
+		// if (!urlsearch.payid || !urlsearch.orderid) {
+		// 	window.history.back();
+		// }
 
 		alert(JSON.stringify(searchObj));
 		var VM_refundinfo = avalon.define({
 			$id: "root",
 			orderid: searchObj.orderid,
 			payid: searchObj.payid,
+			refundstate: searchObj.refundstate,
 			init: function() {
 				// alert(VM_refundinfo.orderid + "---" + VM_refundinfo.payid);
-				VM_refundinfo.getRefundState(VM_refundinfo.orderid, VM_refundinfo.payid);
+				// VM_refundinfo.getRefundState(VM_refundinfo.orderid, VM_refundinfo.payid);
+				alert("refundState:" + VM_refundinfo.refundstate);
 			},
 			// 查询退款状态
 			getRefundState: function(oid,pid) {

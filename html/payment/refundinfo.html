@@ -28,16 +28,17 @@
 			<div class="view-content">
 				<div class="view-content-con">
 					<!-- <div class="refund-tle refund-item">退款项目：硬装包水电阶段</div> -->
-					<div class="refund-step">
+					<div class="refund-step" ms-if="refundstate>0">
 						<label>
 							<span>提交申请</span>
 							<span>等待退款</span>
-							<span>成功退款</span>
+							<span ms-if="refundstate<=1||refundstate==4">成功退款</span>
+							<span ms-if="refundstate<=1||refundstate==3">拒绝申请</span>
 						</label>
 						<div class="step-icon">
-							<em class="step1 ok"></em>
-							<em class="step2"></em>
-							<em class="step3"></em>
+							<em class="step1" ms-class="ok:refundstate>=1"></em>
+							<em class="step2" ms-class="ok:refundstate>=2"></em>
+							<em class="step3" ms-class="ok:refundstate==4" ms-class="fail:refundstate==3"></em>
 						</div>
 					</div>
 					<div class="refund-tle" ms-if="1==2">退款原因</div>

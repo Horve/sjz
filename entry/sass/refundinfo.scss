@@ -53,6 +53,34 @@
 				&.ok {
 					background: $maincolor;
 				}
+				&.fail {
+					background: #fff;
+					-webkit-transform: rotate(-45deg);
+					&:before {
+						width: 11px;
+						height: 11px;
+						content: "";
+						display: block;
+						position: absolute;
+						top: 49%;
+						left: 50%;
+						margin-left: -6px;
+						border-top: 1px solid #ccc;
+						-webkit-transform: rotate(0deg);
+					}
+					&:after {
+						width: 11px;
+						height: 11px;
+						content: "";
+						display: block;
+						position: absolute;
+						left: 49%;
+						top: 50%;
+						margin-top: -6px;
+						border-left: 1px solid #ccc;
+						-webkit-transform: rotate(0deg);
+					}
+				}
 			}
 		}
 	}

@@ -35,7 +35,7 @@
 			<div class="pay-item" ms-repeat="payinfos">
 				<span>{{el.detail}}</span>
 				<!--  ms-click="applyRefund(el.orderIds, el.payId)" -->
-				<a class="apply-refund" ms-attr-href="refundinfo.html?orderid={{el.orderIds}}&payid={{el.payId}}">退款</a>
+				<a class="apply-refund" ms-attr-href="refundinfo.html?orderid={{el.orderIds}}&payid={{el.payId}}&refundstate={{el.refundState}}">退款</a>
 			</div>
 			<!-- <div class="pay-item">
 				<span>水电阶段</span>

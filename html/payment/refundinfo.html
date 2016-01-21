@@ -32,13 +32,15 @@
 						<label>
 							<span>提交申请</span>
 							<span>等待退款</span>
-							<span ms-if="refundstate<=1||refundstate==4">成功退款</span>
-							<span ms-if="refundstate<=1||refundstate==3">拒绝申请</span>
+							<span ms-if="refundstate!=3">成功退款</span>
+							<span ms-if="refundstate==3">拒绝申请</span>
 						</label>
 						<div class="step-icon">
 							<em class="step1" ms-class="ok:refundstate>=1"></em>
 							<em class="step2" ms-class="ok:refundstate>=2"></em>
-							<em class="step3" ms-class="ok:refundstate==4" ms-class="fail:refundstate==3"></em>
+							<em class="step3" ms-if="refundstate!=3&&refundstate!=4"></em>
+							<em class="step3 fail" ms-if="refundstate==3"></em>
+							<em class="step3 ok" ms-if="refundstate==4"></em>
 						</div>
 					</div>
 					<div class="refund-tle" ms-if="1==2">退款原因</div>
@@ -48,11 +50,11 @@
 					</div>
 					<div class="refund-tle">退款说明</div>
 					<div class="refund-list">
-						<span>1.退款原因</span>
-						<span>1.退款原因</span>
-						<span>1.退款原因</span>
+						<span>1.退款说明</span>
+						<span>1.退款说明</span>
+						<span>1.退款3日内返原帐户</span>
 					</div>
-					<a href="uedit.html#!_edit" class="button-2">提交申请</a>
+					<a class="button-2" id="applyRefund" ms-if="refundstate==0" ms-click="applyRefund">提交申请</a>
 				</div>
 			</div>
 		</div>

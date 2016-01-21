@@ -3768,7 +3768,7 @@ define('entry/js/core/tools',[],function() {
 				+ check(time.getSeconds());
 		},
 		returnBaseUrl: function() {
-			return "http://www.s-jz.com/test/Sbuild/";
+			return "http://www.s-jz.com/pub/Sbuild/";
 		}
 	};
 	var Tools = Tools;
@@ -8967,10 +8967,12 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 	var allData = [];
 	var dialog = {
 		TEMPLATE: '<div class="dialog-mask"></div><div class="dialog-body"><p></p><a class="button-ok">确定</a></div>',
-		add: function(txt) {
+		callback: null,
+		add: function(txt, fn) {
 			console.log("Enter dialog Component!");
 			var _this = this;
 			_this.beforeShow(txt);
+			fn && (_this.callback = fn);
 		},
 		beforeShow: function(txt) {
 			var _this = this;
@@ -9009,6 +9011,9 @@ define('entry/js/src/component/dialog',['../../core/core'], function(core) {
 			var _this = this;
 			$('.dialog-mask, .button-ok').off('click').on('click', function() {
 				_this.hide(el);
+				if ($(this).hasClass("button-ok")) {
+					_this.callback();
+				}
 			});
 		},
 		afterHide: function() {
@@ -11016,7 +11021,7 @@ define('entry/js/src/shopchart2.0',['../core/core', './component/slideOptions', 
 							[].forEach.call(VM_shopchart.payinfos, function(item) {
 								item.detail = item.detail.replace(/^.+\)/,"");
 							});
-							alert(JSON.stringify(VM_shopchart.payinfos));
+							// alert(JSON.stringify(VM_shopchart.payinfos));
 							VM_shopchart.showPayList = true;
 						} else if (res.ret == -1) {
 							dialog.add("获取支付列表失败，请稍后再试！");
@@ -11089,7 +11094,7 @@ define('entry/js/src/refundinfo',['../core/core', './component/slideOptions', '.
 		// 	window.history.back();
 		// }
 
-		alert(JSON.stringify(searchObj));
+		// alert(JSON.stringify(searchObj));
 		var VM_refundinfo = avalon.define({
 			$id: "root",
 			orderid: searchObj.orderid,
@@ -11098,7 +11103,7 @@ define('entry/js/src/refundinfo',['../core/core', './component/slideOptions', '.
 			init: function() {
 				// alert(VM_refundinfo.orderid + "---" + VM_refundinfo.payid);
 				// VM_refundinfo.getRefundState(VM_refundinfo.orderid, VM_refundinfo.payid);
-				alert("refundState:" + VM_refundinfo.refundstate);
+				// alert("refundState:" + VM_refundinfo.refundstate);
 			},
 			// 查询退款状态
 			getRefundState: function(oid,pid) {
@@ -11106,7 +11111,6 @@ define('entry/js/src/refundinfo',['../core/core', './component/slideOptions', '.
 					url: baseUrl + "refund/queryRefund.htm?orderId=" + oid + "&payId=" + pid,
 					dataType: "json",
 					success: function(res) {
-						alert("000:" + JSON.stringify(res));
 						if (res.ret == 1) {
 							// alert(JSON.stringify(res));
 						} else if (res.ret == -1) {
@@ -11120,15 +11124,21 @@ define('entry/js/src/refundinfo',['../core/core', './component/slideOptions', '.
 			},
 			// 申请退款 oid 订单号 pid 支付号
 			applyRefund: function(oid, pid) {
+				oid = VM_refundinfo.orderid;
+				pid = VM_refundinfo.payid;
 				$.ajax({
 					url: baseUrl + "refund/applyRefund.htm?orderId=" + oid + "&payId=" + pid,
 					dataType: "json",
 					success: function(res) {
-						// alert(JSON.stringify(res));
 						if (res.ret == 1) {
-							alert(JSON.stringify(res));
+							// alert(JSON.stringify(res));
+							dialog.add("已提交退款申请", function() {
+								window.history.back();
+							});
 						} else if (res.ret == -1) {
-							dialog.add("ret:-1");
+							dialog.add("申请失败，请稍候再试！", function() {
+								window.history.back();
+							});
 						}
 					},
 					error: function(res) {

@@ -36,12 +36,20 @@
 					display: block;
 				}
 				a.apply-refund {
-					width: 60px;
+					width: 65px;
 					height: 30px;
 					margin-top: 5px;
 					background: $maincolor;
 					border-radius: 6px;
 					color: #fff;
+					text-align: center;
+					line-height: 30px;
+				}
+				a.show-refund {
+					width: 65px;
+					height: 30px;
+					margin-top: 5px;
+					color: #666;
 					text-align: center;
 					line-height: 30px;
 				}

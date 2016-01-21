@@ -243,7 +243,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 							[].forEach.call(VM_shopchart.payinfos, function(item) {
 								item.detail = item.detail.replace(/^.+\)/,"");
 							});
-							alert(JSON.stringify(VM_shopchart.payinfos));
+							// alert(JSON.stringify(VM_shopchart.payinfos));
 							VM_shopchart.showPayList = true;
 						} else if (res.ret == -1) {
 							dialog.add("获取支付列表失败，请稍后再试！");

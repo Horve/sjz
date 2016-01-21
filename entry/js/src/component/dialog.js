@@ -3,10 +3,12 @@ define(['../../core/core'], function(core) {
 	var allData = [];
 	var dialog = {
 		TEMPLATE: '<div class="dialog-mask"></div><div class="dialog-body"><p></p><a class="button-ok">确定</a></div>',
-		add: function(txt) {
+		callback: null,
+		add: function(txt, fn) {
 			console.log("Enter dialog Component!");
 			var _this = this;
 			_this.beforeShow(txt);
+			fn && (_this.callback = fn);
 		},
 		beforeShow: function(txt) {
 			var _this = this;
@@ -45,6 +47,9 @@ define(['../../core/core'], function(core) {
 			var _this = this;
 			$('.dialog-mask, .button-ok').off('click').on('click', function() {
 				_this.hide(el);
+				if ($(this).hasClass("button-ok")) {
+					_this.callback();
+				}
 			});
 		},
 		afterHide: function() {

@@ -22,7 +22,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 		// 	window.history.back();
 		// }
 
-		alert(JSON.stringify(searchObj));
+		// alert(JSON.stringify(searchObj));
 		var VM_refundinfo = avalon.define({
 			$id: "root",
 			orderid: searchObj.orderid,
@@ -31,7 +31,7 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			init: function() {
 				// alert(VM_refundinfo.orderid + "---" + VM_refundinfo.payid);
 				// VM_refundinfo.getRefundState(VM_refundinfo.orderid, VM_refundinfo.payid);
-				alert("refundState:" + VM_refundinfo.refundstate);
+				// alert("refundState:" + VM_refundinfo.refundstate);
 			},
 			// 查询退款状态
 			getRefundState: function(oid,pid) {
@@ -39,7 +39,6 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 					url: baseUrl + "refund/queryRefund.htm?orderId=" + oid + "&payId=" + pid,
 					dataType: "json",
 					success: function(res) {
-						alert("000:" + JSON.stringify(res));
 						if (res.ret == 1) {
 							// alert(JSON.stringify(res));
 						} else if (res.ret == -1) {
@@ -53,15 +52,21 @@ define(['../core/core', './component/slideOptions', './component/dialog', './jum
 			},
 			// 申请退款 oid 订单号 pid 支付号
 			applyRefund: function(oid, pid) {
+				oid = VM_refundinfo.orderid;
+				pid = VM_refundinfo.payid;
 				$.ajax({
 					url: baseUrl + "refund/applyRefund.htm?orderId=" + oid + "&payId=" + pid,
 					dataType: "json",
 					success: function(res) {
-						// alert(JSON.stringify(res));
 						if (res.ret == 1) {
-							alert(JSON.stringify(res));
+							// alert(JSON.stringify(res));
+							dialog.add("已提交退款申请", function() {
+								window.history.back();
+							});
 						} else if (res.ret == -1) {
-							dialog.add("ret:-1");
+							dialog.add("申请失败，请稍候再试！", function() {
+								window.history.back();
+							});
 						}
 					},
 					error: function(res) {

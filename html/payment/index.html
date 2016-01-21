@@ -35,7 +35,8 @@
 			<div class="pay-item" ms-repeat="payinfos">
 				<span>{{el.detail}}</span>
 				<!--  ms-click="applyRefund(el.orderIds, el.payId)" -->
-				<a class="apply-refund" ms-attr-href="refundinfo.html?orderid={{el.orderIds}}&payid={{el.payId}}&refundstate={{el.refundState}}">退款</a>
+				<a class="apply-refund" ms-if="el.refundState==0" ms-attr-href="refundinfo.html?orderid={{el.orderIds}}&payid={{el.payId}}&refundstate={{el.refundState}}">申请退款</a>
+				<a class="show-refund" ms-if="el.refundState>0" ms-attr-href="refundinfo.html?orderid={{el.orderIds}}&payid={{el.payId}}&refundstate={{el.refundState}}">查看进度</a>
 			</div>
 			<!-- <div class="pay-item">
 				<span>水电阶段</span>
@@ -57,7 +58,7 @@
 					<div class="body-con">
 						<div class="type-nav">
 							<a class="item" ms-class="on:orderStep==1" ms-click="getOrder(1)">当前订单</a>
-							<a class="item" ms-class="on:orderStep==3" ms-click="getOrder(3)">订单评价</a>
+							<a class="item" ms-class="on:orderStep==3" ms-click="getOrder(3)">完成订单</a>
 							<!-- <a class="item" ms-class="on:orderStep==4" ms-click="getOrder(4)">历史订单</a> -->
 						</div>
 						<div class="empty" ms-if="orderList.length==0">
@@ -174,7 +175,7 @@
 										</div>	
 									</div>
 								</div>
-								<div class="order-comment" ms-if="el.state==4">
+								<div class="order-comment" ms-if="1==2">
 									<a class="btn">施工评价</a>
 									<span class="txt">您的评价很重要！为了让您体验更优质的施工服务，工人的绩效工资将由您的评价来决定。</span>
 								</div>

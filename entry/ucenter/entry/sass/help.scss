@@ -42,9 +42,9 @@
 		}
 	}
 	.qa-list {
-		margin-top: 0.1rem;
+		// margin-top: 0.1rem;
 		background: #fff;
-		border-top: 1px solid #d1d1d1;
+		// border-top: 1px solid #d1d1d1;
 		border-bottom: 1px solid #d1d1d1;
 		padding: 0 0.1rem 0.1rem 0.1rem;
 		color: #808080;
@@ -88,6 +88,7 @@
 					line-height: 0.3rem;
 					box-sizing: border-box;
 					display: none;
+					font-size: 14px;
 				}
 				&.show .answer {
 					display: block;

@@ -9227,7 +9227,7 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog', './jump'], 
 			["uname", /^[\u4E00-\u9FA5]{2,20}$/, "请输入2-20汉字以内的姓名"],
 			["unick", /^.+$/, "请输入20个字符以内的昵称"],
 			["uphone", /^\d{11}$/, "请输入11位数字的手机号码"],
-			["ulocate", /^.{1,20}$/, "请输入所在省份"],
+			["ulocate", /^.{1,20}$/, "请选择所在省份"],
 			["uaddress", /^.+$/, "请输入详细住址"]
 		];
 		var checkDet = function() {

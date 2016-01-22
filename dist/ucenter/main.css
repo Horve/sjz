@@ -831,7 +831,7 @@ i, em {
   font-style: normal;
 }
 
-.page {
+.page, .page-a {
   min-width: 320px;
   max-width: 640px;
   margin: 0 auto;
@@ -843,28 +843,28 @@ i, em {
   -webkit-overflow-scrolling: touch;
   /*padding-bottom: 20px;*/
 }
-.page .single-page {
+.page .single-page, .page-a .single-page {
   min-height: 100%;
   position: relative;
 }
-.page .view {
+.page .view, .page-a .view {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-.page .view-content {
+.page .view-content, .page-a .view-content {
   margin-top: 45px;
   height: 100%;
   overflow: auto !important;
   -webkit-overflow-scrolling: touch;
 }
-.page .view-content .view-content-con {
+.page .view-content .view-content-con, .page-a .view-content .view-content-con {
   overflow: hidden;
   padding-bottom: 45px;
   -webkit-overflow-scrolling: touch;
 }
-.page .view-content .button-2 {
-  margin: 0.5rem 0.1rem;
+.page .view-content .button-2, .page-a .view-content .button-2 {
+  margin: 50px 10px;
 }
 
 body {
@@ -1117,7 +1117,7 @@ input {
   color: #f48080;
 }
 .make-order .button-2 {
-  margin: 0.1rem;
+  margin: 10px;
   background: #94d600;
 }
 
@@ -1137,7 +1137,7 @@ input {
 
 /*! ucenter */
 .ucenter {
-  font-size: 100px;
+  font-size: 16px;
 }
 .ucenter .blur {
   filter: url(img/ucenter/blur.svg#blur);
@@ -1158,7 +1158,7 @@ input {
   display: none;
 }
 .ucenter .rule-txt {
-  font-size: 0.12rem;
+  font-size: 12px;
   color: #999;
   width: 90%;
   height: 90%;
@@ -1183,26 +1183,26 @@ input {
   -webkit-overflow-scrolling: touch;
 }
 .ucenter .rule-txt .close-rule {
-  width: 0.2rem;
-  height: 0.2rem;
+  width: 20px;
+  height: 20px;
   display: block;
   position: absolute;
-  top: -0.07rem;
-  right: -0.07rem;
+  top: -7px;
+  right: -7px;
   background: #3ad064;
   color: #fff;
-  line-height: 0.2rem;
+  line-height: 20px;
   text-align: center;
   border-radius: 50%;
-  font-size: 0.2rem;
+  font-size: 20px;
   -webkit-transform: rotate(45deg);
 }
 .ucenter .rule-txt p {
-  line-height: 0.18rem;
-  margin-bottom: 0.08rem;
+  line-height: 18px;
+  margin-bottom: 8px;
 }
 .ucenter .user-info {
-  height: 1.6rem;
+  height: 160px;
   position: relative;
   overflow: hidden;
   display: -webkit-box;
@@ -1219,14 +1219,14 @@ input {
 }
 .ucenter .user-info .info {
   width: 100%;
-  height: 0.9rem;
+  height: 90px;
   z-index: 10;
   position: relative;
 }
 .ucenter .user-info .head-pic {
   display: block;
-  width: 0.65rem;
-  height: 0.65rem;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   border: 2px solid #fff;
   margin: 0 auto;
@@ -1236,17 +1236,17 @@ input {
   border-radius: 50%;
 }
 .ucenter .user-info .uname {
-  font-size: 0.14rem;
+  font-size: 14px;
   color: #fff;
   display: block;
-  line-height: 0.25rem;
+  line-height: 25px;
   text-align: center;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 .ucenter .option-list {
-  padding: 0 0.1rem;
-  font-size: 0.16rem;
-  text-indent: 0.1rem;
+  padding: 0 10px;
+  font-size: 16px;
+  text-indent: 10px;
 }
 .ucenter .option-list.ucenter-index .item span {
   margin-left: 25px;
@@ -1256,11 +1256,11 @@ input {
 }
 .ucenter .option-list .item {
   display: block;
-  height: 0.45rem;
+  height: 45px;
   border-bottom: 1px solid #d1d1d1;
   color: #666;
   text-decoration: none;
-  line-height: 0.45rem;
+  line-height: 45px;
   position: relative;
   box-sizing: border-box;
 }
@@ -1269,26 +1269,26 @@ input {
   display: block;
   position: absolute;
   height: 100%;
-  width: 0.35rem;
-  font-size: 0.25rem;
-  left: 0.05rem;
+  width: 35px;
+  font-size: 25px;
+  left: 5px;
 }
 .ucenter .option-list .item .input {
-  margin-left: 0.4rem;
+  margin-left: 40px;
   width: 80%;
-  height: 0.3rem;
-  line-height: 0.3rem;
+  height: 30px;
+  line-height: 30px;
 }
 .ucenter .option-list .item.lnk:after {
   display: block;
   content: "";
-  width: 0.1rem;
-  height: 0.1rem;
+  width: 10px;
+  height: 10px;
   border-right: 1px solid #666;
   border-bottom: 1px solid #666;
   -webkit-transform: rotate(-45deg);
-  right: 0.1rem;
-  top: 0.16rem;
+  right: 10px;
+  top: 16px;
   position: absolute;
 }
 .ucenter .option-list .item.show span {
@@ -1298,20 +1298,20 @@ input {
 }
 .ucenter .option-list .item.show span:first-of-type {
   color: #666;
-  width: 0.75rem;
-  margin-right: 0.1rem;
+  width: 75px;
+  margin-right: 10px;
 }
 .ucenter .user-rule {
-  height: 0.5rem;
+  height: 50px;
   text-align: center;
-  font-size: 0.16rem;
+  font-size: 16px;
   color: #999;
-  line-height: 0.5rem;
+  line-height: 50px;
 }
 .ucenter .user-rule .checkbox {
   display: inline-block;
-  width: 0.12rem;
-  height: 0.12rem;
+  width: 12px;
+  height: 12px;
   border: 1px solid #999;
   position: relative;
   top: 1px;
@@ -1319,11 +1319,11 @@ input {
 }
 .ucenter .user-rule .checkbox:after {
   content: "";
-  width: 0.1rem;
-  height: 0.1rem;
+  width: 10px;
+  height: 10px;
   position: absolute;
-  top: 0.01rem;
-  left: 0.01rem;
+  top: 1px;
+  left: 1px;
   background: #3ad064;
   display: none;
 }
@@ -1331,7 +1331,7 @@ input {
   display: block;
 }
 .ucenter .ucenter-info .page .button-2 {
-  margin: 0.3rem 0.1rem;
+  margin: 30px 10px;
   color: #fff;
   background: #94d600;
 }
@@ -1379,9 +1379,7 @@ input {
   background: #94d600;
 }
 .help .qa-list {
-  margin-top: 0.1rem;
   background: #fff;
-  border-top: 1px solid #d1d1d1;
   border-bottom: 1px solid #d1d1d1;
   padding: 0 0.1rem 0.1rem 0.1rem;
   color: #808080;
@@ -1425,6 +1423,7 @@ input {
   line-height: 0.3rem;
   box-sizing: border-box;
   display: none;
+  font-size: 14px;
 }
 .help .qa-list .list-conttent .qa-box.show .answer {
   display: block;

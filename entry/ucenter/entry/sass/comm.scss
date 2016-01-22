@@ -25,7 +25,7 @@ p {
 i, em {
 	font-style: normal;
 }
-.page {
+.page, .page-a {
 	min-width: 320px;
 	max-width: 640px;
 	margin: 0 auto;
@@ -56,7 +56,7 @@ i, em {
 			-webkit-overflow-scrolling: touch;
 		}
 		.button-2 {
-			margin: 0.5rem 0.1rem;
+			margin: 50px 10px;
 		}
 	}
 }
@@ -305,7 +305,7 @@ input {
 		}
 	}
 	.button-2 {
-		margin: 0.1rem;
+		margin: 10px;
 		background: $maincolor;
 	}
 }

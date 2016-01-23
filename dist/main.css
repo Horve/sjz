@@ -2434,6 +2434,15 @@ input {
   background-image: url(img/2_0/kf/totop.png);
   background-size: cover;
 }
+.xf-detail span.pics-area-txt {
+  z-index: 100;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
 .xf-detail .make-order .options .option {
   -webkit-box-pack: inherit;
   padding-bottom: 15px;

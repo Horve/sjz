@@ -5,6 +5,7 @@ define(['../core/core', './component/dialog', './jump'], function(core, dialog, 
 		var headBg = $('.headpic-bg', dom)
 			, headPic = $('.head-pic img', dom)
 			, unameEL = $('.user-info .uname', dom);
+		localStorage.setItem("_prepage", window.location.href);
 		var getUserInfo = function() {
 			if (localStorage.length >= 7) {
 				var unkname = localStorage.getItem("sjz-unkname")

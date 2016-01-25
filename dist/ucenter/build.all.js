@@ -9005,6 +9005,7 @@ define('entry/js/src/ucenter',['../core/core', './component/dialog', './jump'], 
 		var headBg = $('.headpic-bg', dom)
 			, headPic = $('.head-pic img', dom)
 			, unameEL = $('.user-info .uname', dom);
+		localStorage.setItem("_prepage", window.location.href);
 		var getUserInfo = function() {
 			if (localStorage.length >= 7) {
 				var unkname = localStorage.getItem("sjz-unkname")

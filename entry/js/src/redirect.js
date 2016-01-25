@@ -3,6 +3,7 @@ define(['../core/core'], function(core) {
 		var Tools = core.Tools;
 		var url = location.search;
 		var baseUrl = Tools.returnBaseUrl();
+		var preUrl = localStorage.getItem("_prepage") || baseUrl + "html/user/";
 		if (url) {
 			var code = url.replace(/\?/,"").split("&")[0].split("=")[1];
 			$.ajax({
@@ -25,7 +26,7 @@ define(['../core/core'], function(core) {
 						if (localStorage.getItem("_prepage")) {
 							window.location.href = localStorage.getItem("_prepage");
 						} else {
-							window.location.href = baseUrl + "html/user/";
+							window.location.href = preUrl;
 						}
 					}
 				},
@@ -34,7 +35,7 @@ define(['../core/core'], function(core) {
 				}
 			});
 		} else {
-			window.location = baseUrl + "html/user/";;
+			window.location = preUrl;;
 		}
 		
 	});

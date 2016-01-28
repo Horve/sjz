@@ -126,6 +126,9 @@
 											<span ms-if="el.state>=1">已支付</span>
 											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
+											<div class="tips-info">
+												￥{{el.stepTotalCost}}
+											</div>
 										</div>	
 										<div class="step" ms-class="ok:el.state==5" ms-repeat="el.stepInfos">
 											<span>完成订单
@@ -154,7 +157,10 @@
 											<span ms-if="el.state>=1">已支付</span>
 											<span ms-if="el.state==4">{{el.stepDoneTime | date("yyyy-MM-dd HH:mm:ss")}}</span>
 											<div class="line-left"></div>
-											<div class="tips-info" ms-if="el.state==0">
+											<div class="tips-info">
+												￥{{el.stepTotalCost}}
+											</div>
+											<!-- <div class="tips-info" ms-if="el.state==0">
 												￥{{el.stepTotalCost}}
 											</div>
 											<div class="tips-info" ms-if="el.state==1&&el.buildState==0">
@@ -171,7 +177,7 @@
 											</div>
 											<div class="tips-info" ms-if="el.state==1&&el.buildState==4">
 												已完成
-											</div>
+											</div> -->
 										</div>	
 									</div>
 								</div>
